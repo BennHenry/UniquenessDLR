@@ -1,4 +1,4 @@
-# UniDLR
+# Uniqueness of  DLR equation in the continuum
 
 A collaborative study of uniqueness for the logarithmic
 Dobrushin–Lanford–Ruelle (DLR) equations.
