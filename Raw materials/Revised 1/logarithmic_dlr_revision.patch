@@ -1,0 +1,1854 @@
+--- logarithmic_dlr_uniqueness_corrected(1).tex
++++ logarithmic_dlr_uniqueness_revised.tex
+@@ -3,7 +3,7 @@
+ \usepackage{lmodern}
+ \usepackage[letterpaper,margin=1in]{geometry}
+ \usepackage{microtype}
+-\usepackage{amsmath,amssymb,mathtools}
++\usepackage{amsmath,amssymb,mathtools,mathrsfs}
+ \usepackage[hidelinks,pdfusetitle]{hyperref}
+ \usepackage{enumitem}
+ \usepackage{needspace}
+@@ -26,6 +26,10 @@
+ \newcommand{\PV}{\operatorname{PV}}
+ \newcommand{\Ent}{\operatorname{Ent}}
+ \newcommand{\Sine}{\operatorname{Sine}}
++\newcommand{\Id}{\mathrm{Id}}
++\newcommand{\Spec}{\mathsf S_P}
++\newcommand{\Leb}{\operatorname{Leb}}
++\DeclareMathOperator{\Law}{Law}
+ \newcommand{\dd}{\,d}
+ \newcommand{\gap}{\mathfrak g}
+ \newcommand{\calB}{\mathcal B}
+@@ -41,36 +45,43 @@
+ \setlength{\emergencystretch}{1.5em}
+ \setlist[enumerate]{leftmargin=*,itemsep=3pt,topsep=5pt}
+ \title[Uniqueness of the logarithmic DLR state]{Uniqueness of the stationary logarithmic DLR state}
+-\date{Research manuscript draft\\9 September 2026}
++\date{Research manuscript draft\\9 September 2026; exposition revised 10 September 2026}
+ \subjclass[2020]{60G55, 60K35, 82B21, 60B20}
+ \keywords{Logarithmic gas, DLR equations, Sine beta process, hyperuniformity, Palm measure, entropy}
+ 
+ \begin{document}
+ \begin{abstract}
+-We give an entropy comparison argument for uniqueness of the stationary
+-one-dimensional logarithmic DLR state at every inverse temperature
+-$\beta>0$. The comparison theorem is first formulated under explicit count
+-variance assumptions: a linear variance bound, sublinear variance growth,
+-and integrability of the variance against $t^{-2}\dd t$. Two conditional
+-laws with the same number of particles are compared with one deterministic
+-lattice-boundary law carrying a weak quadratic confinement. A static
+-concentration estimate for averages of finite gap vectors bounds their
+-expectation difference by relative entropy per particle. Integrated
+-discrepancy control makes the boundary contribution to the Fisher
+-information tight, while sublinear variance makes the confinement cost
+-negligible. We then derive the required variance assumptions from finite
+-logarithmic electric-field energy by stationarization and a covariance
+-spectral estimate. An explicit identity with the energy of Lebl\'e and
+-Serfaty makes the imported finite-energy input precise. This identifies
+-the stationary finite-energy solution of the canonical DLR equations
+-with $\Sine_\beta$.
++Fix an inverse temperature $\beta>0$. For a stationary simple point
++process $P$ on $\R$ with intensity one, write
++$v_P(t)=\Var_P N_{(0,t]}$. We prove that the canonical logarithmic
++Dobrushin--Lanford--Ruelle equations have at most one such solution
++satisfying
++\[
++v_P(t)\le C_Pt\quad(t>0),\qquad
++\lim_{t\to\infty}\frac{v_P(t)}t=0,\qquad
++\int_1^\infty\frac{v_P(t)}{t^2}\dd t<\infty.
++\]
++The proof compares the conditional distributions of two candidate
++processes with the same finite-dimensional Gibbs measure: a logarithmic
++gas with lattice exterior particles and a quadratic potential of
++vanishing strength. A concentration inequality for averages of
++consecutive gaps controls the difference of expectations by relative
++entropy per particle. The integrated variance bound controls the
++exterior-force contribution in probability, and the sublinear variance
++bound makes the quadratic displacement contribution tend to zero.
++We then derive the variance assumptions from finite renormalized
++logarithmic electric energy, using a stationary joint distribution of
++the configuration and an electric field and a covariance spectral
++estimate. With the energy normalization specified below, this identifies
++every stationary finite-energy canonical DLR solution with $\Sine_\beta$.
+ \end{abstract}
+ \maketitle
+ 
+ \section{Introduction and statements}
+ 
+ The process $\Sine_\beta$ describes the microscopic bulk limit of
+-one-dimensional logarithmic gases. Dereudre, Hardy, Lebl\'e and
++one-dimensional logarithmic gases. We use its unit-intensity
++normalization throughout. Dereudre, Hardy, Lebl\'e and
+ Ma\"ida~\cite{DHLM} show that it satisfies canonical Dobrushin--Lanford--Ruelle
+ equations and that every stationary finite-energy solution of those
+ equations is number-rigid. Their Section~1.3 asks whether the stationary
+@@ -81,12 +92,12 @@
+ strong particle-location estimates for convex analytic potentials.
+ 
+ The organizing idea of the argument below is to compare both candidate
+-infinite-volume laws with one common lattice-boundary law and then
+-cancel that reference. Its limit need not be identified. A static
++infinite-volume laws with one common Gibbs measure with lattice exterior and then
++subtract the two comparison estimates. No limit of the reference measure is needed. A static
+ convexity estimate converts relative entropy into control of averaged
+-gap statistics. Integrated discrepancy control makes the exterior-force
+-cost tight, while sublinear variance makes the weak confinement cost
+-negligible. The comparison theorem is stated directly in terms of
++gap statistics. The integrated variance bound gives tightness of the conditional squared
++exterior-force difference. Sublinear variance controls the quadratic
++displacement introduced by the additional potential. The comparison theorem is stated directly in terms of
+ these count-variance hypotheses and is independent of the electric-field
+ argument used later to verify them.
+ 
+@@ -99,25 +110,106 @@
+ $\beta$ ensemble, cyclic-gap transport, the circular Palm limit,
+ and Palm inversion. The argument below shares the entropy and Palm
+ framework and provides an alternative comparison proof of that
+-finite-energy uniqueness result. Its reference is a lattice-boundary
+-law with weak quadratic confinement, which cancels between the two
++finite-energy uniqueness result. Its reference is a Gibbs measure with lattice exterior
++and a weak quadratic potential, which cancels between the two
+ candidates without identifying its limit. Theorem~\ref{thm:comparison}
+ isolates the discrepancy assumptions sufficient for this comparison.
+ 
+-We write $\gamma$ for a locally finite simple counting measure on $\R$,
+-$N_I(\gamma)=\gamma(I)$, and $\theta_a\gamma=\gamma-a$. All stationary
+-processes in the comparison theorem have intensity one. For such a
+-process $P$, put
+-\[
+-v_P(t)=\Var_P N_{(0,t]},\qquad t>0.
+-\]
+-The canonical DLR property means that, conditionally on the exterior of a
+-bounded interval and on its particle number, the interior points have the
+-normalized logarithmic Gibbs density at inverse temperature $\beta$.
+-The infinite exterior interaction is defined by symmetric cutoffs and
+-relative energies, as in \cite[Section~2.1]{DHLM}.
++\subsection{Configurations, notation, and the DLR specification}
++\label{subsec:notation}
++
++Let $\Conf(\R)$ denote the space of locally finite simple counting
++measures on $\R$, with the Borel sigma-algebra of the vague topology.
++For $\gamma\in\Conf(\R)$ and a Borel set $A$, write
++\[
++N_A(\gamma)=\gamma(A),\qquad
++\gamma_A=\gamma|_A,\qquad
++(\theta_a\gamma)(A)=\gamma(A+a)\quad(a\in\R).
++\]
++Thus $\theta_a$ moves a point at $a$ to the origin. A probability measure
++$P$ on $\Conf(\R)$ is stationary if $(\theta_a)_\#P=P$ for every $a$.
++Here $T_\#\nu(A)=\nu(T^{-1}(A))$ denotes the pushforward of a
++measure $\nu$ under a measurable map $T$. For a probability measure,
++it is the distribution of $T(X)$ when $X$ has law $\nu$.
++We also write $\Law_\nu(X)$ for the distribution of a random variable
++$X$ under $\nu$.
++It has intensity one if
++\begin{equation}\label{eq:intensity-one}
++\E_PN_A=\Leb(A)
++\qquad\text{for every bounded Borel set }A\subset\R.
++\end{equation}
++Here $\Leb$ is Lebesgue measure, and $\delta_x$ denotes the unit
++point mass at $x$. We use $\N=\{1,2,\ldots\}$. We omit the argument $\gamma$ from
++counts when the configuration is clear. For a probability measure $\nu$,
++we use $\nu(f)=\int f\dd\nu$ and $\Var_\nu f=\nu(f^2)-\nu(f)^2$.
++For a stationary intensity-one process, set
++\begin{equation}\label{eq:variance-definition}
++v_P(t)=\Var_PN_{(0,t]}
++      =\E_P\bigl[(N_{(0,t]}-t)^2\bigr],\qquad t>0.
++\end{equation}
++For vectors, $|\cdot|$ is the Euclidean norm; $\Id_K$ is the
++$K\times K$ identity matrix. A generic constant $C$ may change from
++one occurrence to the next. Constants carrying a subscript record
++additional dependencies. In estimates for $K\to\infty$, constants are
++independent of $K$ and of the confinement parameter $T$ unless stated
++otherwise; dependence on fixed $\beta,r,G$, or on a fixed candidate law,
++is allowed. We write $X_K=o_P(a_K)$ for $X_K/a_K\to0$ in
++$P$-probability, and $x_+=\max\{x,0\}$. The notation
++$a_K\asymp b_K$ means $c_1b_K\le a_K\le c_2b_K$ for positive
++constants $c_1,c_2$ independent of $K$.
++
++We specify the conditional distribution meant by the canonical DLR
++equations. Let $I=(a,b)$ be a bounded interval, let $n\ge1$, and define
++\[
++\Omega_{I,n}=\{x\in\R^n:a<x_1<\cdots<x_n<b\}.
++\]
++For an exterior configuration $\xi$ supported in $I^c$, choose a
++reference vector $y\in\Omega_{I,n}$ and define the relative Hamiltonian
++\begin{equation}\label{eq:dlr-relative-energy}
++\begin{split}
++\mathscr H_I^\xi(x;y)
++={}&-\sum_{1\le i<j\le n}
++       \log\frac{|x_j-x_i|}{|y_j-y_i|}\\
++&-\lim_{R\to\infty}
++  \sum_{\substack{p\in\xi\\|p|\le R}}\sum_{i=1}^n
++       \log\frac{|x_i-p|}{|y_i-p|}.
++\end{split}
++\end{equation}
++The cutoff in this definition is symmetric about the spatial origin.
++Whenever a principal-value sum $\PV\sum_p$ occurs below, it means this
++limit with $|p|\le R$ in the coordinates then in use; any explicitly
++excluded particles are omitted before taking the limit. The relative
++energies and the corresponding normalized kernel are required to exist
++for almost every exterior and particle number arising under the process.
++The kernel is
++\begin{equation}\label{eq:dlr-kernel}
++\begin{aligned}
++\kappa_{I,n}^\beta(\xi;\dd x)
++ &=\frac{e^{-\beta\mathscr H_I^\xi(x;y)}}
++         {Z_{I,n}^\beta(\xi;y)}\,\1_{\Omega_{I,n}}(x)\dd x,\\
++Z_{I,n}^\beta(\xi;y)
++ &=\int_{\Omega_{I,n}}e^{-\beta\mathscr H_I^\xi(x;y)}\dd x
++ \in(0,\infty).
++\end{aligned}
++\end{equation}
++Changing $y$ adds a constant independent of $x$ to the Hamiltonian and
++therefore does not change the kernel. For $n=0$, the kernel is the point
++mass on the empty configuration.
++
++Writing $\mathscr G_I=\sigma(\gamma_{I^c},N_I)$, the canonical DLR
++property at inverse temperature $\beta$ is the identity
++\begin{equation}\label{eq:dlr-identity}
++\E_P[f(\gamma)\mid\mathscr G_I]
++ =\int f\!\left(\gamma_{I^c}+\sum_{i=1}^{N_I}\delta_{x_i}\right)
++       \kappa_{I,N_I}^\beta(\gamma_{I^c};\dd x)
++ \quad P\text{-almost surely}
++\end{equation}
++for every bounded measurable $f:\Conf(\R)\to\R$ and every bounded
++interval $I$. This is the ordered-coordinate form of the relative-energy
++specification in \cite[Section~2.1]{DHLM}.
+ 
+ \Needspace{10\baselineskip}
++\begin{samepage}
+ \begin{theorem}[Uniqueness under discrepancy control]\label{thm:comparison}
+ Fix $\beta>0$. There is at most one stationary simple point process of
+ intensity one satisfying the canonical logarithmic DLR equations and the
+@@ -129,21 +221,24 @@
+ \end{align}
+ The constant $C_P$ need not be uniform over candidate processes.
+ \end{theorem}
++\end{samepage}
+ 
+ For clarity, all three conditions are retained in the statement.
+ Section~\ref{sec:energy} proves them together for each ergodic finite-energy
+ DLR solution. The comparison proof itself requires no ergodicity.
+ 
++\begin{samepage}
+ \begin{theorem}[Finite-energy uniqueness]\label{thm:finite-energy}
+ Fix $\beta>0$, and let $W$ be the renormalized logarithmic energy
+ defined in \eqref{eq:renormalized-energy}, with the inner truncation and
+ unit background specified in Section~\ref{sec:energy}.
+ If $P$ is stationary, satisfies the canonical logarithmic DLR
+-property described above, and $\E_P W<\infty$, then
++property \eqref{eq:dlr-identity}, and $\E_P W<\infty$, then
+ \[
+ P=\Sine_\beta.
+ \]
+ \end{theorem}
++\end{samepage}
+ 
+ Theorem~\ref{thm:finite-energy} follows from
+ Theorem~\ref{thm:comparison}, Proposition~\ref{prop:energy-discrepancy},
+@@ -153,20 +248,22 @@
+ one by itself is insufficient for uniqueness: the equal mixture of the
+ vacuum and the image of $\Sine_\beta$ under $x\mapsto x/2$ is a
+ stationary canonical DLR solution of intensity one and infinite energy
+-\cite[Proposition~9.4]{Assiotis}. Its number variance is at least $t^2$,
+-by conditioning on the mixture component, so it also fails
+-\eqref{eq:linear}.
++\cite[Proposition~9.4]{Assiotis}. Indeed, if $P_{\rm mix}$ denotes that mixture and $\Lambda$ its
++component intensity, then
++\[
++P(\Lambda=0)=P(\Lambda=2)=\tfrac12,\qquad
++\Var_{P_{\rm mix}}N_{(0,t]}
++\ge\Var(\Lambda t)=t^2.
++\]
++It therefore also fails \eqref{eq:linear}.
+ 
+ \subsection{Organization and main estimates}
+ 
+-Section~\ref{sec:entropy} proves a static comparison inequality for
+-averages of consecutive gap vectors:
+-\[
+-|\mu(F_K)-\omega_{K,T}(F_K)|^2
+-\le \frac{C_GT}{K}I(\mu\mid\omega_{K,T}).
+-\]
+-Here $\omega_{K,T}$ is a lattice-boundary logarithmic gas with quadratic
+-confinement of strength $T^{-1}$. Section~\ref{sec:palm} collects the
++Section~\ref{sec:entropy} defines the finite-dimensional reference measure,
++the gap average, relative entropy, and relative Fisher information before
++stating the comparison inequalities \eqref{eq:entropy-gap} and
++\eqref{eq:fisher-gap}. The reference has lattice exterior particles and
++a quadratic potential of strength $T^{-1}$. Section~\ref{sec:palm} collects the
+ counting and Palm facts needed for random particle-ended intervals.
+ Sections~\ref{sec:blocks} and \ref{sec:forces} control, respectively, the
+ confinement cost and the exterior-force contribution. These estimates
+@@ -218,14 +315,15 @@
+ -\sum_{i=1}^K\PV\sum_{p\in\xi_K^{\rm lat}}
+        \log\abs{\frac{u_i-p}{r_*-p}}.
+ \end{equation}
+-The reference changes only an additive constant. Equivalently, Euler's
+-product for the gamma function gives the completely finite expression
+-\[
++Changing $r_*$ changes only an additive constant. Euler's product for
++the gamma function gives the following exact finite expression:
++\begin{equation}\label{eq:lattice-gamma-energy}
+ H_K^{\rm lat}(u)=
+--\sum_{i<j}\log(u_j-u_i)
+-+\sum_{i=1}^K\{\log\Gamma(u_i)+\log\Gamma(L-u_i)\}
+-+\text{constant}.
+-\]
++-\sum_{1\le i<j\le K}\log(u_j-u_i)
+++\sum_{i=1}^K\log
++ \frac{\Gamma(u_i)\Gamma(L-u_i)}{\Gamma(r_*)\Gamma(L-r_*)}.
++\end{equation}
++Here $\Gamma(z)=\int_0^\infty t^{z-1}e^{-t}\dd t$ for $z>0$.
+ The paired exterior series converges, and its derivatives of order at
+ least two converge locally uniformly. The endpoint singularities are
+ $-\log u_i-\log(L-u_i)$.
+@@ -235,7 +333,10 @@
+ \Phi_{K,T}(u)=\beta H_K^{\rm lat}(u)
+                   +\frac1{2T}\sum_{i=1}^K(u_i-i)^2.
+ \end{equation}
+-The normalizing constant is finite and strictly positive.
++Here and below $\dd u$ denotes $K$-dimensional Lebesgue measure, and
++\begin{equation}\label{eq:reference-normalizer}
++Z_{K,T}=\int_{\Omega_K}e^{-\Phi_{K,T}(u)}\dd u\in(0,\infty).
++\end{equation}
+ 
+ Fix an integer $r\ge1$ and a function $G\in C_c^2((0,\infty)^r)$.
+ For $K>r$, define
+@@ -243,23 +344,31 @@
+ F_K(u)=\frac1{K-r}
+ \sum_{i=1}^{K-r}G(g_i(u),\ldots,g_{i+r-1}(u)).
+ \end{equation}
+-This uses only gaps between interior particles. Omitting finitely many
+-edge windows has no effect on the limiting average.
++This uses only gaps between interior particles. Adding or deleting at
++most $m$ edge windows, with $m$ fixed, changes the normalized average
++by at most $2m\norm G_\infty/(K-r-m)$ for $K>r+m$; this bound tends
++to zero as $K\to\infty$.
+ 
+ For probability measures $\mu\ll\omega$ on $\Omega_K$, write
+-$h=\dd\mu/\dd\omega$ and use the conventions
+-\[
++$h=\dd\mu/\dd\omega$. The relative entropy and relative Fisher
++information are, respectively,
++\begin{equation}\label{eq:entropy-fisher-definitions}
+ S(\mu\mid\omega)=\int h\log h\dd\omega,\qquad
+-I(\mu\mid\omega)=4\int\abs{\nabla\sqrt h}^2\dd\omega.
+-\]
++I(\mu\mid\omega)=4\int\abs{\nabla\sqrt h}^2\dd\omega,
++\end{equation}
++with $0\log0=0$. If $\mu\not\ll\omega$, both quantities are defined
++to be $+\infty$.
+ Here $I=+\infty$ unless $\sqrt h$ belongs to the weighted weak
+ Sobolev space specified in Appendix~\ref{app:convex}. For positive
+ locally differentiable densities this is
+ $\int|\nabla\log h|^2\dd\mu$.
+ 
+-\begin{proposition}[Gap entropy bound]\label{prop:gap-entropy}
+-For fixed $\beta,r,G$, there is a constant $C_G$ independent of $K,T$
+-such that, for $K\ge2r+1$,
++\begin{samepage}
++\begin{proposition}[Entropy and Fisher-information bounds for gap averages]\label{prop:gap-entropy}
++Fix $\beta>0$, an integer $r\ge1$, and $G\in C_c^2((0,\infty)^r)$.
++There is a constant $C_G<\infty$ such that, for every integer
++$K\ge2r+1$, every $T>0$, and every probability measure $\mu$ on
++$\Omega_K$,
+ \begin{align}
+ |\mu(F_K)-\omega_{K,T}(F_K)|^2
+ &\le \frac{C_G}{K}S(\mu\mid\omega_{K,T}),\label{eq:entropy-gap}\\
+@@ -276,6 +385,7 @@
+ The constant may be chosen to depend only on
+ $\beta,r,B,M_0,M_1,M_2$.
+ \end{proposition}
++\end{samepage}
+ 
+ \begin{proof}
+ Write $\Phi=\Phi_{K,T}$ and $n=K-r\ge K/2$. For $v\in\R^K$,
+@@ -344,14 +454,17 @@
+ \end{equation}
+ 
+ \smallskip\noindent\textit{Uniformity over the tilted laws.}
+-Let $\omega_s$ have density proportional to
+-$e^{sF_K}\dd\omega_{K,T}$, and choose
+-$c_G=[2(1+A_2)]^{-1}$. The same pointwise estimate
++For $s\in\R$, define the exponentially tilted probability measure
++\[
++\omega_s(\dd u)=
++\frac{e^{sF_K(u)}}{\omega_{K,T}(e^{sF_K})}\,\omega_{K,T}(\dd u),
++\]
++Set $c_G=[2(1+A_2)]^{-1}$. The same pointwise estimate
+ \eqref{eq:tilt-hessian}, with no dependence on $s,K,T$, gives
+ for every $|s|\le c_GK$
+ \[
+ (\Phi-sF_K)''
+-\ge\tfrac12\beta H_K^{{\rm lat}\,\prime\prime}+T^{-1}I
++\ge\tfrac12\beta H_K^{{\rm lat}\,\prime\prime}+T^{-1}\Id_K
+ \ge\tfrac12\Phi''.
+ \]
+ The Brascamp--Lieb inequality in Lemma~\ref{lem:convex-approx},
+@@ -380,6 +493,7 @@
+ \le\frac{S(\mu\mid\omega_{K,T})}{s}+\frac{D s}{K},
+ \qquad 0<s\le c_GK,\qquad D=1+A_1.
+ \]
++Abbreviate $S=S(\mu\mid\omega_{K,T})$ for the rest of this paragraph.
+ When $0<S\le Dc_G^2K$, choose $s=\sqrt{SK/D}$ to obtain the
+ square bound $4DS/K$; the case $S=0$ follows by $s\downarrow0$.
+ When $S>Dc_G^2K$, use
+@@ -388,7 +502,7 @@
+ \[
+ C_G\ge\max\{4D,\,4M_0^2/(Dc_G^2)\}.
+ \]
+-Infinite entropy causes no difficulty.
++When $S=+\infty$, \eqref{eq:entropy-gap} is immediate.
+ Finally, the uniform convexity in \eqref{eq:hessian} and the
+ logarithmic Sobolev part of Lemma~\ref{lem:convex-approx} imply
+ \begin{equation}\label{eq:lsi}
+@@ -404,31 +518,66 @@
+ 
+ \section{Discrepancy and Palm preliminaries}\label{sec:palm}
+ 
+-Throughout Sections~\ref{sec:palm}--\ref{sec:proof-main}, $P$ satisfies the
+-hypotheses of Theorem~\ref{thm:comparison}. The symbol $P^0$ denotes its
+-Palm distribution, and $T_*$ denotes the shift from a point at the origin
+-to its successor.
+-
++Throughout Sections~\ref{sec:palm}--\ref{sec:proof-main}, $P$ satisfies
++Theorem~\ref{thm:comparison}. Its Palm distribution $P^0$ is the
++probability measure on configurations with a point at zero characterized
++by Campbell's identity
++\begin{equation}\label{eq:campbell}
++\E_P\sum_{p\in\gamma} f(p,\theta_p\gamma)
++ =\int_\R\E_{P^0}f(x,\gamma)\dd x
++\end{equation}
++for every nonnegative measurable $f$ on $\R\times\Conf(\R)$.
++For a rooted configuration with infinitely many points in each
++direction, enumerate its points and gaps as
++\begin{equation}\label{eq:palm-points-gaps}
++\cdots<p_{-1}<p_0=0<p_1<\cdots,\qquad
++ g_j=p_{j+1}-p_j\quad(j\in\Z).
++\end{equation}
++The successor shift is $T_*\gamma=\theta_{p_1}\gamma$; thus
++$g_j(T_*\gamma)=g_{j+1}(\gamma)$. Palm measure is invariant under this
++map: $(T_*)_\#P^0=P^0$. The almost-sure existence of the two-sided
++enumeration follows from the next lemma.
++
++\begin{samepage}
+ \begin{lemma}[Almost-sure exterior regularity]\label{lem:as-regularity}
+-Almost surely the configuration has density one in both directions,
+-and, at every finite origin $a$,
++There is a translation-invariant measurable set $\mathcal R$ with
++$P(\mathcal R)=P^0(\mathcal R)=1$ such that, for every
++$\gamma\in\mathcal R$ and every $a\in\R$,
++\begin{equation}\label{eq:as-density}
++\lim_{t\to\infty}\frac{N_{(a,a+t]}(\gamma)}t
++ =\lim_{t\to\infty}\frac{N_{[a-t,a)}(\gamma)}t=1,
++\end{equation}
++and
+ \begin{equation}\label{eq:as-integral}
+ \int_1^\infty\frac{
+   (N_{(a,a+t]}-t)^2+(N_{[a-t,a)}-t)^2}{t^2}\dd t<\infty.
+ \end{equation}
+-The symmetric principal value
+-$\lim_{R\to\infty}\sum_{p\in\gamma,\,0<|p|\le R}1/p$ exists,
+-with a possible point at the origin omitted.
+-These properties hold $P^0$-almost surely as well.
++Moreover,
++\begin{equation}\label{eq:reciprocal-pv}
++\lim_{R\to\infty}
++\sum_{\substack{p\in\gamma\\0<|p-a|\le R}}\frac1{p-a}
++\quad\text{exists as a finite real number for every }a\in\R.
++\end{equation}
++A point at $a$, when present, is omitted from this sum.
+ \end{lemma}
++\end{samepage}
+ 
+ \begin{proof}
+ By \eqref{eq:linear}, Chebyshev's inequality along $t=n^2$ and
+ Borel--Cantelli give $N_{(0,t]}/t\to1$; monotonic interpolation removes
+ the subsequence. The backward statement is identical.
+ Tonelli and \eqref{eq:integrated} give \eqref{eq:as-integral} at $a=0$.
+-Write the oriented cumulative discrepancy as $D_0(x)$ for $x\in\R$.
+-The discrepancy of $(a,a+t]$ equals $D_0(a+t)-D_0(a)$. A change of
++Define the oriented cumulative discrepancy by
++\begin{equation}\label{eq:oriented-discrepancy}
++D_0(x)=
++\begin{cases}
++N_{(0,x]}-x,&x\ge0,\\
++-N_{(x,0]}-x,&x<0.
++\end{cases}
++\end{equation}
++Then $N_{(a,a+t]}-t=D_0(a+t)-D_0(a)$ for every $t>0$.
++The backward discrepancy with the convention $[a-t,a)$ differs from
++$D_0(a)-D_0(a-t)$ by at most two endpoint indicators. A change of
+ variable and comparability of $t$ and $a+t$ for large $t$ prove the
+ integrability at every finite $a$, simultaneously on the same event.
+ 
+@@ -441,18 +590,25 @@
+ \]
+ The first term vanishes by density one. The integral converges
+ absolutely by Cauchy--Schwarz and \eqref{eq:as-integral}. Add the finite
+-sum over $0<|p|\le1$. Since the resulting good event is invariant under all finite
+-translations, Campbell's formula transfers it to Palm measure.
++sum over $0<|p|\le1$. The same argument at any $a$ gives
++\eqref{eq:reciprocal-pv}. All the resulting properties hold simultaneously
++at every $a$, so their common event is translation invariant.
++Equation~\eqref{eq:campbell} transfers this event to Palm measure.
+ \end{proof}
+ 
+-\begin{lemma}[Integrable Palm count envelopes]\label{lem:palm-envelope}
++\begin{samepage}
++\begin{lemma}[Integrable bounds for Palm counting functions]\label{lem:palm-envelope}
+ Under $P^0$ define
+ \[
+ C^+=\sup_{t\ge0}\frac{N_{(0,t]}}{1+t},\qquad
+ C^-=\sup_{t\ge0}\frac{N_{[-t,0)}}{1+t}.
+ \]
+-Then $\E_{P^0}C^++\E_{P^0}C^-<\infty$.
++Then
++\begin{equation}\label{eq:palm-envelope-integrability}
++\E_{P^0}C^++\E_{P^0}C^-<\infty.
++\end{equation}
+ \end{lemma}
++\end{samepage}
+ 
+ \begin{proof}
+ For a spatially rooted sample put
+@@ -477,11 +633,8 @@
+ 
+ \subsection{The first positive point and the preceding gap}
+ 
+-Under $P^0$ enumerate the points by
+-$\cdots<p_{-1}<p_0=0<p_1<\cdots$, and write
+-$g_i=p_{i+1}-p_i$. Palm measure is invariant under $T_*$, and
+-Campbell's identity gives the following version of the inspection
+-paradox. If $a$ is the first positive point of a spatial sample, the law
++Use the Palm points and gaps in \eqref{eq:palm-points-gaps}.
++Campbell's identity gives the following size-bias formula. If $a$ is the first positive point of a spatial sample, the law
+ of $\theta_a\gamma$ is
+ \begin{equation}\label{eq:first-positive}
+ \widetilde P^0(\dd\gamma)=g_{-1}(\gamma)P^0(\dd\gamma).
+@@ -490,6 +643,7 @@
+ possible spatial origins of length $g_{-1}(\theta_p\gamma)$.
+ In particular $\E_{P^0}g_{-1}=1$.
+ 
++\begin{samepage}
+ \begin{lemma}[Uniform domination of endpoint environments]
+ \label{lem:endpoint-domination}
+ Let $a_j$ be the $(j+1)$-st positive point of a spatial sample, and let
+@@ -503,6 +657,7 @@
+ Thus the restricted endpoint laws are dominated by $MP^0$, uniformly
+ in the number $j$ of successor shifts.
+ \end{lemma}
++\end{samepage}
+ 
+ \begin{proof}
+ The event $\{\gap_*\le M\}$ becomes $\{g_{-1}\le M\}$ when the sample
+@@ -516,7 +671,7 @@
+ \le M\E_{P^0}[\Phi\circ T_*^j]
+ =M\E_{P^0}\Phi.
+ \]
+-The last equality is point-shift invariance. No invariance of the
++The last equality uses $(T_*)_\#P^0=P^0$. No invariance of the
+ truncating event, and no independence of that event from the shifted
+ environment, is required.
+ \end{proof}
+@@ -528,18 +683,33 @@
+ mean of the preceding gap on every point-shift invariant component is
+ one.
+ 
++\begin{samepage}
+ \begin{lemma}[Spatial block averages identify Palm gap laws]
+ \label{lem:identify}
+-For fixed $r$ and bounded $G$, the expectation under $P$ of the average
+-of $G$ over $K-r$ successive gap windows following the first positive
+-point converges to $P^0(G(g_0,\ldots,g_{r-1}))$.
++Let $r\ge1$ be an integer and let $G:(0,\infty)^r\to\R$ be bounded
++and measurable. Let $a_j$ be the $(j+1)$-st positive point of a
++configuration sampled under $P$, for $j\ge0$. For $K>r$, set
++\begin{equation}\label{eq:spatial-gap-average}
++A_{K,r}(\gamma)=\frac1{K-r}\sum_{i=1}^{K-r}
++G(a_{i+1}-a_i,\ldots,a_{i+r}-a_{i+r-1}).
++\end{equation}
++Then
++\begin{equation}\label{eq:spatial-palm-limit}
++\lim_{K\to\infty}\E_PA_{K,r}
++ =\E_{P^0}G(g_0,\ldots,g_{r-1}).
++\end{equation}
+ \end{lemma}
++\end{samepage}
+ 
+ \begin{proof}
+ Put $\Psi(\gamma)=G(g_0,\ldots,g_{r-1})$ and let $\calI$ be the
+-invariant sigma-algebra of $T_*$. If $A_K$ denotes the corresponding
+-average over $K-r$ successive translates of $\Psi$, Birkhoff's theorem
+-gives $A_K\to\E_{P^0}[\Psi\mid\calI]$ Palm-almost surely. Shifting the
++invariant sigma-algebra of $T_*$. Define the rooted average
++\[
++A_K^0=\frac1{K-r}\sum_{i=1}^{K-r}\Psi\circ T_*^i,
++\qquad A_{K,r}(\gamma)=A_K^0(\theta_{a_0}\gamma).
++\]
++Birkhoff's theorem gives
++$A_K^0\to\E_{P^0}[\Psi\mid\calI]$ $P^0$-almost surely. Shifting the
+ starting index by a fixed number changes a bounded average by $O(K^{-1})$.
+ Density one and $\E_{P^0}g_{-1}<\infty$ give
+ \[
+@@ -550,11 +720,11 @@
+ Here the middle equality telescopes the gaps and the last uses the
+ almost-sure particle density from Lemma~\ref{lem:as-regularity}.
+ By \eqref{eq:first-positive}, the expectation of the spatially rooted
+-block average is $\E_{P^0}[g_{-1}A_K]$. Since
+-$|A_K|\le\norm G_\infty$, dominated convergence with the integrable
++block average is $\E_{P^0}[g_{-1}A_K^0]$. Since
++$|A_K^0|\le\norm G_\infty$, dominated convergence with the integrable
+ weight $g_{-1}$, followed by conditioning on $\calI$, yields
+ \[
+-\lim_{K\to\infty}\E_{P^0}[g_{-1}A_K]
++\lim_{K\to\infty}\E_{P^0}[g_{-1}A_K^0]
+ =\E_{P^0}\!\left[g_{-1}\E_{P^0}[\Psi\mid\calI]\right]
+ =\E_{P^0}\!\left[\E_{P^0}[g_{-1}\mid\calI]
+                          \E_{P^0}[\Psi\mid\calI]\right]
+@@ -584,13 +754,28 @@
+ $\{b<R\}$, and this original particle number on that event are all
+ $\calG_K$-measurable.
+ 
+-\begin{lemma}[Random-rank DLR disintegration]\label{lem:random-dlr}
+-Conditionally on $\zeta$, the $x_i$ have the normalized logarithmic
+-Gibbs density on $a<x_1<\cdots<x_K<b$, with exterior $\zeta$.
+-After the affine change of variables the conditional law, denoted
+-$\mu_\zeta$, is a logarithmic Gibbs law on $\Omega_K$ with exterior
+-$c(\zeta-a)$ and endpoint charges at $0,L$.
++\begin{samepage}
++\begin{lemma}[DLR conditioning between particles of fixed ranks]\label{lem:random-dlr}
++For every bounded measurable $f:\R^K\to\R$,
++\begin{equation}\label{eq:random-dlr-law}
++\E_P[f(x_1,\ldots,x_K)\mid\calG_K]
++ =\int_{\Omega_{(a,b),K}}f(x)\,
++        \kappa_{(a,b),K}^\beta(\zeta;\dd x)
++ \quad P\text{-almost surely}.
++\end{equation}
++Let $S_{a,c}(x)=(c(x_1-a),\ldots,c(x_K-a))$ and let
++$\widehat\zeta=(p\mapsto c(p-a))_\#\zeta$ be the scaled exterior.
++The conditional distribution of the rescaled coordinates is
++\begin{equation}\label{eq:rescaled-conditional-law}
++\mu_\zeta=(S_{a,c})_\#\kappa_{(a,b),K}^\beta(\zeta;\cdot)
++       =\kappa_{(0,L),K}^\beta(\widehat\zeta;\cdot),
++\qquad
++\E_P[f(u)\mid\calG_K]=\mu_\zeta(f).
++\end{equation}
++Its domain is $\Omega_K$, and $\widehat\zeta$ contains particles at
++$0$ and $L$.
+ \end{lemma}
++\end{samepage}
+ 
+ \begin{proof}
+ Fix a positive integer $R$ and work on $A_R=\{b<R\}$. Canonical DLR
+@@ -631,16 +816,27 @@
+ below. The Jacobian is constant and is absorbed by normalization.
+ \end{proof}
+ 
++\begin{samepage}
+ \begin{lemma}[Affine covariance of relative exterior energies]
+ \label{lem:affine-covariance}
+ Let $I=(a,b)$ be a bounded interval with $K$ interior particles and a
+ locally finite exterior $\zeta$ of density one in both directions, for
+ which the symmetric relative exterior energies exist. For $c>0$, the
+-map $x\mapsto c(x-a)$ sends its conditional logarithmic Gibbs law to
+-the law with exterior $c(\zeta-a)$, using the same symmetric-cutoff
+-convention. The change of cutoff center has an error tending to zero
+-uniformly over both interior configurations in $I^K$.
++map $S_{a,c}:x\mapsto c(x-a)$ satisfies
++\begin{equation}\label{eq:affine-kernel}
++(S_{a,c})_\#\kappa_{I,K}^\beta(\zeta;\cdot)
++ =\kappa_{(0,c(b-a)),K}^\beta
++      ((p\mapsto c(p-a))_\#\zeta;\cdot).
++\end{equation}
++The same symmetric-cutoff convention is used on both sides. More
++precisely, for the exterior summand $\Phi_p(x,y)$ defined in the proof,
++\begin{equation}\label{eq:cutoff-center-error}
++\lim_{S\to\infty}\sup_{x,y\in I^K}
++\left|\sum_{\substack{p\in\zeta\\|p-a|\le S}}\Phi_p(x,y)
++      -\sum_{\substack{p\in\zeta\\|p|\le S}}\Phi_p(x,y)\right|=0.
++\end{equation}
+ \end{lemma}
++\end{samepage}
+ 
+ \begin{proof}
+ For two interior configurations $x,y\in I^K$, the relative contribution
+@@ -689,8 +885,14 @@
+ origin. This is the whole gap containing that origin. It is measurable
+ from $\zeta$, and $a\le\gap_*$.
+ 
+-\begin{lemma}[Good endpoint lengths]\label{lem:length}
+-One has $\ell-L=o_P(\sqrt K)$. For any two candidate processes $P,Q$,
++\begin{samepage}
++\begin{lemma}[Concentration of the endpoint distance]\label{lem:length}
++The endpoint length satisfies
++\begin{equation}\label{eq:length-probability}
++\forall\varepsilon>0,\qquad
++\lim_{K\to\infty}P\bigl(|\ell-L|>\varepsilon\sqrt K\bigr)=0.
++\end{equation}
++Equivalently, $\ell-L=o_P(\sqrt K)$. For any two candidate processes $P,Q$,
+ there is a deterministic sequence $r_K\downarrow0$ such that, for each
+ fixed $M$ and
+ \begin{equation}\label{eq:good}
+@@ -702,15 +904,28 @@
+ and the same assertion holds for $Q$.
+ The event $E_{K,M}$ is retained-exterior measurable.
+ \end{lemma}
++\end{samepage}
+ 
+ \begin{proof}
+-For fixed $\varepsilon>0$, the event that the $(K+2)$-nd positive point
+-exceeds $K+2+\varepsilon\sqrt K$ is a count deviation of at least
+-$\varepsilon\sqrt K$ at a deterministic interval of length asymptotic
+-to $K$. Chebyshev and \eqref{eq:hyper} make its probability tend to
+-zero. The lower tail is identical. Since $a$ is a finite random variable
+-with a law not depending on $K$, subtracting $a$ proves the assertion
+-for $\ell$. Choose a common slowly decreasing $r_K$ by diagonalization.
++Fix $\varepsilon>0$ and put
++$t_\pm=K+2\pm\varepsilon\sqrt K$. For all sufficiently large $K$,
++Chebyshev's inequality gives
++\[
++P(b>t_+)\le\frac{v_P(t_+)}{\varepsilon^2K}\longrightarrow0,
++\qquad
++P(b<t_-)\le\frac{v_P(t_-)}{\varepsilon^2K}\longrightarrow0,
++\]
++because $t_\pm/K\to1$ and \eqref{eq:hyper} holds. Now
++\[
++\frac{\ell-L}{\sqrt K}
++ =\frac{b-(K+2)}{\sqrt K}+\frac{1-a}{\sqrt K}
++ \longrightarrow0\quad\text{in }P\text{-probability}.
++\]
++The variable $a$ is finite almost surely and does not depend on $K$.
++A diagonal choice gives a deterministic $r_K\downarrow0$ such that
++\[
++P(|\ell-L|>r_K\sqrt K)+Q(|\ell-L|>r_K\sqrt K)\longrightarrow0.
++\]
+ The assertions about $E_{K,M}$ follow.
+ \end{proof}
+ 
+@@ -719,12 +934,14 @@
+ J_K(\zeta)=\E_{\mu_\zeta}\sum_{i=1}^K(u_i-i)^2.
+ \end{equation}
+ 
+-\begin{lemma}[Negligible quadratic cost]\label{lem:quadratic}
++\begin{samepage}
++\begin{lemma}[Subquadratic expected displacement]\label{lem:quadratic}
+ For every fixed $M$,
+ \begin{equation}\label{eq:J-small}
+ K^{-2}\E_P[\1_{E_{K,M}}J_K]\longrightarrow0.
+ \end{equation}
+ \end{lemma}
++\end{samepage}
+ 
+ \begin{proof}
+ For deterministic ordered $z_1,\ldots,z_K\in(0,\ell)$, let $A(t)$ be
+@@ -740,56 +957,109 @@
+ $\int_0^\ell tA(t)\dd t=\frac12\sum_i(\ell^2-z_i^2)$, which verify
+ \eqref{eq:quantile}.
+ 
+-Take $z_i=x_i-a$ and put $D_0(s)=N_{(0,s]}-s$. Except at endpoints of
++Take $z_i=x_i-a$ and use $D_0$ from \eqref{eq:oriented-discrepancy}. Except at endpoints of
+ Lebesgue measure zero,
+ \[
+ A(t)-\rho t=D_0(a+t)+(a-1)+(1-\rho)t.
+ \]
+ On $E_{K,M}$, $a\le M$, $\ell\asymp K$, and $b\le3K$ for all
+-sufficiently large $K$ (with $M$ fixed). The midpoint locations
+-$(i-\frac12)\ell/K$ differ from $i\ell/L$ by at most a fixed constant.
+-It follows from \eqref{eq:quantile} that, on this event,
++sufficiently large $K$ (with $M$ fixed). To compare the two deterministic particle locations, set
++$m_i=(i-\frac12)\ell/K$. Since $L=K+1$,
++\[
++\left|m_i-\frac{i\ell}{L}\right|
++ =\frac\ell K\left|\frac iL-\frac12\right|
++ \le\frac\ell{2K}\qquad(1\le i\le K).
++\]
++Consequently, \eqref{eq:quantile} yields
++\[
++\sum_{i=1}^K(u_i-i)^2
++\le\frac{2c^2}{\rho}\int_0^\ell(A(t)-\rho t)^2\dd t
++   +\frac{L^2}{2K}.
++\]
++Also,
++\[
++\int_0^\ell(A(t)-\rho t)^2\dd t
++\le3\int_0^{3K}D_0(s)^2\dd s
++  +3\ell(a-1)^2+\ell(\ell-K)^2.
++\]
++Here $c^2/\rho=L^2/(K\ell)$ is bounded on $E_{K,M}$, and
++$(\ell-K)^2\le2(\ell-L)^2+2$. These inequalities give, on this event,
+ \begin{equation}\label{eq:quadratic-bound}
+ \sum_i(u_i-i)^2
+ \le C\int_0^{3K}D_0(s)^2\dd s+C_MK+CK(\ell-L)^2.
+ \end{equation}
+-Now $\int_0^{3K}v_P(s)\dd s=o(K^2)$ by \eqref{eq:hyper}, and the last
+-term on the good event is at most $Cr_K^2K^2$. Take expectations.
++By \eqref{eq:hyper},
++$\int_0^{3K}v_P(s)\dd s=o(K^2)$, and on $E_{K,M}$ the last term
++in \eqref{eq:quadratic-bound} is at most $Cr_K^2K^2$. Therefore
++\[
++\frac1{K^2}\E_P\!\left[\1_{E_{K,M}}
++     \sum_{i=1}^K(u_i-i)^2\right]
++\le\frac C{K^2}\int_0^{3K}v_P(s)\dd s+\frac{C_M}{K}+Cr_K^2
++\longrightarrow0.
++\]
+ Because the good event is retained-exterior measurable, conditional
+ expectation turns the left side into the expression in
+ \eqref{eq:J-small}.
+ \end{proof}
+ 
+-\section{Tightness of the exterior force cost}\label{sec:forces}
++\section{Tightness of the conditional exterior-force contribution}\label{sec:forces}
+ 
+ The force estimates will only use tightness. We will not require an
+ integrable product of an exterior energy and an interior count envelope.
+ 
+ \Needspace{13\baselineskip}
+-\begin{lemma}[A half-line force envelope]\label{lem:halfline}
+-At a particle endpoint, remove the endpoint itself and count residual
+-exterior points at outward distance at most $t$. For a density-one
+-configuration satisfying Lemma~\ref{lem:as-regularity}, put
+-\[
++\begin{samepage}
++\begin{lemma}[A square-integrable bound for the half-line force]\label{lem:halfline}
++Let $q$ be a particle and let the exterior lie on one side of $q$.
++After deleting $q$, define its outward counting function by one of
++\[
++N_{\rm ext}(t)=\gamma([q-t,q))
++\quad\text{or}\quad
++N_{\rm ext}(t)=\gamma((q,q+t]),\qquad t\ge0.
++\]
++Assume the configuration belongs to the regularity set of
++Lemma~\ref{lem:as-regularity}. Define
++\begin{equation}\label{eq:halfline-definitions}
+ D(t)=N_{\rm ext}(t)-(t-1)_+,\qquad
+ H(x)=\int_0^\infty\frac{|D(t)|}{(x+t)^2}\dd t,\quad x\ge0.
+-\]
+-Then
++\end{equation}
++The function $(t-1)_+$ is the cumulative mass of the continuum ray
++$[1,\infty)$ with unit density.
++The associated bound satisfies
+ \begin{equation}\label{eq:B}
+ \calB=H(0)^2+\int_0^\infty H(x)^2\dd x<\infty.
+ \end{equation}
+-After an affine scale $c\in[1/2,2]$, the analogous quantity centered at
+-the new density $\lambda=1/c$ is bounded by $C(\calB+1)$.
++For $c\in[1/2,2]$, define the rescaled quantities by
++\begin{equation}\label{eq:halfline-scaled-definitions}
++\begin{aligned}
++D^{(c)}(t)&=N_{\rm ext}(t/c)-c^{-1}(t-1)_+,\\
++H^{(c)}(x)&=\int_0^\infty\frac{|D^{(c)}(t)|}{(x+t)^2}\dd t,\\
++\calB^{(c)}&=H^{(c)}(0)^2+\int_0^\infty H^{(c)}(x)^2\dd x.
++\end{aligned}
++\end{equation}
++There is an absolute constant $C<\infty$ such that
++\begin{equation}\label{eq:halfline-scale-bound}
++\sup_{1/2\le c\le2}\calB^{(c)}\le C(\calB+1).
++\end{equation}
+ \end{lemma}
++\end{samepage}
+ 
+ \begin{proof}
+-Simplicity and local finiteness give a positive distance to the next
+-residual exterior point. Thus $D(t)=0$ for all sufficiently small $t$.
+-At infinity,
+-$\int D(t)^2t^{-2}\dd t<\infty$ by
+-Lemma~\ref{lem:as-regularity}. Cauchy--Schwarz proves $H(0)<\infty$.
+-Applying the Schur test to the kernel $t/(x+t)^2$, with weight
+-$t^{-1/2}$, gives
++Simplicity and local finiteness give $d\in(0,1]$ such that no
++residual exterior point has outward distance less than $d$. Thus
++$D(t)=0$ on $[0,d)$. Lemma~\ref{lem:as-regularity} controls the tail,
++and Cauchy--Schwarz gives
++\[
++\int_0^\infty\frac{D(t)^2}{t^2}\dd t<\infty,
++\qquad
++H(0)^2\le\frac1d\int_0^\infty\frac{D(t)^2}{t^2}\dd t<\infty.
++\]
++For completeness, the Schur-test kernel $K(x,t)=t/(x+t)^2$ satisfies
++\[
++\int_0^\infty K(x,t)t^{-1/2}\dd t=\frac\pi2x^{-1/2},\qquad
++\int_0^\infty K(x,t)x^{-1/2}\dd x=\frac\pi2t^{-1/2}.
++\]
++Since $H(x)=\int_0^\infty K(x,t)|D(t)|/t\dd t$, the Schur test gives
+ \begin{equation}\label{eq:hardy}
+ \int_0^\infty H(x)^2\dd x
+ \le\frac{\pi^2}{4}\int_0^\infty D(t)^2t^{-2}\dd t.
+@@ -799,17 +1069,24 @@
+ \[
+ D(t/c)+(t/c-1)_+-c^{-1}(t-1)_+.
+ \]
+-The last two terms differ by a uniformly bounded function vanishing
+-for $t<1/2$. Its force envelope is at most $C/(x+1/2)$.
+-A change of variables in the first term proves the scaling assertion.
++Write the last two terms as
++$R_c(t)=(t/c-1)_+-c^{-1}(t-1)_+$. For $c\in[1/2,2]$,
++\[
++|R_c(t)|\le C\1_{\{t\ge1/2\}},\qquad
++H^{(c)}(x)\le c^{-1}H(x/c)+\frac C{x+1/2}.
++\]
++Squaring, integrating in $x$, and evaluating at $x=0$ proves
++\eqref{eq:halfline-scale-bound}, with the same constant for every
++$c\in[1/2,2]$.
+ \end{proof}
+ 
+ Let $B_\zeta(u)$ be the difference of the actual and lattice exterior
+ forces in the rescaled block. More precisely, with endpoint terms
+ cancelled,
+ \[
+-B_\zeta(u)=\PV\sum_{p\in c(\zeta-a)\setminus\{0,L\}}\frac1{u-p}
+--\PV\sum_{p\in\xi_K^{\rm lat}\setminus\{0,L\}}\frac1{u-p}.
++B_\zeta(u)=\PV\sum_{p\in\widehat\zeta\setminus\{0,L\}}\frac1{u-p}
++-\PV\sum_{p\in\xi_K^{\rm lat}\setminus\{0,L\}}\frac1{u-p},
++\qquad 0\le u\le L.
+ \]
+ For almost every retained exterior under a candidate law, each paired
+ sum exists and their difference is bounded on $[0,L]$. Define
+@@ -818,7 +1095,8 @@
+ \E_{\mu_\zeta}\sum_{i=1}^K B_\zeta(u_i)^2.
+ \end{equation}
+ 
+-\begin{proposition}[Tight conditional force cost]\label{prop:force}
++\begin{samepage}
++\begin{proposition}[Tightness of the conditional squared force difference]\label{prop:force}
+ For fixed $M$, the nonnegative random variables
+ $\1_{E_{K,M}}\mathcal D_K$ are tight as $K\to\infty$. Explicitly,
+ \begin{equation}\label{eq:force-tight-tail}
+@@ -828,59 +1106,109 @@
+ The statement holds separately for each candidate process, with no
+ assertion of a uniform first moment for $\mathcal D_K$.
+ \end{proposition}
++\end{samepage}
+ 
+ \begin{proof}
+-On the good event, $c=L/\ell\in[1/2,2]$ for large $K$. The scaled
+-exterior density is $\lambda=\ell/L$. Center each scaled outward
+-counting function at $\lambda(t-1)_+$.
+-Stieltjes integration by parts identifies its force difference from
+-the corresponding continuum ray with an integral of $D(t)/(u+t)^2$.
+-Since the scaled counting functions have density $\lambda$, their
+-centered discrepancies satisfy $D(t)=o(t)$. Hence $D(t)/(u+t)\to0$
+-as $t\to\infty$, and the boundary terms vanish.
+-
+-For the unit lattice the residual outward count is $\lfloor t\rfloor$;
+-its difference from $(t-1)_+$ is bounded and vanishes below $1$.
+-The continuum density mismatch between the two paired rays integrates
+-explicitly to a signed version of
+-$(\lambda-1)\log((u+1)/(L-u+1))$. Consequently,
++On $E_{K,M}$, $c=L/\ell\in[1/2,2]$ for all sufficiently large $K$.
++The scaled exterior $\widehat\zeta$ has density
++$\lambda=c^{-1}=\ell/L$. Define its left and right outward counts,
++centered discrepancies, and nonnegative bounds by
++\begin{equation}\label{eq:boundary-halfline-quantities}
++\begin{aligned}
++N_{\rm L}(t)&=\widehat\zeta([-t,0)),&
++N_{\rm R}(t)&=\widehat\zeta((L,L+t]),\\
++D_\star(t)&=N_\star(t)-\lambda(t-1)_+,&
++H_\star(x)&=\int_0^\infty\frac{|D_\star(t)|}{(x+t)^2}\dd t,\\
++\calB_\star&=H_\star(0)^2+\int_0^\infty H_\star(x)^2\dd x,
++& &\star\in\{{\rm L},{\rm R}\}.
++\end{aligned}
++\end{equation}
++Both endpoint particles have already been removed from these counts.
++For the residual unit lattice, set
++\[
++D_{\rm lat}(t)=\lfloor t\rfloor-(t-1)_+,\qquad
++0\le D_{\rm lat}(t)\le\1_{\{t\ge1\}}.
++\]
++Stieltjes integration by parts, first with finite cutoffs, gives the
++exact signed decomposition
++\begin{equation}\label{eq:force-decomposition}
++\begin{split}
++B_\zeta(u)
++={}&\int_0^\infty\frac{D_{\rm L}(t)-D_{\rm lat}(t)}{(u+t)^2}\dd t
++   -\int_0^\infty\frac{D_{\rm R}(t)-D_{\rm lat}(t)}{(L-u+t)^2}\dd t\\
++&+(\lambda-1)\log\frac{L-u+1}{u+1}.
++\end{split}
++\end{equation}
++Indeed, the boundary terms at infinity vanish because
++$D_\star(t)=o(t)$, and the continuum contribution is
++\[
++\int_1^\infty\left(\frac1{u+t}-\frac1{L-u+t}\right)\dd t
++ =\log\frac{L-u+1}{u+1}.
++\]
++The change from a common outward cutoff to the symmetric spatial
++cutoff has vanishing error, by the same fixed-width shell estimate as
++in Lemma~\ref{lem:affine-covariance}. Finally,
++\[
++\int_0^\infty\frac{D_{\rm lat}(t)}{(x+t)^2}\dd t
++\le\frac1{x+1},\qquad x\ge0.
++\]
++Consequently,
+ \begin{equation}\label{eq:force-pointwise}
+ \begin{split}
+ |B_\zeta(u)|\le{}&
+-H_+(u)+H_-(L-u)+\frac C{u+1}+\frac C{L-u+1}\\
++H_{\rm L}(u)+H_{\rm R}(L-u)+\frac C{u+1}+\frac C{L-u+1}\\
+ &+|\lambda-1|\abs{\log\frac{u+1}{L-u+1}}.
+ \end{split}
+ \end{equation}
+ The endpoint charges at $0,L$ cancel exactly before this estimate.
+-Here the half-line quantities $\calB_\pm$ depend only on the retained
+-exterior.
+-
+-For any decreasing nonnegative $h$ and interior configuration,
+-integration by parts gives
++The quantities $\calB_{\rm L}$ and $\calB_{\rm R}$ in
++\eqref{eq:boundary-halfline-quantities} depend only on the retained exterior.
++
++For an interior configuration $u\in\Omega_K$, define
++\begin{equation}\label{eq:interior-count-definitions}
++C_{\rm int}^{\rm L}(u)=\sup_{t\ge0}
++ \frac{\#\{i:u_i\le t\}}{1+t},\qquad
++C_{\rm int}^{\rm R}(u)=\sup_{t\ge0}
++ \frac{\#\{i:L-u_i\le t\}}{1+t}.
++\end{equation}
++For any nonnegative nonincreasing function $h:[0,L]\to[0,\infty)$,
++Stieltjes integration by parts gives
+ \begin{equation}\label{eq:sum-envelope}
+ \sum_i h(u_i)^2
+-\le C_{\rm int}^+
+-\left(h(0)^2+\int_0^L h(s)^2\dd s\right),\qquad
+-C_{\rm int}^+=\sup_{t\ge0}\frac{\#\{i:u_i\le t\}}{1+t}.
+-\end{equation}
+-For instance use $N_{\rm int}(t)\le C_{\rm int}^+(1+t)$ in
++\le C_{\rm int}^{\rm L}
++\left(h(0)^2+\int_0^L h(s)^2\dd s\right).
++\end{equation}
++For instance, set $N_{\rm int}(t)=\#\{i:u_i\le t\}$ and use
++$N_{\rm int}(t)\le C_{\rm int}^{\rm L}(1+t)$ in
+ $\int h^2\dd N_{\rm int}$; the terminal boundary term gives exactly
+-the expression on the right. The right endpoint has the reflected
+-bound with $C_{\rm int}^-$.
+-
+-The function $h(s)=\log((L+1)/(s+1))$ satisfies
+-$h(0)^2+\int_0^Lh(s)^2\dd s\le CL$.
++the expression on the right. The right-endpoint version is
++\[
++\sum_{i=1}^K h(L-u_i)^2
++\le C_{\rm int}^{\rm R}
++\left(h(0)^2+\int_0^Lh(s)^2\dd s\right).
++\]
++
++For $h_L(s)=\log((L+1)/(s+1))$, one has
++\[
++\left|\log\frac{u+1}{L-u+1}\right|
++ \le h_L(u)+h_L(L-u),\qquad
++h_L(0)^2+\int_0^Lh_L(s)^2\dd s\le CL.
++\]
+ Squaring \eqref{eq:force-pointwise}, using
+ \eqref{eq:sum-envelope}, and taking conditional expectations gives
+ \begin{equation}\label{eq:force-total}
+ \mathcal D_K\le
+-C\{X_+(\calB_++1)+X_-(\calB_-+1)\}
+-+C(\lambda-1)^2L(X_++X_-),
+-\end{equation}
+-where $X_\pm=\E_{\mu_\zeta}C_{\rm int}^\pm$.
+-
+-We verify \eqref{eq:force-tight-tail} under the boundary law in four
+-steps. All bounds below are for fixed $M$ and sufficiently large $K$.
++C\{X_{\rm L}(\calB_{\rm L}+1)+X_{\rm R}(\calB_{\rm R}+1)\}
+++C(\lambda-1)^2L(X_{\rm L}+X_{\rm R}),
++\end{equation}
++where the exterior-measurable conditional expectations are
++\begin{equation}\label{eq:conditional-count-definitions}
++X_\star(\zeta)=\mu_\zeta(C_{\rm int}^\star),
++\qquad \star\in\{{\rm L},{\rm R}\}.
++\end{equation}
++
++We verify \eqref{eq:force-tight-tail} under the distribution of the retained
++exterior induced by $P$, in four steps. All bounds below are for fixed $M$ and sufficiently large $K$.
+ 
+ \emph{Exterior envelopes.}
+ Let $\calB^{\rm out,-}$ and $\calB^{\rm out,+}$ be the unscaled
+@@ -890,15 +1218,15 @@
+ The actual left endpoint is $a=a_0$, and the right endpoint is
+ $b=a_{K+1}$. The scale estimate in that lemma implies on $E_{K,M}$
+ \[
+-\calB_+\le C\{\calB^{\rm out,-}(\theta_a\gamma)+1\},\qquad
+-\calB_-\le C\{\calB^{\rm out,+}(\theta_b\gamma)+1\}.
++\calB_{\rm L}\le C\{\calB^{\rm out,-}(\theta_a\gamma)+1\},\qquad
++\calB_{\rm R}\le C\{\calB^{\rm out,+}(\theta_b\gamma)+1\}.
+ \]
+ Both right sides depend only on the appropriate outward half-line.
+ Using Lemma~\ref{lem:endpoint-domination}, uniformly in $K$,
+ \begin{align*}
+-P(E_{K,M}\cap\{\calB_+>A\})
++P(E_{K,M}\cap\{\calB_{\rm L}>A\})
+ &\le M P^0(\calB^{\rm out,-}>A/C-1),\\
+-P(E_{K,M}\cap\{\calB_->A\})
++P(E_{K,M}\cap\{\calB_{\rm R}>A\})
+ &\le M P^0(\calB^{\rm out,+}>A/C-1).
+ \end{align*}
+ The right sides tend to zero as $A\to\infty$. The domination constant
+@@ -908,31 +1236,37 @@
+ \emph{Conditional count envelopes.}
+ For an actual sample on the good event, $c\in[1/2,2]$ gives
+ \[
+-C_{\rm int}^+\le2C^+(\theta_a\gamma),\qquad
+-C_{\rm int}^-\le2C^-(\theta_b\gamma).
++C_{\rm int}^{\rm L}\le2C^+(\theta_a\gamma),\qquad
++C_{\rm int}^{\rm R}\le2C^-(\theta_b\gamma).
+ \]
+ For example $\#\{i:u_i\le t\}\le
+ N_{(a,a+t/c]}(\gamma)\le C^+(\theta_a\gamma)(1+t/c)$,
+-and $(1+t/c)/(1+t)\le2$. By random-rank disintegration,
+-$X_\pm=\E_P[C_{\rm int}^\pm\mid\calG_K]$. Since $E_{K,M}$ belongs
++and $(1+t/c)/(1+t)\le2$. By Lemma~\ref{lem:random-dlr},
++$X_\star=\E_P[C_{\rm int}^\star\mid\calG_K]$. Since $E_{K,M}$ belongs
+ to $\calG_K$, Lemmas~\ref{lem:endpoint-domination} and
+ \ref{lem:palm-envelope} imply
+ \begin{equation}\label{eq:conditional-count-moment}
+-\E_P[\1_{E_{K,M}}X_\pm]
+-=\E_P[\1_{E_{K,M}}C_{\rm int}^\pm]
+-\le2M\E_{P^0}C^\pm<\infty.
++\begin{aligned}
++\E_P[\1_{E_{K,M}}X_{\rm L}]
++ &=\E_P[\1_{E_{K,M}}C_{\rm int}^{\rm L}]
++ \le2M\E_{P^0}C^+,\\
++\E_P[\1_{E_{K,M}}X_{\rm R}]
++ &=\E_P[\1_{E_{K,M}}C_{\rm int}^{\rm R}]
++ \le2M\E_{P^0}C^-.
++\end{aligned}
+ \end{equation}
+ The bound is uniform in $K$. Markov's inequality therefore makes
+-$\1_{E_{K,M}}X_\pm$ uniformly tight.
++$\1_{E_{K,M}}X_\star$ uniformly tight.
+ 
+ \emph{Products.}
+-For either sign and any $A>0$, the union bound gives
++For $\star\in\{{\rm L},{\rm R}\}$ and any $A>0$, the union bound gives
+ \begin{align*}
+-P\bigl(E_{K,M}\cap\{X_\pm(\calB_\pm+1)>A\}\bigr)
+-&\le P(E_{K,M}\cap\{X_\pm>\sqrt A\})\\
+-&\quad+P(E_{K,M}\cap\{\calB_\pm+1>\sqrt A\}).
++P\bigl(E_{K,M}\cap\{X_\star(\calB_\star+1)>A\}\bigr)
++&\le P(E_{K,M}\cap\{X_\star>\sqrt A\})\\
++&\quad+P(E_{K,M}\cap\{\calB_\star+1>\sqrt A\}).
+ \end{align*}
+-Both terms tend to zero uniformly in the limiting $K$-range. This
++The limit superior as $K\to\infty$ of each term tends to zero as
++$A\to\infty$. This
+ proves tightness of the products using their marginal tails only;
+ neither independence nor an integrable product has been used.
+ 
+@@ -943,7 +1277,7 @@
+ \]
+ Consequently \eqref{eq:conditional-count-moment} gives the bound
+ \[
+-\E_P\bigl[\1_{E_{K,M}}(\lambda-1)^2L(X_++X_-)\bigr]
++\E_P\bigl[\1_{E_{K,M}}(\lambda-1)^2L(X_{\rm L}+X_{\rm R})\bigr]
+ \le C_Mr_K^2\longrightarrow0.
+ \]
+ This particular term vanishes in mean. Combining its vanishing tail
+@@ -1015,21 +1349,33 @@
+ \le C_G\left\{\varepsilon_{K,M}\mathcal D_K
+                  +\frac{J_K}{\varepsilon_{K,M}K^2}\right\}.
+ \end{equation}
+-The two terms are controlled separately. By Proposition~\ref{prop:force},
+-$\1_{E_{K,M}}\mathcal D_K$ is tight under either candidate law.
+-Multiplication by $\varepsilon_{K,M}\to0$ makes this term tend to
+-zero in probability. For the quadratic term, under $P$,
++The two terms are controlled separately. For either candidate law
++$R\in\{P,Q\}$, Proposition~\ref{prop:force} and
++$\varepsilon_{K,M}\to0$ imply
++\begin{equation}\label{eq:force-vanishing-probability}
++\forall\delta>0,\qquad
++R\!\left(E_{K,M}\cap
++\{\varepsilon_{K,M}\mathcal D_K>\delta\}\right)\longrightarrow0.
++\end{equation}
++To see the use of tightness explicitly, for every fixed $A>0$ and all
++large $K$ with $\varepsilon_{K,M}A\le\delta$, this probability is
++at most $R(E_{K,M}\cap\{\mathcal D_K>A\})$. Take first the limit
++superior in $K$ and then let $A\to\infty$. For the quadratic term, under $P$,
+ \[
+ \E_P\left[\frac{\1_{E_{K,M}}J_K}
+ {\varepsilon_{K,M}K^2}\right]
+ \le\frac{q_{K,M}}{\varepsilon_{K,M}}\longrightarrow0,
+ \]
+ and the same bound holds under $Q$.
+-Consequently the left side of \eqref{eq:comparison-final}, multiplied
+-by $\1_{E_{K,M}}$, tends to zero in probability. Its square root is
+-bounded by $2\norm G_\infty$, so it tends to zero in $L^1$.
+-This uses boundedness of the observable, and requires no first-moment
+-bound on $\mathcal D_K$.
++Consequently, for $R\in\{P,Q\}$,
++\begin{equation}\label{eq:conditional-comparison-L1}
++\E_R\!\left[\1_{E_{K,M}}
++ \left|\mu_\zeta(F_K)-\omega_{K,T_{K,M}}(F_K)\right|\right]
++ \longrightarrow0.
++\end{equation}
++Indeed, the integrand converges to zero in $R$-probability by
++\eqref{eq:comparison-final} and is bounded by $2\norm G_\infty$.
++This deduction does not use a first-moment bound on $\mathcal D_K$.
+ 
+ \subsection{Order of limits and identification}
+ 
+@@ -1054,13 +1400,13 @@
+ \lim_{K\to\infty}
+ \abs{\E_P\mathfrak F_K-\E_Q\mathfrak F_K}=0.
+ \end{equation}
+-The dependence of the reference on $M$ is harmless because it was
+-cancelled before this last limit.
++No estimate uniform in $M$ is needed: the common reference expectation
++has been eliminated for each fixed $M$ before taking $M\to\infty$.
+ 
+ The affine rescaling does not alter the limiting statistic. Extending
+ $G$ by zero gives a bounded globally Lipschitz function, and each gap
+-occurs in at most $r$ windows. With $\mathfrak F_K^{\rm un}$ the
+-unscaled statistic,
++occurs in at most $r$ windows. The unscaled statistic is $\mathfrak F_K^{\rm un}=A_{K,r}$ from
++\eqref{eq:spatial-gap-average}, because $x_i=a_i$. Thus
+ \[
+ |\mathfrak F_K-\mathfrak F_K^{\rm un}|
+ \le\frac{C_G}{K-r}|c-1|\ell
+@@ -1076,8 +1422,11 @@
+ These test functions determine probability measures on
+ $(0,\infty)^r$, so every finite consecutive-gap distribution agrees.
+ Point-shift invariance moves any finite integer-indexed gap window
+-into such a consecutive window. Hence the laws of the entire
+-bi-infinite gap sequences coincide.
++into such a consecutive window. It follows that
++\begin{equation}\label{eq:gap-law-equality}
++\Law_{P^0}\bigl((g_j)_{j\in\Z}\bigr)
++ =\Law_{Q^0}\bigl((g_j)_{j\in\Z}\bigr).
++\end{equation}
+ 
+ The Palm configuration is reconstructed from its gaps and the point
+ at zero by
+@@ -1105,40 +1454,67 @@
+ discrepancy estimate from the integrated-variance conclusion proved
+ below.
+ 
+-\subsection{Energy convention and imported input}
+-
+-Fix $p\in(1,2)$. For a locally finite simple configuration $\gamma$,
+-let $\operatorname{Comp}(\gamma)$ consist of vector fields
+-$E\in L^p_{\rm loc}(\R^2;\R^2)$ satisfying
+-\[
+--\diver E=2\pi(\gamma-dx\,\delta_0)
+-\]
+-in distributions. Here $\gamma$ is embedded on $\R\times\{0\}$ and
+-$dx\,\delta_0$ is the unit-density line background.
+-Let $\rho_\eta$ be uniform probability measure on the circle of radius
+-$\eta$. For $0<\eta<1$, set
+-\[
++\subsection{Energy convention and results used from the literature}
++
++For a configuration $\gamma\in\Conf(\R)$, distinguish its embedding
++in the plane from the one-dimensional counting measure:
++\[
++\overline\gamma=\sum_{q\in\gamma}\delta_{(q,0)},\qquad
++\dd x\,\delta_0=\Leb\otimes\delta_0.
++\]
++The second measure is the unit-density background on the horizontal
++axis. Integrals over subsets of $\R^2$ use $\dd x\dd y$ unless a
++different measure is displayed. The notation $\langle T,\phi\rangle$
++denotes the action of a distribution $T$ on a test function $\phi$.
++Fix $p\in(1,2)$ and define
++\begin{equation}\label{eq:compatible-fields}
++\operatorname{Comp}(\gamma)=
++\left\{E\in L^p_{\rm loc}(\R^2;\R^2):
++ -\diver E=2\pi(\overline\gamma-\dd x\,\delta_0)
++ \text{ in distributions}\right\}.
++\end{equation}
++Thus the divergence constraint means
++\[
++\int_{\R^2}E\cdot\nabla\phi
++ =2\pi\left\{\sum_{q\in\gamma}\phi(q,0)
++                  -\int_\R\phi(x,0)\dd x\right\}
++\qquad(\phi\in C_c^\infty(\R^2)).
++\]
++No curl-free condition is imposed in this definition.
++
++For $0<\eta<1$, let $\rho_\eta$ be the uniform probability measure
++on the circle of radius $\eta$, characterized by
++\[
++\int\phi(z)\rho_\eta(\dd z)
++ =\frac1{2\pi}\int_0^{2\pi}
++   \phi(\eta\cos\theta,\eta\sin\theta)\dd\theta.
++\]
++Define, almost everywhere in $z\in\R^2$,
++\begin{equation}\label{eq:inner-truncation}
+ f_\eta(z)=\1_{\{|z|\le\eta\}}\log(|z|/\eta),\qquad
+-F=E_\eta=E+\sum_{q\in\gamma}\nabla f_\eta(\,\cdot-(q,0)).
+-\]
+-Since $\Delta f_\eta=2\pi(\delta_0-\rho_\eta)$,
++E_\eta=E+\sum_{q\in\gamma}\nabla f_\eta(\,\cdot-(q,0)).
++\end{equation}
++The value of $f_\eta$ at zero is irrelevant to this locally integrable
++function. Since $\Delta f_\eta=2\pi(\delta_{(0,0)}-\rho_\eta)$,
++the truncated field $F=E_\eta$ satisfies
+ \begin{equation}\label{eq:regularized-div}
+--\diver F=2\pi(\gamma*\rho_\eta-dx\,\delta_0).
++-\diver F=2\pi(\overline\gamma*\rho_\eta-dx\,\delta_0).
+ \end{equation}
+ Define
+ \begin{equation}\label{eq:renormalized-energy}
+ \begin{aligned}
+-\mathcal W(E)
+-&=\lim_{\eta\downarrow0}\left\{
+-\limsup_{R\to\infty}\frac1{2R}
++\mathcal W_\eta(E)
++&=\limsup_{R\to\infty}\frac1{2R}
+ \int_{[-R,R]\times\R}|E_\eta(x,y)|^2\dd x\dd y
+-+2\pi\log\eta\right\},\\
+++2\pi\log\eta,\\
++\mathcal W(E)&=\lim_{\eta\downarrow0}\mathcal W_\eta(E),\\
+ W(\gamma)&=\inf_{E\in\operatorname{Comp}(\gamma)}\mathcal W(E).
+ \end{aligned}
+ \end{equation}
+-The spatial average is per unit horizontal length, and the limits and
+-infimum have the extended-real interpretation of the regularized
+-energy. The truncation-limit existence is the one recorded in
++The spatial average is per unit horizontal length. The order of operations
++is $R\to\infty$, then $\eta\downarrow0$, and finally the infimum
++over compatible fields. The limits have the extended-real interpretation
++of the regularized energy, and $\inf\varnothing=+\infty$. The truncation-limit existence is the one recorded in
+ \cite[Section~2.7.1]{LS}.
+ 
+ The choice of $p\in(1,2)$ does not change the finite-energy class.
+@@ -1150,7 +1526,8 @@
+ field relevant to a finite infimum in \eqref{eq:renormalized-energy}
+ belongs to the displayed admissible class.
+ 
+-\begin{lemma}[Compatibility with the energy input]\label{lem:energy-input}
++\begin{samepage}
++\begin{lemma}[Energy normalization and the linear variance bound]\label{lem:energy-input}
+ Write $W_{\rm LS}(\gamma,1)$ and $\widetilde W_{\rm LS}(P,1)$ for the
+ configuration and process energies of \cite[Sections~2.7.3--2.7.4]{LS}
+ in the Log1 case. Then
+@@ -1167,10 +1544,15 @@
+ \end{equation}
+ Thus the finite-energy hypothesis in Theorem~\ref{thm:finite-energy}
+ is exactly the energy hypothesis of \cite[Theorem~1.1]{Assiotis}.
+-In particular $W$ is bounded below. If $P$ is stationary and
+-$\E_PW<\infty$, then $P$ has intensity one and satisfies
+-\eqref{eq:linear}, with a constant depending on $P$.
++In particular, there is an absolute constant $C_0<\infty$ such that
++$W(\gamma)\ge-C_0$. If $P$ is stationary and $\E_PW<\infty$, then
++\begin{equation}\label{eq:energy-linear-conclusion}
++\E_PN_A=\Leb(A),\qquad
++v_P(t)\le C_Pt\quad(t>0),
++\end{equation}
++for every bounded Borel set $A$, with $C_P<\infty$ depending on $P$.
+ \end{lemma}
++\end{samepage}
+ 
+ \begin{proof}
+ Specialize \cite[Sections~2.6.4--2.7.4]{LS} to $d=1$, extension
+@@ -1202,8 +1584,8 @@
+ Positive scaling commutes with the limits and infimum, giving the
+ configuration identity. The process energy in that definition is the
+ expectation of this configuration infimum, so the process identity
+-follows directly; no optimization over stationary lifts or measurable
+-selection is involved.
++follows directly; no optimization over stationary joint distributions of configurations and
++fields, and no measurable field selection, is involved.
+ 
+ By \cite[Lemma~3.2]{LS} and \eqref{eq:energy-bridge}, for $t\ge1$,
+ \[
+@@ -1242,25 +1624,44 @@
+ applicability of the imported energy results.
+ \end{remark}
+ 
+-\subsection{A stationary lift and the spectral estimate}
+-
+-
+-\begin{lemma}[Stationary electric lift]\label{lem:lift}
+-Let $P$ be ergodic and stationary, and suppose $P$-almost every configuration has finite
+-renormalized electric energy $W$ as defined in
+-\eqref{eq:renormalized-energy}. There are $0<\eta<1$ and a stationary
+-joint law of $(\gamma,F)$, with configuration marginal $P$, satisfying
+-\eqref{eq:regularized-div} and
++\subsection{A stationary configuration--field law and the spectral estimate}
++
++
++For vector fields, the horizontal translation is
++$(\theta_aF)(x,y)=F(x+a,y)$. A joint law of $(\gamma,F)$ is called
++stationary when it is invariant under
++$(\gamma,F)\mapsto(\theta_a\gamma,\theta_aF)$ for every $a\in\R$.
++
++\begin{samepage}
++\begin{lemma}[Stationary joint law of a configuration and a field]\label{lem:lift}
++Let $P$ be ergodic and stationary, and suppose
++$P(W<\infty)=1$, where $W$ is defined in
++\eqref{eq:renormalized-energy}. There exist $\eta\in(0,1)$ and a
++probability measure $\mathsf Q$ on configuration--field pairs such that
++\begin{equation}\label{eq:joint-law-properties}
++\begin{aligned}
++\Law_{\mathsf Q}(\gamma)&=P,\\
++(\theta_a,\theta_a)_\#\mathsf Q&=\mathsf Q\quad(a\in\R),\\
++-\diver F&=2\pi(\overline\gamma*\rho_\eta-\dd x\,\delta_0)
++\quad\mathsf Q\text{-almost surely},
++\end{aligned}
++\end{equation}
++and
+ \begin{equation}\label{eq:field-energy}
+-\calE=\E\int_{[0,1]\times\R}|F(x,y)|^2\dd x\dd y<\infty.
++\calE=\E_{\mathsf Q}\int_{[0,1]\times\R}|F(x,y)|^2\dd x\dd y<\infty.
+ \end{equation}
+ \end{lemma}
++\end{samepage}
+ 
+ \begin{proof}
+-Choose a $P$-generic configuration $\gamma$ with finite energy: its
+-translation averages converge to $P$ against a countable determining
+-family of bounded continuous functions on the space of locally finite
+-measures, equipped with the vague topology. Ergodicity ensures that
++Choose a configuration $\gamma$ with $W(\gamma)<\infty$ such that
++\begin{equation}\label{eq:generic-configuration}
++\lim_{R\to\infty}\frac1{2R}\int_{-R}^R
++ f_j(\theta_x\gamma)\dd x=P(f_j),\qquad j\ge1,
++\end{equation}
++where $(f_j)_{j\ge1}$ is a countable convergence-determining family of
++bounded continuous functions on the space of locally finite measures
++with the vague topology. Ergodicity ensures that
+ such configurations have full probability. Choose a compatible field
+ whose renormalized functional is finite; attainment of the infimum
+ defining $W$ is unnecessary. At some sufficiently small fixed $\eta$,
+@@ -1276,9 +1677,11 @@
+ \]
+ No field is selected as a measurable function of the configuration.
+ 
+-For the field coordinate use $H^{-1}_{\mathrm{loc}}(\R^2;\R^2)$,
+-with its usual topology defined by smooth cutoffs on an exhausting
+-sequence of bounded domains. For every $a,b>0$, Fubini gives
++For the field coordinate use $H^{-1}_{\mathrm{loc}}(\R^2;\R^2)$:
++a distribution belongs to this space if its product with every smooth
++compactly supported cutoff belongs to $H^{-1}(\R^2;\R^2)$, the dual
++of $H^1(\R^2;\R^2)$. The local topology is generated by these cutoff
++norms on an exhausting sequence of bounded domains. For every $a,b>0$, Fubini gives
+ \[
+ \E_{\mathsf Q_R}
+ \int_{[-a,a]\times[-b,b]}|F|^2
+@@ -1317,24 +1720,30 @@
+ \eqref{eq:field-energy}.
+ \end{proof}
+ 
+-We isolate the integration by parts with a configuration-dependent
+-test. For a stationary process of intensity one with finite local
+-second moments, write $\sigma=\gamma-dx$ and normalize its covariance
+-spectral measure $S$ by
++In the rest of this subsection, an expectation involving $F$ is under
++the fixed joint law $\mathsf Q$; for configuration observables it is
++under its marginal $P$. We isolate integration by parts with a
++configuration-dependent test. For a stationary process of intensity one
++with finite local second moments, let $\sigma=\gamma-\Leb$ be the
++centered random measure on $\R$. Its covariance spectral measure,
++denoted by $\Spec$ (not the relative entropy $S(\mu\mid\omega)$), is
++normalized by
+ \begin{equation}\label{eq:covariance-spectrum}
+ \E_P|\langle\sigma,f\rangle|^2
+ =\int_\R|\widehat f(k)|^2S(\dd k),\qquad
+ \widehat f(k)=\int_\R e^{-ikx}f(x)\dd x.
+ \end{equation}
+-Here $S$ is a symmetric positive Radon measure and need not have a
+-density. Finite local second moments make $\sigma$ a stationary random
++The identity is first understood for smooth compactly supported test
++functions $f$. Here $\Spec$ is a symmetric positive Radon measure and
++need not have a density. Finite local second moments make $\sigma$ a stationary random
+ tempered distribution, so this definition also applies to Schwartz
+ tests by approximation.
+ 
++\begin{samepage}
+ \begin{lemma}[Stationary random-test integration by parts]
+ \label{lem:stationary-ibp}
+ Suppose $P$ has intensity one and finite local second moments, and
+-$(\gamma,F)$ is a stationary lift satisfying
++$(\gamma,F)$ has a stationary joint law $\mathsf Q$ satisfying
+ \eqref{eq:regularized-div} and \eqref{eq:field-energy} at fixed $\eta$.
+ For real even $\chi\in C_c^\infty(\R\setminus\{0\})$, define
+ \[
+@@ -1350,7 +1759,7 @@
+ and
+ \begin{equation}\label{eq:test-pairing}
+ \E\int_{[0,1]\times\R}F\cdot\nabla\varphi
+-=2\pi\int_\R\chi(k)a_\eta(k)S(\dd k),
++=2\pi\int_\R\chi(k)a_\eta(k)\Spec(\dd k),
+ \end{equation}
+ where
+ \[
+@@ -1358,6 +1767,7 @@
+ e^{ik\eta\cos\theta-|k|\eta|\sin\theta|}\dd\theta.
+ \]
+ \end{lemma}
++\end{samepage}
+ 
+ \begin{proof}
+ Fix $0<c<C<\infty$ such that $\operatorname{supp}\chi\subset
+@@ -1379,7 +1789,7 @@
+ variable, supported in $[-\epsilon,\epsilon]$, with mass one, and set
+ $\varphi_\epsilon=q_\epsilon*_y\varphi$, $0<\epsilon<1$.
+ It is smooth in both variables. The compact spectral support gives,
+-with constants depending on $\chi$ and $S$ on its support,
++with constants depending on $\chi$ and $\Spec$ on its support,
+ \begin{align}
+ \E\bigl(|\varphi_\epsilon(0,y)|^2+
+ |\nabla\varphi_\epsilon(0,y)|^2\bigr)
+@@ -1395,12 +1805,14 @@
+ pointwise values of $F$ on the line.
+ 
+ Take $w\in C_c^\infty(\R)$ nonnegative with $\int w=1$, and put
+-$w_L(x)=L^{-1}w(x/L)$. Take $\zeta\in C_c^\infty(\R)$ equal to one
++$w_L(x)=L^{-1}w(x/L)$. Take $\vartheta\in C_c^\infty(\R)$ equal to one
+ on $[-1,1]$ and supported in $[-2,2]$, and put
+-$\zeta_H(y)=\zeta(y/H)$, where $H>\max(1,\eta)$.
++$\vartheta_H(y)=\vartheta(y/H)$, where $H>\max(1,\eta)$.
+ The distribution identity can be tested pathwise against
+-$w_L\zeta_H\varphi_\epsilon$: it holds simultaneously for all smooth
+-compactly supported tests, so their dependence on $\gamma$ is harmless.
++$w_L\vartheta_H\varphi_\epsilon$: it holds simultaneously for all smooth
++compactly supported tests on a single event of probability one.
++Consequently the identity also holds for this test after the configuration
++has been fixed.
+ Every expected pairing is integrable. On the field side this follows
+ from \eqref{eq:field-energy} and \eqref{eq:test-decay}; on the charge
+ side it follows from local second moments and the Schwartz bounds.
+@@ -1411,13 +1823,13 @@
+ Cauchy--Schwarz and $\int|w_L'|=L^{-1}\int|w'|$ bound the horizontal
+ cutoff error by
+ \[
+-\left|\E\int_{\R^2}w_L'\zeta_H F_x\varphi_\epsilon\right|
++\left|\E\int_{\R^2}w_L'\vartheta_H F_x\varphi_\epsilon\right|
+ \le \frac{C_\chi\sqrt{\calE}}{L}.
+ \]
+ The vertical cutoff error and the omitted tail of the main term are
+ bounded, respectively, by
+ \[
+-\left|\E\int_{\R^2}w_L\zeta_H' F_y\varphi_\epsilon\right|
++\left|\E\int_{\R^2}w_L\vartheta_H' F_y\varphi_\epsilon\right|
+ \le\frac{C_\chi\sqrt{\calE}}{H}e^{-cH/2},
+ \qquad
+ C_\chi\sqrt{\calE}\,e^{-cH/2}.
+@@ -1434,14 +1846,14 @@
+ measures in $p$,
+ \[
+ \E\bigl[\gamma(\dd p)\varphi_\epsilon(p+a,b)\bigr]
+-=\left(\int e^{ika}\chi(k)b_\epsilon(k,b)S(\dd k)\right)\dd p.
++=\left(\int e^{ika}\chi(k)b_\epsilon(k,b)\Spec(\dd k)\right)\dd p.
+ \]
+ It follows first by testing against a smooth compactly supported
+ function of $p$ and then by the Schwartz approximation above. Since
+-$\zeta_H=1$ on the support of $\rho_\eta$ and $\int w_L(p+a)\dd p=1$,
++$\vartheta_H=1$ on the support of $\rho_\eta$ and $\int w_L(p+a)\dd p=1$,
+ the right side of the tested divergence identity is exactly
+ \[
+-2\pi\int\chi(k)a_{\eta,\epsilon}(k)S(\dd k),
++2\pi\int\chi(k)a_{\eta,\epsilon}(k)\Spec(\dd k),
+ \qquad
+ a_{\eta,\epsilon}(k)=
+ \int e^{ikz_1}b_\epsilon(k,z_2)\rho_\eta(\dd z).
+@@ -1456,51 +1868,65 @@
+ field pairing changes in the last limit by at most
+ $C_\chi\sqrt{\calE\epsilon}$. On $\operatorname{supp}\chi$,
+ $|a_{\eta,\epsilon}-a_\eta|\le C\epsilon$; the charge pairing
+-therefore converges as well, since $S$ is finite on that compact set.
++therefore converges as well, since $\Spec$ is finite on that compact set.
+ This proves \eqref{eq:test-pairing}.
+ \end{proof}
+ 
++\begin{samepage}
+ \begin{proposition}[Spectral energy and hyperuniformity]
+ \label{prop:spectral}
+ Suppose $P$ is stationary of intensity one, satisfies
+-\eqref{eq:linear}, and admits a stationary electric lift as in
+-Lemma~\ref{lem:lift}. Then \eqref{eq:hyper} and
+-\eqref{eq:integrated} hold.
++\eqref{eq:linear}, and admits a stationary joint law with an electric field as in
++Lemma~\ref{lem:lift}. Then
++\begin{equation}\label{eq:spectral-variance-conclusions}
++\lim_{t\to\infty}\frac{v_P(t)}t=0,
++\qquad \int_1^\infty\frac{v_P(t)}{t^2}\dd t<\infty.
++\end{equation}
++Thus both \eqref{eq:hyper} and \eqref{eq:integrated} hold.
+ \end{proposition}
++\end{samepage}
+ 
+ \begin{proof}
+ The linear variance bound gives finite local second moments, so define
+-$S$ by \eqref{eq:covariance-spectrum}. Approximation of interval
++$\Spec$ by \eqref{eq:covariance-spectrum}. Approximation of interval
+ indicators by smooth tests gives
+ \begin{equation}\label{eq:count-spectrum}
+-v_P(t)=\int_\R\frac{4\sin^2(kt/2)}{k^2}S(\dd k),
++v_P(t)=\int_\R\frac{4\sin^2(kt/2)}{k^2}\Spec(\dd k),
+ \end{equation}
+ with the continuous value $t^2$ at zero. In particular,
+ $t^2S(\{0\})\le v_P(t)\le C_Pt$ for $t\ge1$, hence
+-$S(\{0\})=0$.
++$\Spec(\{0\})=0$.
+ 
+ Apply Lemma~\ref{lem:stationary-ibp} and Cauchy--Schwarz to obtain
+ \begin{equation}\label{eq:spectral-duality}
+-\abs{\int\chi a_\eta\dd S}^2
+-\le C\calE\int |k|\chi^2\dd S,
+-\end{equation}
+-with a numerical constant $C$. The function $a_\eta$ is real and
++\left|\int_\R\chi(k)a_\eta(k)\Spec(\dd k)\right|^2
++\le\frac{\calE}{2\pi^2}
++      \int_\R |k|\chi(k)^2\Spec(\dd k).
++\end{equation}
++The coefficient is obtained by dividing the product of
++\eqref{eq:field-energy} and \eqref{eq:test-energy} by $(2\pi)^2$. The function $a_\eta$ is real and
+ even, is smooth away from zero, and is continuous with $a_\eta(0)=1$.
+-Choose $\delta>0$ so that $a_\eta\ge1/2$ on $|k|<\delta$.
++Choose $\delta\in(0,1)$ so that $a_\eta(k)\ge1/2$ whenever
++$|k|<\delta$.
+ For a smooth even cutoff $0\le\psi\le1$ supported in
+ $\epsilon<|k|<\delta$, the test
+-$\chi=a_\eta\psi/|k|$ is legitimate: every integral is finite on
++$\chi(k)=a_\eta(k)\psi(k)/|k|$ belongs to
++$C_c^\infty(\R\setminus\{0\})$: every integral is finite on
+ this compact annulus before any limit is taken. Write
+ \[
+-A_\psi=\int\frac{a_\eta(k)^2}{|k|}\psi(k)S(\dd k).
++A_\psi=\int\frac{a_\eta(k)^2}{|k|}\psi(k)\Spec(\dd k).
+ \]
+ The rightmost integral in \eqref{eq:spectral-duality} is at most
+-$A_\psi$, because $\psi^2\le\psi$. Hence
+-$A_\psi^2\le C\calE A_\psi$ and $A_\psi\le C\calE$.
++$A_\psi$, because $\psi^2\le\psi$. Therefore
++\[
++A_\psi^2\le\frac{\calE}{2\pi^2}A_\psi,
++\qquad A_\psi\le\frac{\calE}{2\pi^2}.
++\]
+ Exhaust the punctured interval by such cutoffs and use monotone
+ convergence and $a_\eta^2\ge1/4$ to deduce
+ \begin{equation}\label{eq:low-frequency}
+-\int_{0<|k|<\delta}\frac{S(\dd k)}{|k|}<\infty.
++\int_{0<|k|<\delta}\frac{\Spec(\dd k)}{|k|}
++\le\frac{2\calE}{\pi^2}<\infty.
+ \end{equation}
+ The annular tests establish this integrability; it was not assumed
+ in constructing the potential or applying integration by parts.
+@@ -1511,7 +1937,7 @@
+ compact annulus and tends to $1/2$ as $|k|\to\infty$; it therefore
+ has a positive lower bound on $|k|\ge\delta$. Tonelli yields
+ \begin{equation}\label{eq:high-frequency}
+-\int_{|k|\ge\delta}k^{-2}S(\dd k)<\infty.
++\int_{|k|\ge\delta}k^{-2}\Spec(\dd k)<\infty.
+ \end{equation}
+ 
+ Another application of Tonelli, now using
+@@ -1534,35 +1960,51 @@
+ 
+ \subsection{The finite-energy implication}
+ 
++\begin{samepage}
+ \begin{proposition}[Variance hypotheses for finite-energy components]
+ \label{prop:energy-discrepancy}
+ Let $P$ be an ergodic stationary canonical logarithmic DLR solution
+ with $\E_PW<\infty$, where $W$ is given by
+-\eqref{eq:renormalized-energy}. Then $P$ has intensity one and
+-satisfies all three conditions \eqref{eq:linear}--\eqref{eq:integrated}.
+-The constant in \eqref{eq:linear} may depend on $P$.
++\eqref{eq:renormalized-energy}. Then $P$ has intensity one, and there is $C_P<\infty$ such that
++\begin{equation}\label{eq:finite-energy-variance-conclusions}
++v_P(t)\le C_Pt\quad(t>0),\qquad
++\lim_{t\to\infty}\frac{v_P(t)}t=0,\qquad
++\int_1^\infty\frac{v_P(t)}{t^2}\dd t<\infty.
++\end{equation}
++These are exactly \eqref{eq:linear}--\eqref{eq:integrated}; $C_P$ may
++depend on $P$.
+ \end{proposition}
++\end{samepage}
+ 
+ \begin{proof}
+ Lemma~\ref{lem:energy-input} gives intensity one and the linear
+ variance bound. Because $W$ is bounded below, finite expectation
+ implies $W<\infty$ almost surely. Lemma~\ref{lem:lift} constructs the
+-stationary electric lift; Proposition~\ref{prop:spectral} then proves
++stationary joint distribution of the configuration and field; Proposition~\ref{prop:spectral} then proves
+ the sublinear and integrated variance bounds. In particular, the
+ integrated bound is a conclusion of the spectral argument, not an
+ imported consequence of the linear discrepancy estimate alone.
+ \end{proof}
+ 
+ \begin{proof}[Proof of Theorem~\ref{thm:finite-energy}]
+-The canonical DLR ergodic decomposition of
+-\cite[Proposition~3.13]{DHLM} writes $P$ as a mixture of ergodic
+-stationary canonical DLR solutions $P_\alpha$.
++By the canonical DLR ergodic decomposition in
++\cite[Proposition~3.13]{DHLM}, there are a probability space
++$(\mathcal A,\pi)$ and ergodic stationary canonical DLR solutions
++$P_\alpha$ such that
++\begin{equation}\label{eq:ergodic-decomposition}
++P(f)=\int_{\mathcal A}P_\alpha(f)\pi(\dd\alpha)
++\qquad\text{for every bounded measurable }f.
++\end{equation}
+ Here the DLR specification is the conditional-density specification
+ described in Section~1; its preservation under this decomposition
+ uses the probabilistic argument of that proposition, independently
+ of any numerical convention for the energy.
+-Since $W$ is bounded below, disintegration of $W$ plus a fixed lower-bound
+-constant shows that $\E_{P_\alpha}W<\infty$ for almost every component.
++With $C_0$ as in Lemma~\ref{lem:energy-input}, Tonelli's theorem gives
++\[
++\int_{\mathcal A}\E_{P_\alpha}(W+C_0)\pi(\dd\alpha)
++ =\E_P(W+C_0)<\infty.
++\]
++Hence $\E_{P_\alpha}W<\infty$ for $\pi$-almost every $\alpha$.
+ Proposition~\ref{prop:energy-discrepancy} puts each such component in
+ the class of Theorem~\ref{thm:comparison}. Hence all these components
+ coincide with a single law.
+@@ -1609,13 +2051,18 @@
+ resampling sets in \cite[Definitions~2.1--2.2]{Assiotis}.
+ To check its uniformity requirement, fix a bounded Borel set
+ $\Lambda\subset[-B,B]$ with $B>0$ and $|\Lambda|>0$, put
+-$n=N_\Lambda(\gamma)$, and write
++$n=N_\Lambda(\gamma)$, and define
++\[
++\Conf_n(\Lambda)=\{\eta\in\Conf(\R):
++                 \eta(\Lambda)=n,\ \eta(\Lambda^c)=0\}.
++\]
++For $\eta\in\Conf_n(\Lambda)$, write
+ \[
+ M_{\Lambda,R}(\eta,\gamma)
+ =-\sum_{\substack{p\in\gamma\setminus\Lambda\\|p|\le R}}
+ \int_\Lambda\log|x-p|\,(\eta-\gamma_\Lambda)(\dd x)
+ \]
+-for the relative exterior move at radius $R$.
++for the relative exterior interaction difference at radius $R$.
+ For $S>R>2B$, Taylor expansion and cancellation of the total mass give,
+ uniformly over all $n$-point configurations $\eta$ in $\Lambda$,
+ \[
+@@ -1624,8 +2071,8 @@
+ +CnB^2\sum_{\substack{p\in\gamma\\|p|>R}}\frac1{p^2}.
+ \]
+ Density one makes the second series summable, and the reciprocal
+-principal value makes the first term Cauchy. Thus the moves converge
+-uniformly on the entire fibre, including along the radii $p/2$ used
++principal value makes the first term Cauchy. Thus the relative interaction differences converge
++uniformly on the set of all $n$-point configurations in $\Lambda$, including along the radii $m/2$, $m\in\N$, used
+ in \cite{Assiotis}.
+ 
+ Choose a bounded interval containing $\Lambda$ and condition its
+@@ -1635,14 +2082,15 @@
+ the distant potential is bounded after fixing its additive constant,
+ while the finitely many nearby logarithmic interaction factors are
+ bounded above and positive Lebesgue-almost everywhere on the bounded
+-domain. The constant relating ordered Lebesgue measure to binomial
+-reference measure cancels in normalization. Subtracting the move to a
+-fixed reference configuration in each fibre removes dependence on the
++domain. The binomial reference measure is the law of $n$ independent points
++uniformly distributed in $\Lambda$. Its ordered-coordinate density is
++$n!/\Leb(\Lambda)^n$, a constant which cancels in normalization. Subtracting the interaction difference to a
++fixed reference configuration with the same exterior and particle number removes dependence on the
+ original interior configuration and gives exterior-and-count
+ measurability. Limits of the finite-cutoff kernels, or a conditional-law
+-version with a countable determining class, give the completed-kernel
+-formulation of \cite[Definition~2.2]{Assiotis}. The empty fibre has its
+-usual trivial kernel. Conversely, that definition immediately includes
++version with a countable determining class, give a measurable version of the conditional kernel, up to null sets,
++as required by the formulation of \cite[Definition~2.2]{Assiotis}. For particle number zero, the kernel is the point mass on the empty
++configuration. Conversely, that definition immediately includes
+ interval resampling. Assiotis initially allows multiplicities, but
+ \cite[Lemma~2.8]{Assiotis} makes every canonical DLR law simple.
+ 
+@@ -1685,10 +2133,13 @@
+ \label{app:convex}
+ 
+ We record the approximation used in Proposition~\ref{prop:gap-entropy}.
+-For a probability density $\nu$ that is positive and smooth inside
+-$\Omega_K$, let $H^1(\nu)$ mean the space of functions in
+-$H^1_{\rm loc}(\Omega_K)$ for which
+-$\int(f^2+|\nabla f|^2)\dd\nu<\infty$.
++Let $\nu$ be a probability measure with a positive continuous Lebesgue
++density inside $\Omega_K$. Define its weighted weak Sobolev space by
++\begin{equation}\label{eq:weighted-sobolev}
++H^1(\nu)=\left\{f\in H^1_{\rm loc}(\Omega_K):
++\int_{\Omega_K}(f^2+|\nabla f|^2)\dd\nu<\infty\right\}.
++\end{equation}
++Here $\nabla f$ is the distributional weak gradient.
+ This definition imposes no boundary trace condition.
+ For a nonnegative function $h$, write
+ \[
+@@ -1697,9 +2148,10 @@
+ \]
+ with the usual extended-value convention.
+ 
++\begin{samepage}
+ \begin{lemma}[Removal of the gap truncation]\label{lem:convex-approx}
+ Suppose $V\in C^2(\Omega_K)$, $0<Z=\int_{\Omega_K}e^{-V}<\infty$,
+-and $V''\ge\rho I$ for some $\rho>0$.
++and $V''\ge\rho\Id_K$ for some $\rho>0$.
+ Put $\nu=Z^{-1}e^{-V}\dd u$. For every $f\in H^1(\nu)$,
+ \begin{align}
+ \Var_\nu f
+@@ -1716,6 +2168,7 @@
+ range in Section~\ref{sec:entropy}, with the Hessian bounds stated
+ there and constants unaffected by removal of the truncation.
+ \end{lemma}
++\end{samepage}
+ 
+ \begin{proof}
+ For $0<\delta<1$ define the nonempty convex simplex
+@@ -1726,9 +2179,12 @@
+  {\nu(\Omega_{K,\delta})}.
+ \]
+ Its closure lies strictly inside $\Omega_K$, so the density there
+-is bounded above and below by positive constants and $V$ is smooth
+-up to the boundary. The bounds may depend on $\delta$; the convexity
+-constant $\rho$ does not.
++is bounded above and below by positive constants and $V$ is $C^2$
++on a neighborhood of the closure. The bounds may depend on $\delta$; the convexity
++constant $\rho$ does not. When applying a smooth-domain argument below,
++one may first mollify $V$ on this neighborhood. Mollification preserves
++$V''\ge\rho\Id_K$, and convergence in $C^2$ on the closure allows
++passage back to the stated $C^2$ potential.
+ 
+ We specify the convex-domain inequalities being used. For a smooth
+ bounded convex domain $D$ and $\nu_D\propto e^{-V}\1_D$, the
+@@ -1737,15 +2193,18 @@
+ as the integration domain; see \cite{BL,BE} for the underlying
+ inequalities. Their boundary extension can be seen directly with
+ the Neumann generator $\mathcal L=\Delta-\nabla V\cdot\nabla$.
++Let $n$ denote the outward unit normal on $\partial D$.
+ If $-\mathcal Lw=f-\nu_D(f)$ and $\partial_nw=0$, the integrated
+ Bochner identity and convexity of $\partial D$ give
+ \[
+ \int(\mathcal Lw)^2\dd\nu_D
+ \ge\int\nabla w^\top V''\nabla w\dd\nu_D.
+ \]
+-The omitted terms are $\int\|D^2w\|_{\rm HS}^2\dd\nu_D$
+-and the boundary integral of the second fundamental form on the
+-tangential gradient, with nonnegative sign. Integration by parts
++The omitted nonnegative terms are
++$\int\|D^2w\|_{\rm HS}^2\dd\nu_D$ and the boundary integral of the
++second fundamental form evaluated on the tangential gradient. Here
++$\|D^2w\|_{\rm HS}^2=\sum_{i,j}|\partial_{ij}w|^2$ is the squared
++Hilbert--Schmidt norm of the Hessian. Integration by parts
+ and weighted Cauchy--Schwarz then give
+ \[
+ \Var_{\nu_D}f=\int\nabla f\cdot\nabla w\dd\nu_D
+@@ -1757,12 +2216,12 @@
+ identity yield
+ \[
+ -\frac{\dd}{\dd t}\Ent_{\nu_D}(P_th)
+- =J(P_th),\qquad
+-\frac{\dd}{\dd t}J(P_th)\le-2\rho J(P_th),\qquad
+-J(h)=\int\frac{|\nabla h|^2}{h}\dd\nu_D.
++ =\mathscr I_D(P_th),\qquad
++\frac{\dd}{\dd t}\mathscr I_D(P_th)\le-2\rho \mathscr I_D(P_th),\qquad
++\mathscr I_D(h)=\int\frac{|\nabla h|^2}{h}\dd\nu_D.
+ \]
+ Integrating to equilibrium gives
+-$\Ent_{\nu_D}(h)\le J(h)/(2\rho)$.
++$\Ent_{\nu_D}(h)\le \mathscr I_D(h)/(2\rho)$.
+ Apply this to $h=f^2+\varepsilon$ and let $\varepsilon\downarrow0$
+ to obtain the stated factor $2/\rho$. Smooth approximation on a
+ smooth bounded domain extends both inequalities to its ordinary
+@@ -1805,7 +2264,7 @@
+ 
+ For $V=\Phi_{K,T}-sF_K$, the normalizing integral is finite because
+ $F_K$ is bounded. Throughout $|s|\le c_GK$ its Hessian satisfies
+-both $V''\ge\frac12\Phi_{K,T}''$ and $V''\ge T^{-1}I$ on every
++both $V''\ge\frac12\Phi_{K,T}''$ and $V''\ge T^{-1}\Id_K$ on every
+ truncated domain. In particular, the pointwise bound
+ $\nabla F_K^\top(V'')^{-1}\nabla F_K\le2A_1/K$ survives the
+ limit unchanged. Taking $s=0$, $\rho=T^{-1}$ and $f=\sqrt h$

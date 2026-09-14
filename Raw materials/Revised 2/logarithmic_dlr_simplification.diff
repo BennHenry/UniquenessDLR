@@ -1,0 +1,1021 @@
+--- logarithmic_dlr_uniqueness_revised.tex
++++ logarithmic_dlr_uniqueness_simplified.tex
+@@ -26,9 +26,8 @@
+ \newcommand{\PV}{\operatorname{PV}}
+ \newcommand{\Ent}{\operatorname{Ent}}
+ \newcommand{\Sine}{\operatorname{Sine}}
+ \newcommand{\Id}{\mathrm{Id}}
+-\newcommand{\Spec}{\mathsf S_P}
+ \newcommand{\Leb}{\operatorname{Leb}}
+ \DeclareMathOperator{\Law}{Law}
+ \newcommand{\dd}{\,d}
+ \newcommand{\gap}{\mathfrak g}
+@@ -44,9 +43,9 @@
+ \allowdisplaybreaks[2]
+ \setlength{\emergencystretch}{1.5em}
+ \setlist[enumerate]{leftmargin=*,itemsep=3pt,topsep=5pt}
+ \title[Uniqueness of the logarithmic DLR state]{Uniqueness of the stationary logarithmic DLR state}
+-\date{Research manuscript draft\\9 September 2026; exposition revised 10 September 2026}
++\date{Research manuscript draft\\9 September 2026; revised and simplified 10 September 2026}
+ \subjclass[2020]{60G55, 60K35, 82B21, 60B20}
+ \keywords{Logarithmic gas, DLR equations, Sine beta process, hyperuniformity, Palm measure, entropy}
+ 
+ \begin{document}
+@@ -56,24 +55,23 @@
+ $v_P(t)=\Var_P N_{(0,t]}$. We prove that the canonical logarithmic
+ Dobrushin--Lanford--Ruelle equations have at most one such solution
+ satisfying
+ \[
+-v_P(t)\le C_Pt\quad(t>0),\qquad
+-\lim_{t\to\infty}\frac{v_P(t)}t=0,\qquad
+ \int_1^\infty\frac{v_P(t)}{t^2}\dd t<\infty.
+ \]
+-The proof compares the conditional distributions of two candidate
+-processes with the same finite-dimensional Gibbs measure: a logarithmic
+-gas with lattice exterior particles and a quadratic potential of
+-vanishing strength. A concentration inequality for averages of
+-consecutive gaps controls the difference of expectations by relative
+-entropy per particle. The integrated variance bound controls the
+-exterior-force contribution in probability, and the sublinear variance
+-bound makes the quadratic displacement contribution tend to zero.
+-We then derive the variance assumptions from finite renormalized
+-logarithmic electric energy, using a stationary joint distribution of
+-the configuration and an electric field and a covariance spectral
+-estimate. With the energy normalization specified below, this identifies
++Stationarity makes the linear and sublinear variance bounds used in
++the comparison consequences of this single hypothesis. The proof
++compares the conditional distributions of two candidate processes with
++the same finite-dimensional Gibbs measure: a logarithmic gas with
++lattice exterior particles and a quadratic potential of vanishing
++strength. A concentration inequality for averages of consecutive gaps
++controls the difference of expectations by relative entropy per
++particle. The integrated variance bound controls the exterior-force
++contribution in probability, and sublinear variance makes the quadratic
++displacement contribution tend to zero. We derive the integrated bound
++from finite renormalized logarithmic electric energy using Lebl\'e's
++recovery sequence and an interval-counting identity for the intrinsic
++energy. With the energy normalization specified below, this identifies
+ every stationary finite-energy canonical DLR solution with $\Sine_\beta$.
+ \end{abstract}
+ \maketitle
+ 
+@@ -96,11 +94,15 @@
+ subtract the two comparison estimates. No limit of the reference measure is needed. A static
+ convexity estimate converts relative entropy into control of averaged
+ gap statistics. The integrated variance bound gives tightness of the conditional squared
+ exterior-force difference. Sublinear variance controls the quadratic
+-displacement introduced by the additional potential. The comparison theorem is stated directly in terms of
+-these count-variance hypotheses and is independent of the electric-field
+-argument used later to verify them.
++displacement introduced by the additional potential. The comparison theorem
++has a single integrated count-variance hypothesis; the linear and
++sublinear estimates follow from it by stationarity. To verify this
++hypothesis for finite-energy laws, we combine the recovery sequence of
++Lebl\'e~\cite[Proposition~5.3]{Leble} with an interval-counting identity
++for the intrinsic energy. No stationary-field or spectral construction
++is needed in this implication.
+ 
+ Assiotis~\cite[Theorem~1.1]{Assiotis} proves stationary uniqueness for
+ every $\beta>0$ in the same finite-energy class, without an ergodicity
+ assumption. His process energy is exactly $(2\pi)^{-1}\E_PW$;
+@@ -207,26 +209,25 @@
+ for every bounded measurable $f:\Conf(\R)\to\R$ and every bounded
+ interval $I$. This is the ordered-coordinate form of the relative-energy
+ specification in \cite[Section~2.1]{DHLM}.
+ 
+-\Needspace{10\baselineskip}
++\Needspace{8\baselineskip}
+ \begin{samepage}
+-\begin{theorem}[Uniqueness under discrepancy control]\label{thm:comparison}
++\begin{theorem}[Uniqueness under integrated discrepancy control]
++\label{thm:comparison}
+ Fix $\beta>0$. There is at most one stationary simple point process of
+-intensity one satisfying the canonical logarithmic DLR equations and the
+-following three conditions:
+-\begin{align}
+-v_P(t)&\le C_Pt \quad(t>0),\label{eq:linear}\\
+-v_P(t)&=o(t)\quad(t\to\infty),\label{eq:hyper}\\
+-\int_1^\infty v_P(t)t^{-2}\dd t&<\infty.\label{eq:integrated}
+-\end{align}
+-The constant $C_P$ need not be uniform over candidate processes.
++intensity one satisfying the canonical logarithmic DLR equations and
++\begin{equation}\label{eq:integrated}
++\mathcal V(P):=\int_1^\infty\frac{v_P(t)}{t^2}\dd t<\infty.
++\end{equation}
+ \end{theorem}
+ \end{samepage}
+ 
+-For clarity, all three conditions are retained in the statement.
+-Section~\ref{sec:energy} proves them together for each ergodic finite-energy
+-DLR solution. The comparison proof itself requires no ergodicity.
++Lemma~\ref{lem:integrated-consequences} below derives the linear and
++sublinear variance bounds from \eqref{eq:integrated}; they are not
++additional assumptions. Section~\ref{sec:energy} verifies
++\eqref{eq:integrated} for every stationary finite-energy law.
++Neither implication requires the DLR property or ergodicity.
+ 
+ \begin{samepage}
+ \begin{theorem}[Finite-energy uniqueness]\label{thm:finite-energy}
+ Fix $\beta>0$, and let $W$ be the renormalized logarithmic energy
+@@ -241,10 +242,11 @@
+ \end{samepage}
+ 
+ Theorem~\ref{thm:finite-energy} follows from
+ Theorem~\ref{thm:comparison}, Proposition~\ref{prop:energy-discrepancy},
+-the ergodic DLR decomposition in \cite[Proposition~3.13]{DHLM}, and the
+-finite-energy existence input of \cite[Corollary~1.2]{LS}.
++the DLR property of $\Sine_\beta$ in \cite[Theorem~2.1]{DHLM}, and its
++finite-energy existence input in \cite[Corollary~1.2]{LS}.
++No ergodic decomposition is required.
+ The energy condition uses a background of intensity one. Mean intensity
+ one by itself is insufficient for uniqueness: the equal mixture of the
+ vacuum and the image of $\Sine_\beta$ under $x\mapsto x/2$ is a
+ stationary canonical DLR solution of intensity one and infinite energy
+@@ -254,9 +256,75 @@
+ P(\Lambda=0)=P(\Lambda=2)=\tfrac12,\qquad
+ \Var_{P_{\rm mix}}N_{(0,t]}
+ \ge\Var(\Lambda t)=t^2.
+ \]
+-It therefore also fails \eqref{eq:linear}.
++It therefore fails \eqref{eq:integrated}.
++
++\subsection{Consequences of integrated variance}
++
++\begin{samepage}
++\begin{lemma}[Linear and sublinear variance from the integrated bound]
++\label{lem:integrated-consequences}
++Let $P$ be a stationary simple point process of intensity one with
++$\mathcal V(P)<\infty$. Then every bounded interval has a finite second
++count moment, and
++\begin{align}
++v_P(t)&\le C_Pt\quad(t>0),\qquad
++ C_P:=36\mathcal V(P)+2,\label{eq:linear}\\
++\lim_{t\to\infty}\frac{v_P(t)}t&=0.\label{eq:hyper}
++\end{align}
++More precisely, for every $t>0$,
++\begin{equation}\label{eq:variance-tail-control}
++\frac{v_P(t)}t
++\le18\int_t^{3t}\frac{v_P(u)}{u^2}\dd u.
++\end{equation}
++\end{lemma}
++\end{samepage}
++
++\begin{proof}
++For each $L>0$, finiteness of $\mathcal V(P)$ gives some
++$T>\max\{1,L\}$ with $v_P(T)<\infty$. Since
++$N_{(0,L]}\le N_{(0,T]}$, the count in $(0,L]$ has a finite second
++moment. Stationarity gives the same conclusion for every bounded
++interval.
++
++Put $D_t=N_{(0,t]}-t$. For $s,t>0$,
++\[
++D_t=D_{t+s}-\bigl(N_{(t,t+s]}-s\bigr).
++\]
++By stationarity and $(a-b)^2\le2a^2+2b^2$,
++\[
++v_P(t)\le2v_P(t+s)+2v_P(s).
++\]
++Integrate over $s\in[t,2t]$ to obtain
++\[
++tv_P(t)\le2\int_t^{3t}v_P(u)\dd u
++\le18t^2\int_t^{3t}\frac{v_P(u)}{u^2}\dd u,
++\]
++which proves \eqref{eq:variance-tail-control}. Its right-hand side
++tends to zero as $t\to\infty$, proving \eqref{eq:hyper}; for $t\ge1$
++it also gives $v_P(t)\le18\mathcal V(P)t$.
++
++If $0<t<1$, let $m=\lfloor1/t\rfloor$. Disjointness of the intervals
++and stationarity imply
++\[
++m\E_PN_{(0,t]}^2
++ =\E_P\sum_{j=0}^{m-1}N_{(jt,(j+1)t]}^2
++ \le\E_PN_{(0,1]}^2=v_P(1)+1.
++\]
++Since $m\ge1/(2t)$ and $v_P(1)\le18\mathcal V(P)$,
++\[
++v_P(t)\le\E_PN_{(0,t]}^2
++\le2t\bigl(v_P(1)+1\bigr)
++\le\bigl(36\mathcal V(P)+2\bigr)t.
++\]
++This proves \eqref{eq:linear} at all scales.
++\end{proof}
++
++The bounds \eqref{eq:linear} and \eqref{eq:hyper} will be used
++separately below, but both follow from the sole discrepancy hypothesis
++\eqref{eq:integrated}. Qualitative hyperuniformity
++$v_P(t)=o(t)$ alone is not used to infer the integrated estimate.
+ 
+ \subsection{Organization and main estimates}
+ 
+ Section~\ref{sec:entropy} defines the finite-dimensional reference measure,
+@@ -266,19 +334,19 @@
+ a quadratic potential of strength $T^{-1}$. Section~\ref{sec:palm} collects the
+ counting and Palm facts needed for random particle-ended intervals.
+ Sections~\ref{sec:blocks} and \ref{sec:forces} control, respectively, the
+ confinement cost and the exterior-force contribution. These estimates
+-are assembled in Section~\ref{sec:proof-main}. The electric-field
+-argument in Section~\ref{sec:energy} verifies the hypotheses of
+-Theorem~\ref{thm:comparison} for finite-energy states.
+-
+-
+-The three variance hypotheses have distinct roles in the comparison:
++are assembled in Section~\ref{sec:proof-main}. The intrinsic-energy
++identity and recovery-sequence argument in Section~\ref{sec:energy}
++verify \eqref{eq:integrated} for finite-energy states.
++
++
++The integrated hypothesis and its two consequences have distinct roles:
+ \begin{center}
+ \renewcommand{\arraystretch}{1.2}
+ \begin{tabular}{@{}p{0.32\textwidth}p{0.62\textwidth}@{}}
+ \hline
+-Assumption & Main role \\
++Estimate & Main role \\
+ \hline
+ Linear bound \eqref{eq:linear}
+ & Counting regularity and integrable Palm count envelopes
+ (Section~\ref{sec:palm}). \\
+@@ -290,10 +358,11 @@
+ (Sections~\ref{sec:palm} and \ref{sec:forces}). \\
+ \hline
+ \end{tabular}
+ \end{center}
+-Proposition~\ref{prop:energy-discrepancy} collects the three conclusions
+-for ergodic finite-energy components. Appendix~\ref{app:convex} supplies
++Proposition~\ref{prop:energy-discrepancy} proves the integrated estimate
++for every stationary finite-energy law; Lemma~\ref{lem:integrated-consequences}
++supplies the other two bounds. Appendix~\ref{app:convex} supplies
+ the convex-domain and weak Sobolev justification used in the static
+ comparison estimate.
+ 
+ \section{A static comparison inequality for gap statistics}
+@@ -518,9 +587,11 @@
+ 
+ \section{Discrepancy and Palm preliminaries}\label{sec:palm}
+ 
+ Throughout Sections~\ref{sec:palm}--\ref{sec:proof-main}, $P$ satisfies
+-Theorem~\ref{thm:comparison}. Its Palm distribution $P^0$ is the
++the hypotheses of Theorem~\ref{thm:comparison}, and
++\eqref{eq:linear}--\eqref{eq:hyper} hold by
++Lemma~\ref{lem:integrated-consequences}. Its Palm distribution $P^0$ is the
+ probability measure on configurations with a point at zero characterized
+ by Campbell's identity
+ \begin{equation}\label{eq:campbell}
+ \E_P\sum_{p\in\gamma} f(p,\theta_p\gamma)
+@@ -1287,10 +1358,12 @@
+ 
+ \section{Proof of the discrepancy comparison theorem}
+ \label{sec:proof-main}
+ 
+-Let $P,Q$ satisfy Theorem~\ref{thm:comparison}. Fix $r,G$ and first fix
+-$M<\infty$. Choose $r_K$ in Lemma~\ref{lem:length} jointly for $P$ and
++Let $P,Q$ satisfy the hypotheses of Theorem~\ref{thm:comparison}.
++The linear and sublinear bounds follow from
++Lemma~\ref{lem:integrated-consequences} for both laws.
++Fix $r,G$ and first fix $M<\infty$. Choose $r_K$ in Lemma~\ref{lem:length} jointly for $P$ and
+ $Q$, and use this same sequence in both good events $E_{K,M}$.
+ 
+ \subsection{Cancellation in the logarithmic derivative}
+ 
+@@ -1447,13 +1520,14 @@
+ \section{From logarithmic electric energy to discrepancy control}
+ \label{sec:energy}
+ 
+ Theorem~\ref{thm:comparison} has been proved without an electric-energy
+-assumption. This section verifies its three variance hypotheses for
+-the ergodic finite-energy components used in
+-Theorem~\ref{thm:finite-energy}. We separate the imported linear
+-discrepancy estimate from the integrated-variance conclusion proved
+-below.
++assumption. This section verifies its single integrated-variance
++hypothesis for every stationary finite-energy law. We first identify
++the energy conventions. We then prove an interval-counting identity
++for the intrinsic energy and apply Lebl\'e's recovery sequence
++\cite[Proposition~5.3]{Leble}. This argument does not assume the DLR
++property or ergodicity.
+ 
+ \subsection{Energy convention and results used from the literature}
+ 
+ For a configuration $\gamma\in\Conf(\R)$, distinguish its embedding
+@@ -1526,16 +1600,22 @@
+ field relevant to a finite infimum in \eqref{eq:renormalized-energy}
+ belongs to the displayed admissible class.
+ 
+ \begin{samepage}
+-\begin{lemma}[Energy normalization and the linear variance bound]\label{lem:energy-input}
++\begin{lemma}[Energy normalization and intensity]\label{lem:energy-input}
+ Write $W_{\rm LS}(\gamma,1)$ and $\widetilde W_{\rm LS}(P,1)$ for the
+ configuration and process energies of \cite[Sections~2.7.3--2.7.4]{LS}
+ in the Log1 case. Then
+ \begin{equation}\label{eq:energy-bridge}
+ W(\gamma)=2\pi W_{\rm LS}(\gamma,1),\qquad
+ \E_PW=2\pi\widetilde W_{\rm LS}(P,1).
+ \end{equation}
++Lebl\'e's process energy $W^{\rm elec}(P)$ in
++\cite[equations~(3.1)--(3.4)]{Leble} satisfies
++\begin{equation}\label{eq:leble-energy-bridge}
++W^{\rm elec}(P)=\widetilde W_{\rm LS}(P,1)
++=\frac1{2\pi}\E_PW.
++\end{equation}
+ Writing $\widetilde{\mathcal W}^{\rm div}$ and
+ $\mathcal W^{\rm div}$ for the configuration and process energies
+ of \cite[Definitions~2.5--2.6]{Assiotis}, one also has
+ \begin{equation}\label{eq:assiotis-energy}
+@@ -1545,13 +1625,12 @@
+ Thus the finite-energy hypothesis in Theorem~\ref{thm:finite-energy}
+ is exactly the energy hypothesis of \cite[Theorem~1.1]{Assiotis}.
+ In particular, there is an absolute constant $C_0<\infty$ such that
+ $W(\gamma)\ge-C_0$. If $P$ is stationary and $\E_PW<\infty$, then
+-\begin{equation}\label{eq:energy-linear-conclusion}
+-\E_PN_A=\Leb(A),\qquad
+-v_P(t)\le C_Pt\quad(t>0),
+-\end{equation}
+-for every bounded Borel set $A$, with $C_P<\infty$ depending on $P$.
++\begin{equation}\label{eq:energy-intensity-conclusion}
++\E_PN_A=\Leb(A)
++\qquad\text{for every bounded Borel set }A\subset\R.
++\end{equation}
+ \end{lemma}
+ \end{samepage}
+ 
+ \begin{proof}
+@@ -1566,8 +1645,13 @@
+ $E_\eta$. Their cube $\square_S$ has side length $S$; taking $S=2R$
+ identifies their spatial average with ours. Finally their subtraction
+ $-c_{d,s}g(\eta)$ is $+2\pi\log\eta$, and their configuration energy
+ includes a factor $1/c_{d,s}$. This proves \eqref{eq:energy-bridge}.
++The compatible field class, truncation, and normalized energy in
++\cite[Sections~2.5 and~3.1]{Leble} are the same with
++$d=1$, $k=1$, weight exponent zero, and $c_{d,s}=2\pi$.
++Its process energy is the expectation of the configuration infimum,
++which proves \eqref{eq:leble-energy-bridge}.
+ The lower bound is the standard one recalled in the proof of
+ \cite[Lemma~3.9]{LS}.
+ 
+ For \eqref{eq:assiotis-energy}, take the exponent $q_{\rm el}=p$ in
+@@ -1590,20 +1674,14 @@
+ By \cite[Lemma~3.2]{LS} and \eqref{eq:energy-bridge}, for $t\ge1$,
+ \[
+ \E_P(N_{(0,t]}-t)^2\le C(C+\E_PW)t.
+ \]
+-Stationarity forces intensity one, since any different intensity would
+-give a quadratic lower bound by Jensen's inequality.
+-For completeness, the small-interval bound follows from stationarity
+-alone once $\E_PN_{(0,1]}^2<\infty$. If $0<t<1$ and
+-$m=\lfloor1/t\rfloor$, then
+-\[
+-m\E_PN_{(0,t]}^2
+-=\E_P\sum_{j=0}^{m-1}N_{(jt,(j+1)t]}^2
+-\le\E_PN_{(0,1]}^2.
+-\]
+-Since $m\ge1/(2t)$, this gives
+-$v_P(t)\le2t\E_PN_{(0,1]}^2$ and completes \eqref{eq:linear}.
++Stationarity forces intensity one: writing $m=\E_PN_{(0,1]}$,
++Jensen's inequality gives $(m-1)^2t^2\le\E_P(N_{(0,t]}-t)^2$
++for $t\ge1$, whereas the displayed bound is linear in $t$.
++The small-interval variance estimate will follow from
++Lemma~\ref{lem:integrated-consequences} once the integrated bound
++has been proved.
+ \end{proof}
+ 
+ \begin{remark}[Truncation versus normalization]\label{rem:cutoff}
+ The cutoff displayed in \cite[Definition~2.20]{DHLM}, in the
+@@ -1623,405 +1701,193 @@
+ justification. The identity \eqref{eq:energy-bridge} documents the
+ applicability of the imported energy results.
+ \end{remark}
+ 
+-\subsection{A stationary configuration--field law and the spectral estimate}
+-
+-
+-For vector fields, the horizontal translation is
+-$(\theta_aF)(x,y)=F(x+a,y)$. A joint law of $(\gamma,F)$ is called
+-stationary when it is invariant under
+-$(\gamma,F)\mapsto(\theta_a\gamma,\theta_aF)$ for every $a\in\R$.
++\subsection{An interval-counting identity for the intrinsic energy}
++
++Let $Q$ be a stationary simple point process of intensity one with
++finite second count moments on bounded intervals. Its reduced second
++factorial moment measure $\alpha_Q$ is the locally finite positive
++measure on $\R$ characterized by
++\begin{equation}\label{eq:reduced-factorial-moment}
++\E_Q\sum_{\substack{x,y\in\gamma\\x\ne y}}\varphi(x,y)
++ =\int_\R\int_\R\varphi(x,x+h)\,\alpha_Q(\dd h)\dd x
++\end{equation}
++for every nonnegative compactly supported measurable function
++$\varphi$ on $\R^2$. The sum is over ordered pairs; simplicity gives
++$\alpha_Q(\{0\})=0$. No density of $\alpha_Q$ is assumed. Put
++\begin{equation}\label{eq:factorial-count-overlap}
++\begin{aligned}
++A_Q(t)&:=\E_Q\!\left[N_{(0,t]}\bigl(N_{(0,t]}-1\bigr)\right]
++       =v_Q(t)+t^2-t,\\
++A_Q(t)&=\int_\R(t-|h|)_+\,\alpha_Q(\dd h),\qquad t>0.
++\end{aligned}
++\end{equation}
++The second identity follows from \eqref{eq:reduced-factorial-moment}:
++for a fixed displacement $h$, the admissible first coordinates form
++an interval of length $(t-|h|)_+$.
++
++For $R>1$, define
++\begin{equation}\label{eq:intrinsic-energy}
++\begin{aligned}
++e_R(Q)&:=\int_{0<|h|<R}
++ \left(1-\frac{|h|}{R}\right)(-\log|h|)
++ \bigl(\alpha_Q(\dd h)-\dd h\bigr),\\
++W^{\rm int}(Q)&:=\liminf_{R\to\infty}e_R(Q).
++\end{aligned}
++\end{equation}
++The pair and Lebesgue-background terms are evaluated separately.
++For fixed $R$, the negative part is finite, so $e_R(Q)$ is well
++defined in $\R\cup\{+\infty\}$. Formula
++\eqref{eq:intrinsic-energy} is the one-dimensional logarithmic case
++of \cite[equation~(3.12)]{Leble}, with $g(h)=-\log|h|$ and no
++factor $1/2$ in the pair interaction.
+ 
+ \begin{samepage}
+-\begin{lemma}[Stationary joint law of a configuration and a field]\label{lem:lift}
+-Let $P$ be ergodic and stationary, and suppose
+-$P(W<\infty)=1$, where $W$ is defined in
+-\eqref{eq:renormalized-energy}. There exist $\eta\in(0,1)$ and a
+-probability measure $\mathsf Q$ on configuration--field pairs such that
+-\begin{equation}\label{eq:joint-law-properties}
+-\begin{aligned}
+-\Law_{\mathsf Q}(\gamma)&=P,\\
+-(\theta_a,\theta_a)_\#\mathsf Q&=\mathsf Q\quad(a\in\R),\\
+--\diver F&=2\pi(\overline\gamma*\rho_\eta-\dd x\,\delta_0)
+-\quad\mathsf Q\text{-almost surely},
+-\end{aligned}
+-\end{equation}
+-and
+-\begin{equation}\label{eq:field-energy}
+-\calE=\E_{\mathsf Q}\int_{[0,1]\times\R}|F(x,y)|^2\dd x\dd y<\infty.
++\begin{lemma}[Integrated variance controlled by intrinsic energy]
++\label{lem:intrinsic-variance}
++Let $Q$ be as above. If
++\[
++\sup_{t\ge1}v_Q(t)<\infty,
++\qquad W^{\rm int}(Q)<\infty,
++\]
++then
++\begin{equation}\label{eq:intrinsic-variance-bound}
++\mathcal V(Q)=\int_1^\infty\frac{v_Q(t)}{t^2}\dd t
++\le W^{\rm int}(Q)+2.
+ \end{equation}
+ \end{lemma}
+ \end{samepage}
+ 
+ \begin{proof}
+-Choose a configuration $\gamma$ with $W(\gamma)<\infty$ such that
+-\begin{equation}\label{eq:generic-configuration}
+-\lim_{R\to\infty}\frac1{2R}\int_{-R}^R
+- f_j(\theta_x\gamma)\dd x=P(f_j),\qquad j\ge1,
+-\end{equation}
+-where $(f_j)_{j\ge1}$ is a countable convergence-determining family of
+-bounded continuous functions on the space of locally finite measures
+-with the vague topology. Ergodicity ensures that
+-such configurations have full probability. Choose a compatible field
+-whose renormalized functional is finite; attainment of the infimum
+-defining $W$ is unnecessary. At some sufficiently small fixed $\eta$,
+-the truncated field $F=E_\eta$ consequently satisfies
+-\[
+-A=\limsup_{R\to\infty}\frac1{2R}
+-\int_{[-R,R]\times\R}|F|^2<\infty.
+-\]
+-Average translates of this single pair:
+-\[
+-\mathsf Q_R=\frac1{2R}\int_{-R}^R
+-\delta_{(\theta_x\gamma,\theta_xF)}\dd x.
+-\]
+-No field is selected as a measurable function of the configuration.
+-
+-For the field coordinate use $H^{-1}_{\mathrm{loc}}(\R^2;\R^2)$:
+-a distribution belongs to this space if its product with every smooth
+-compactly supported cutoff belongs to $H^{-1}(\R^2;\R^2)$, the dual
+-of $H^1(\R^2;\R^2)$. The local topology is generated by these cutoff
+-norms on an exhausting sequence of bounded domains. For every $a,b>0$, Fubini gives
+-\[
+-\E_{\mathsf Q_R}
+-\int_{[-a,a]\times[-b,b]}|F|^2
+-\le \frac{2a}{2R}
+-\int_{[-R-a,R+a]\times\R}|F|^2,
+-\qquad
+-\limsup_{R\to\infty}\E_{\mathsf Q_R}
+-\int_{[-a,a]\times[-b,b]}|F|^2\le 2aA.
+-\]
+-Markov's inequality on an exhausting sequence of boxes and the compact
+-embedding of bounded local $L^2$ sets into $H^{-1}_{\mathrm{loc}}$
+-give tightness of the field laws. The configuration marginals converge
+-to $P$, hence are tight as well. A subsequence therefore has a joint
+-weak limit $\mathsf Q$, whose configuration marginal is exactly $P$.
+-The local $L^2$ norm, extended to $+\infty$ outside $L^2$, is lower
+-semicontinuous for distributional convergence. The same bounds show
+-that $\mathsf Q$ is supported on locally square-integrable fields.
+-
+-For each fixed horizontal shift $h$, translating the averaging interval
+-changes $\mathsf Q_R$ in total variation by at most $|h|/R$.
+-Translations are continuous in both coordinate topologies, so
+-$\mathsf Q$ is stationary. For any $u\in C_c^\infty(\R^2)$, the maps
+-\[
+-F\longmapsto\langle F,\nabla u\rangle,
+-\qquad
+-\gamma\longmapsto
+-\int\!\left(\int u(p+z_1,z_2)\rho_\eta(\dd z)\right)\gamma(\dd p)
+-\]
+-are continuous in these topologies. The inner integral in the second
+-map is a continuous compactly supported function of $p$. Thus
+-\eqref{eq:regularized-div} passes to the joint limit, first on a
+-countable dense family of tests and then on all tests.
+-Finally the analogous averaging bound for $(0,1)\times(-b,b)$ has
+-limsup at most $A$. Lower semicontinuity followed by monotone
+-convergence as $b\to\infty$ proves $\calE\le A$ in
+-\eqref{eq:field-energy}.
++For $R>1$ and $0<t<R$, put
++$w_R(t)=t^{-2}+(Rt)^{-1}$. Direct integration gives
++\begin{equation}\label{eq:log-kernel-identity}
++\left(1-\frac rR\right)\log\frac Rr
++ =\int_r^R(t-r)w_R(t)\dd t,
++\qquad 0<r<R.
++\end{equation}
++Apply Tonelli's theorem to the nonnegative kernel in
++\eqref{eq:log-kernel-identity} and the positive measure $\alpha_Q$.
++By \eqref{eq:factorial-count-overlap}, the pair contribution is
++$\int_0^R w_R(t)A_Q(t)\dd t$. Subtract the finite background
++contribution to obtain
++\[
++e_R(Q)+\frac{\log R}{R}\bigl(v_Q(R)-R\bigr)
++ =\int_0^R w_R(t)A_Q(t)\dd t
++  -\int_0^R w_R(t)t^2\dd t.
++\]
++Here we used
++$\int(R-|h|)_+(\alpha_Q(\dd h)-\dd h)=v_Q(R)-R$.
++On $[1,R]$, substitute $A_Q(t)=v_Q(t)+t^2-t$.
++The elementary background integrals
++\[
++\int_0^1w_R(t)t^2\dd t=1+\frac1{2R},\qquad
++\int_1^Rw_R(t)t\dd t=\log R+1-\frac1R
++\]
++give the exact identity
++\begin{equation}\label{eq:intrinsic-variance-identity}
++\begin{split}
++e_R(Q)+\frac{\log R}{R}v_Q(R)+2-\frac1{2R}
++={}&\int_0^1w_R(t)A_Q(t)\dd t\\
++ &+\int_1^Rw_R(t)v_Q(t)\dd t.
++\end{split}
++\end{equation}
++This identity holds also when the two sides equal $+\infty$; no
++integration by parts at the logarithmic singularity is required.
++Both terms on the right are nonnegative, and $w_R(t)\ge t^{-2}$.
++Consequently,
++\begin{equation}\label{eq:finite-window-variance-bound}
++\int_1^R\frac{v_Q(t)}{t^2}\dd t
++\le e_R(Q)+\frac{\log R}{R}v_Q(R)+2.
++\end{equation}
++The bounded-variance hypothesis makes
++$R^{-1}\log R\,v_Q(R)\to0$. Choose $R_j\to\infty$ along a
++sequence realizing the lower limit in \eqref{eq:intrinsic-energy}
++and let $j\to\infty$ in \eqref{eq:finite-window-variance-bound}.
++This proves \eqref{eq:intrinsic-variance-bound}. In particular, the
++same inequality rules out $W^{\rm int}(Q)=-\infty$ under these
++hypotheses.
+ \end{proof}
+ 
+-In the rest of this subsection, an expectation involving $F$ is under
+-the fixed joint law $\mathsf Q$; for configuration observables it is
+-under its marginal $P$. We isolate integration by parts with a
+-configuration-dependent test. For a stationary process of intensity one
+-with finite local second moments, let $\sigma=\gamma-\Leb$ be the
+-centered random measure on $\R$. Its covariance spectral measure,
+-denoted by $\Spec$ (not the relative entropy $S(\mu\mid\omega)$), is
+-normalized by
+-\begin{equation}\label{eq:covariance-spectrum}
+-\E_P|\langle\sigma,f\rangle|^2
+-=\int_\R|\widehat f(k)|^2S(\dd k),\qquad
+-\widehat f(k)=\int_\R e^{-ikx}f(x)\dd x.
+-\end{equation}
+-The identity is first understood for smooth compactly supported test
+-functions $f$. Here $\Spec$ is a symmetric positive Radon measure and
+-need not have a density. Finite local second moments make $\sigma$ a stationary random
+-tempered distribution, so this definition also applies to Schwartz
+-tests by approximation.
++\subsection{Recovery sequence and finite-energy uniqueness}
+ 
+ \begin{samepage}
+-\begin{lemma}[Stationary random-test integration by parts]
+-\label{lem:stationary-ibp}
+-Suppose $P$ has intensity one and finite local second moments, and
+-$(\gamma,F)$ has a stationary joint law $\mathsf Q$ satisfying
+-\eqref{eq:regularized-div} and \eqref{eq:field-energy} at fixed $\eta$.
+-For real even $\chi\in C_c^\infty(\R\setminus\{0\})$, define
+-\[
+-h_y(x)=\frac1{2\pi}\int_\R
+-e^{ikx}\chi(k)e^{-|k||y|}\dd k,
+-\qquad \varphi(x,y)=\langle\sigma,h_y(x-\cdot)\rangle.
+-\]
+-Then
+-\begin{equation}\label{eq:test-energy}
+-\E\int_{[0,1]\times\R}|\nabla\varphi|^2
+-=2\int_\R |k|\chi(k)^2S(\dd k),
+-\end{equation}
+-and
+-\begin{equation}\label{eq:test-pairing}
+-\E\int_{[0,1]\times\R}F\cdot\nabla\varphi
+-=2\pi\int_\R\chi(k)a_\eta(k)\Spec(\dd k),
+-\end{equation}
+-where
+-\[
+-a_\eta(k)=\frac1{2\pi}\int_0^{2\pi}
+-e^{ik\eta\cos\theta-|k|\eta|\sin\theta|}\dd\theta.
+-\]
+-\end{lemma}
+-\end{samepage}
+-
+-\begin{proof}
+-Fix $0<c<C<\infty$ such that $\operatorname{supp}\chi\subset
+-\{c\le|k|\le C\}$. The kernels $h_y$ and their horizontal
+-derivatives are Schwartz functions, with each Schwartz seminorm bounded
+-by a constant times $e^{-c|y|/2}$; polynomial factors arising from
+-spectral differentiation are absorbed in this exponential bound.
+-The same holds for their first vertical derivatives on each side of
+-$y=0$. Local point counts grow at most polynomially almost surely,
+-by stationarity and the first moment bound. Thus the convolutions
+-define pathwise smooth functions away from $y=0$, continuous across
+-$y=0$, with a weak first vertical derivative. Their mean is zero.
+-Applying \eqref{eq:covariance-spectrum} at each $y$ and integrating
+-$2k^2e^{-2|k||y|}$ over $\R$ gives
+-\eqref{eq:test-energy}.
+-
+-Here are explicit cutoffs for \eqref{eq:test-pairing}. Let
+-$q_\epsilon$ be a nonnegative even smooth mollifier in the vertical
+-variable, supported in $[-\epsilon,\epsilon]$, with mass one, and set
+-$\varphi_\epsilon=q_\epsilon*_y\varphi$, $0<\epsilon<1$.
+-It is smooth in both variables. The compact spectral support gives,
+-with constants depending on $\chi$ and $\Spec$ on its support,
+-\begin{align}
+-\E\bigl(|\varphi_\epsilon(0,y)|^2+
+-|\nabla\varphi_\epsilon(0,y)|^2\bigr)
+-&\le C_\chi e^{-c|y|},\label{eq:test-decay}\\
+-\E\int_\R|\nabla\varphi_\epsilon(0,y)-
+-\nabla\varphi(0,y)|^2\dd y
+-&\le C_\chi\epsilon.\label{eq:test-smoothing}
+-\end{align}
+-For the latter estimate, outside $|y|\le\epsilon$ the multipliers and
+-their first derivatives change by $O(\epsilon)e^{-c|y|}$; inside that
+-strip the first derivatives are uniformly bounded and the strip has
+-length $2\epsilon$. This accounts for the cusp without assuming
+-pointwise values of $F$ on the line.
+-
+-Take $w\in C_c^\infty(\R)$ nonnegative with $\int w=1$, and put
+-$w_L(x)=L^{-1}w(x/L)$. Take $\vartheta\in C_c^\infty(\R)$ equal to one
+-on $[-1,1]$ and supported in $[-2,2]$, and put
+-$\vartheta_H(y)=\vartheta(y/H)$, where $H>\max(1,\eta)$.
+-The distribution identity can be tested pathwise against
+-$w_L\vartheta_H\varphi_\epsilon$: it holds simultaneously for all smooth
+-compactly supported tests on a single event of probability one.
+-Consequently the identity also holds for this test after the configuration
+-has been fixed.
+-Every expected pairing is integrable. On the field side this follows
+-from \eqref{eq:field-energy} and \eqref{eq:test-decay}; on the charge
+-side it follows from local second moments and the Schwartz bounds.
+-In particular no third moment of the counts is used.
+-
+-Expand the gradient of this product and take expectation. Stationarity
+-makes the main term independent of $L$, because $\int w_L=1$.
+-Cauchy--Schwarz and $\int|w_L'|=L^{-1}\int|w'|$ bound the horizontal
+-cutoff error by
+-\[
+-\left|\E\int_{\R^2}w_L'\vartheta_H F_x\varphi_\epsilon\right|
+-\le \frac{C_\chi\sqrt{\calE}}{L}.
+-\]
+-The vertical cutoff error and the omitted tail of the main term are
+-bounded, respectively, by
+-\[
+-\left|\E\int_{\R^2}w_L\vartheta_H' F_y\varphi_\epsilon\right|
+-\le\frac{C_\chi\sqrt{\calE}}{H}e^{-cH/2},
+-\qquad
+-C_\chi\sqrt{\calE}\,e^{-cH/2}.
+-\]
+-These constants are uniform in $L,H$ and $0<\epsilon<1$.
+-
+-For clarity, the expected charge pairing can be computed before
+-removing either spatial cutoff. Put
+-\[
+-b_\epsilon(k,y)=
+-\int q_\epsilon(s)e^{-|k||y-s|}\dd s.
+-\]
+-The covariance identity and stationarity give, as an identity of
+-measures in $p$,
+-\[
+-\E\bigl[\gamma(\dd p)\varphi_\epsilon(p+a,b)\bigr]
+-=\left(\int e^{ika}\chi(k)b_\epsilon(k,b)\Spec(\dd k)\right)\dd p.
+-\]
+-It follows first by testing against a smooth compactly supported
+-function of $p$ and then by the Schwartz approximation above. Since
+-$\vartheta_H=1$ on the support of $\rho_\eta$ and $\int w_L(p+a)\dd p=1$,
+-the right side of the tested divergence identity is exactly
+-\[
+-2\pi\int\chi(k)a_{\eta,\epsilon}(k)\Spec(\dd k),
+-\qquad
+-a_{\eta,\epsilon}(k)=
+-\int e^{ikz_1}b_\epsilon(k,z_2)\rho_\eta(\dd z).
+-\]
+-The original line background has zero expected pairing since
+-$\E\varphi_\epsilon=0$. Thus there is no extra contribution from
+-the difference between the original and smeared backgrounds.
+-
+-Let $L\to\infty$, then $H\to\infty$, and finally
+-$\epsilon\downarrow0$, in that order. The first two limits follow
+-from the displayed cutoff bounds. By \eqref{eq:test-smoothing} the
+-field pairing changes in the last limit by at most
+-$C_\chi\sqrt{\calE\epsilon}$. On $\operatorname{supp}\chi$,
+-$|a_{\eta,\epsilon}-a_\eta|\le C\epsilon$; the charge pairing
+-therefore converges as well, since $\Spec$ is finite on that compact set.
+-This proves \eqref{eq:test-pairing}.
+-\end{proof}
+-
+-\begin{samepage}
+-\begin{proposition}[Spectral energy and hyperuniformity]
+-\label{prop:spectral}
+-Suppose $P$ is stationary of intensity one, satisfies
+-\eqref{eq:linear}, and admits a stationary joint law with an electric field as in
+-Lemma~\ref{lem:lift}. Then
+-\begin{equation}\label{eq:spectral-variance-conclusions}
+-\lim_{t\to\infty}\frac{v_P(t)}t=0,
+-\qquad \int_1^\infty\frac{v_P(t)}{t^2}\dd t<\infty.
+-\end{equation}
+-Thus both \eqref{eq:hyper} and \eqref{eq:integrated} hold.
++\begin{proposition}[Integrated variance from finite electric energy]
++\label{prop:energy-discrepancy}
++Let $P$ be a stationary simple point process with $\E_PW<\infty$,
++where $W$ is given by \eqref{eq:renormalized-energy}. Then $P$ has
++intensity one and
++\begin{equation}\label{eq:finite-energy-variance-conclusions}
++\mathcal V(P)=\int_1^\infty\frac{v_P(t)}{t^2}\dd t
++\le2+\frac1{2\pi}\E_PW<\infty.
++\end{equation}
++The linear and sublinear bounds \eqref{eq:linear}--\eqref{eq:hyper}
++follow from Lemma~\ref{lem:integrated-consequences}. Neither the DLR
++property nor ergodicity is assumed.
+ \end{proposition}
+ \end{samepage}
+ 
+ \begin{proof}
+-The linear variance bound gives finite local second moments, so define
+-$\Spec$ by \eqref{eq:covariance-spectrum}. Approximation of interval
+-indicators by smooth tests gives
+-\begin{equation}\label{eq:count-spectrum}
+-v_P(t)=\int_\R\frac{4\sin^2(kt/2)}{k^2}\Spec(\dd k),
+-\end{equation}
+-with the continuous value $t^2$ at zero. In particular,
+-$t^2S(\{0\})\le v_P(t)\le C_Pt$ for $t\ge1$, hence
+-$\Spec(\{0\})=0$.
+-
+-Apply Lemma~\ref{lem:stationary-ibp} and Cauchy--Schwarz to obtain
+-\begin{equation}\label{eq:spectral-duality}
+-\left|\int_\R\chi(k)a_\eta(k)\Spec(\dd k)\right|^2
+-\le\frac{\calE}{2\pi^2}
+-      \int_\R |k|\chi(k)^2\Spec(\dd k).
+-\end{equation}
+-The coefficient is obtained by dividing the product of
+-\eqref{eq:field-energy} and \eqref{eq:test-energy} by $(2\pi)^2$. The function $a_\eta$ is real and
+-even, is smooth away from zero, and is continuous with $a_\eta(0)=1$.
+-Choose $\delta\in(0,1)$ so that $a_\eta(k)\ge1/2$ whenever
+-$|k|<\delta$.
+-For a smooth even cutoff $0\le\psi\le1$ supported in
+-$\epsilon<|k|<\delta$, the test
+-$\chi(k)=a_\eta(k)\psi(k)/|k|$ belongs to
+-$C_c^\infty(\R\setminus\{0\})$: every integral is finite on
+-this compact annulus before any limit is taken. Write
+-\[
+-A_\psi=\int\frac{a_\eta(k)^2}{|k|}\psi(k)\Spec(\dd k).
+-\]
+-The rightmost integral in \eqref{eq:spectral-duality} is at most
+-$A_\psi$, because $\psi^2\le\psi$. Therefore
+-\[
+-A_\psi^2\le\frac{\calE}{2\pi^2}A_\psi,
+-\qquad A_\psi\le\frac{\calE}{2\pi^2}.
+-\]
+-Exhaust the punctured interval by such cutoffs and use monotone
+-convergence and $a_\eta^2\ge1/4$ to deduce
+-\begin{equation}\label{eq:low-frequency}
+-\int_{0<|k|<\delta}\frac{\Spec(\dd k)}{|k|}
+-\le\frac{2\calE}{\pi^2}<\infty.
+-\end{equation}
+-The annular tests establish this integrability; it was not assumed
+-in constructing the potential or applying integration by parts.
+-
+-For high frequencies, integrate \eqref{eq:count-spectrum} over
+-$1\le t\le2$. The integral of $v_P(t)$ is finite. The continuous
+-function $\int_1^2\sin^2(kt/2)\dd t$ is strictly positive on every
+-compact annulus and tends to $1/2$ as $|k|\to\infty$; it therefore
+-has a positive lower bound on $|k|\ge\delta$. Tonelli yields
+-\begin{equation}\label{eq:high-frequency}
+-\int_{|k|\ge\delta}k^{-2}\Spec(\dd k)<\infty.
+-\end{equation}
+-
+-Another application of Tonelli, now using
+-\[
+-\frac4{k^2}\int_1^\infty\frac{\sin^2(kt/2)}{t^2}\dd t
+-\le
+-\begin{cases}
+-C/|k|,&0<|k|<\delta,\\
+-4/k^2,&|k|\ge\delta,
+-\end{cases}
+-\]
+-proves \eqref{eq:integrated}. Finally, for $t\ge1$ the integrand
+-$4\sin^2(kt/2)/(tk^2)$ of $v_P(t)/t$ tends to zero at every
+-$k\ne0$. On $0<|k|<\delta$ it is bounded by $C/|k|$, using
+-$\sin^2 u\le\min(u^2,1)$; on $|k|\ge\delta$ it is bounded by
+-$4/k^2$. Equations \eqref{eq:low-frequency} and
+-\eqref{eq:high-frequency}, and the absence of an atom at zero,
+-permit dominated convergence. This proves \eqref{eq:hyper}.
++Lemma~\ref{lem:energy-input} gives intensity one and
++$W^{\rm elec}(P)=(2\pi)^{-1}\E_PW<\infty$.
++By \cite[Proposition~5.3, equation~(5.7)]{Leble}, in the
++one-dimensional logarithmic case there are stationary intensity-one
++processes $P_n$ such that
++\begin{equation}\label{eq:leble-recovery-sequence}
++P_n\Longrightarrow P,\qquad
++W^{\rm int}(P_n)\longrightarrow W^{\rm elec}(P),\qquad
++\sup_{t\ge1}v_{P_n}(t)<\infty\quad\text{for each }n.
++\end{equation}
++Here $\Longrightarrow$ denotes weak convergence of laws for the vague
++topology on configurations. The last property is exactly the
++one-dimensional consequence of the definition of hyperuniformity in
++\cite[equation~(2.3)]{Leble}. Its bound may depend on $n$; no uniform
++bound in $n$ is needed. The regularization in
++\cite[Section~5.2.1]{Leble} separates close particles before the finite
++configurations are concatenated, so the approximating processes may
++be taken simple. After omitting finitely many terms, their intrinsic
++energies are finite. The bounded variances also give finite second
++count moments on every bounded interval. Thus
++Lemma~\ref{lem:intrinsic-variance} yields
++\[
++\mathcal V(P_n)\le W^{\rm int}(P_n)+2.
++\]
++
++For each fixed $t>0$, intensity one implies
++$P(N_{\{0,t\}}>0)=0$. Hence \eqref{eq:leble-recovery-sequence}
++gives convergence in distribution of the counts in $(0,t]$.
++Apply the lower-semicontinuity inequality under weak convergence
++to the nonnegative continuous function $n\mapsto(n-t)^2$ to obtain
++\begin{equation}\label{eq:variance-lower-semicontinuity}
++v_P(t)\le\liminf_{n\to\infty}v_{P_n}(t).
++\end{equation}
++Fatou's lemma and \eqref{eq:leble-recovery-sequence} therefore imply
++\begin{align*}
++\mathcal V(P)
++&\le\liminf_{n\to\infty}\mathcal V(P_n)\\
++&\le\lim_{n\to\infty}\bigl(W^{\rm int}(P_n)+2\bigr)
++ =W^{\rm elec}(P)+2
++ =\frac1{2\pi}\E_PW+2.
++\end{align*}
++Uniform integrability of the squared counts is not required: only
++the lower bound \eqref{eq:variance-lower-semicontinuity} is used.
+ \end{proof}
+ 
+-\subsection{The finite-energy implication}
+-
+-\begin{samepage}
+-\begin{proposition}[Variance hypotheses for finite-energy components]
+-\label{prop:energy-discrepancy}
+-Let $P$ be an ergodic stationary canonical logarithmic DLR solution
+-with $\E_PW<\infty$, where $W$ is given by
+-\eqref{eq:renormalized-energy}. Then $P$ has intensity one, and there is $C_P<\infty$ such that
+-\begin{equation}\label{eq:finite-energy-variance-conclusions}
+-v_P(t)\le C_Pt\quad(t>0),\qquad
+-\lim_{t\to\infty}\frac{v_P(t)}t=0,\qquad
+-\int_1^\infty\frac{v_P(t)}{t^2}\dd t<\infty.
+-\end{equation}
+-These are exactly \eqref{eq:linear}--\eqref{eq:integrated}; $C_P$ may
+-depend on $P$.
+-\end{proposition}
+-\end{samepage}
+-
+-\begin{proof}
+-Lemma~\ref{lem:energy-input} gives intensity one and the linear
+-variance bound. Because $W$ is bounded below, finite expectation
+-implies $W<\infty$ almost surely. Lemma~\ref{lem:lift} constructs the
+-stationary joint distribution of the configuration and field; Proposition~\ref{prop:spectral} then proves
+-the sublinear and integrated variance bounds. In particular, the
+-integrated bound is a conclusion of the spectral argument, not an
+-imported consequence of the linear discrepancy estimate alone.
+-\end{proof}
+-
+ \begin{proof}[Proof of Theorem~\ref{thm:finite-energy}]
+-By the canonical DLR ergodic decomposition in
+-\cite[Proposition~3.13]{DHLM}, there are a probability space
+-$(\mathcal A,\pi)$ and ergodic stationary canonical DLR solutions
+-$P_\alpha$ such that
+-\begin{equation}\label{eq:ergodic-decomposition}
+-P(f)=\int_{\mathcal A}P_\alpha(f)\pi(\dd\alpha)
+-\qquad\text{for every bounded measurable }f.
+-\end{equation}
+-Here the DLR specification is the conditional-density specification
+-described in Section~1; its preservation under this decomposition
+-uses the probabilistic argument of that proposition, independently
+-of any numerical convention for the energy.
+-With $C_0$ as in Lemma~\ref{lem:energy-input}, Tonelli's theorem gives
+-\[
+-\int_{\mathcal A}\E_{P_\alpha}(W+C_0)\pi(\dd\alpha)
+- =\E_P(W+C_0)<\infty.
+-\]
+-Hence $\E_{P_\alpha}W<\infty$ for $\pi$-almost every $\alpha$.
+-Proposition~\ref{prop:energy-discrepancy} puts each such component in
+-the class of Theorem~\ref{thm:comparison}. Hence all these components
+-coincide with a single law.
+-
+-The two existence inputs are used separately. The canonical DLR
+-property of $\Sine_\beta$ is \cite[Theorem~2.1]{DHLM}.
+-Its finite expected energy follows from \cite[Corollary~1.2]{LS}:
+-$\Sine_\beta$ minimizes a free energy with finite minimum, and the
+-specific relative entropy in that functional is nonnegative.
+-Equation~\eqref{eq:energy-bridge} converts this statement to
++Proposition~\ref{prop:energy-discrepancy} puts every stationary
++finite-energy canonical DLR solution in the class of
++Theorem~\ref{thm:comparison}. That class contains $\Sine_\beta$:
++its stationary unit-intensity normalization and canonical DLR
++property are given by \cite[Theorem~2.1]{DHLM}, and its finite
++expected energy follows from \cite[Corollary~1.2]{LS}.
++Indeed, $\Sine_\beta$ minimizes a free energy with finite minimum,
++and the specific relative entropy in that functional is nonnegative.
++Equation~\eqref{eq:energy-bridge} converts this to
+ $\E_{\Sine_\beta}W<\infty$ in our convention.
+-Apply the same ergodic decomposition to $\Sine_\beta$. All its
+-components belong to the singleton class of
+-Theorem~\ref{thm:comparison}, so their common law is $\Sine_\beta$.
+-Every candidate $P$, being a mixture of this law, equals
+-$\Sine_\beta$.
++Apply Proposition~\ref{prop:energy-discrepancy} to $\Sine_\beta$
++and then Theorem~\ref{thm:comparison} to conclude $P=\Sine_\beta$.
++No ergodic decomposition is needed.
+ \end{proof}
+ 
+ 
+ \section{Relation to other uniqueness arguments}
+@@ -2039,12 +1905,17 @@
+ The present proof uses the static Brascamp--Lieb and logarithmic Sobolev
+ estimate of Proposition~\ref{prop:gap-entropy}, together with force
+ tightness and weak quadratic confinement. It compares both candidates
+ with one lattice-boundary law and cancels the common reference.
+-The linear and sublinear variance bounds are the discrepancy inputs
+-recorded in \cite[Proposition~2.7]{Assiotis}; the integrated variance
+-condition \eqref{eq:integrated} is the additional explicit sufficient
+-input used by our force-envelope argument and proved here from energy.
++The linear and sublinear variance bounds are the discrepancy estimates
++recorded in \cite[Proposition~2.7]{Assiotis}. The integrated condition
++\eqref{eq:integrated}, used by our force-envelope argument, is the sole
++discrepancy hypothesis of Theorem~\ref{thm:comparison}: it implies
++both of those estimates by Lemma~\ref{lem:integrated-consequences}.
++Proposition~\ref{prop:energy-discrepancy} derives it from electric
++energy by combining Lebl\'e's recovery sequence with
++\eqref{eq:intrinsic-variance-identity}, rather than by assuming a
++quantitative rate of hyperuniformity.
+ 
+ \begin{remark}[Agreement of the DLR conventions]\label{rem:dlr-conventions}
+ On the almost-sure regularity event of Lemma~\ref{lem:as-regularity},
+ the interval formulation used here extends to the bounded Borel
+@@ -2093,11 +1964,11 @@
+ configuration. Conversely, that definition immediately includes
+ interval resampling. Assiotis initially allows multiplicities, but
+ \cite[Lemma~2.8]{Assiotis} makes every canonical DLR law simple.
+ 
+-For the finite-energy class, the required regularity holds on almost
+-every ergodic component by Proposition~\ref{prop:energy-discrepancy}
+-and Lemma~\ref{lem:as-regularity}, hence also under their mixture.
++For every stationary finite-energy law, the required regularity holds
++almost surely by Proposition~\ref{prop:energy-discrepancy} and
++Lemma~\ref{lem:as-regularity}.
+ This verifies agreement of the DLR classes used in the two
+ finite-energy statements.
+ \end{remark}
+ 
+@@ -2119,9 +1990,9 @@
+ it establishes neither a separate universality theorem for all
+ deterministic boundaries nor a limiting theorem for
+ $\omega_{K,T_K}$.
+ 
+-The distinction between the two improved discrepancy inputs is useful:
++The integrated bound and its sublinear consequence have distinct uses:
+ $v_P(t)=o(t)$ makes the average quadratic displacement $o(K)$ per
+ particle, whereas $\int_1^\infty v_P(t)t^{-2}\dd t<\infty$ supplies
+ the half-line force envelopes. The linear bound alone gives neither
+ of these two improvements. The weak confinement can be chosen between
+@@ -2324,8 +2195,18 @@
+ \emph{Journal of Approximation Theory} \textbf{243} (2019), 1--24.
+ References here use arXiv:1703.02349v2, 21 March 2019.
+ \url{https://arxiv.org/abs/1703.02349v2}.
+ 
++\bibitem[Leb16]{Leble}
++Thomas Lebl\'e,
++\emph{Logarithmic, Coulomb and Riesz energy of point processes}.
++\emph{Journal of Statistical Physics} \textbf{162} (2016), no.~4,
++887--923. \href{https://doi.org/10.1007/s10955-015-1425-4}
++{doi:10.1007/s10955-015-1425-4}.
++Proposition and equation numbers cited here refer to
++arXiv:1509.05253v1, 17 September 2015.
++\url{https://arxiv.org/abs/1509.05253v1}.
++
+ \bibitem[LS17]{LS}
+ Thomas Lebl\'e and Sylvia Serfaty,
+ \emph{Large deviation principle for empirical fields of Log and Riesz gases}.
+ \emph{Inventiones Mathematicae} \textbf{210} (2017), no.~3, 645--757.

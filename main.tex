@@ -1,0 +1,277 @@
+\documentclass[11pt,reqno]{amsart}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[letterpaper,margin=1in]{geometry}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb,mathtools,mathrsfs}
+\usepackage[hidelinks,pdfusetitle]{hyperref}
+\usepackage{enumitem}
+\usepackage{needspace}
+\numberwithin{equation}{section}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newcommand{\R}{\mathbb R}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\N}{\mathbb N}
+\newcommand{\E}{\mathbb E}
+\newcommand{\1}{\mathbf 1}
+\newcommand{\Conf}{\operatorname{Conf}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\PV}{\operatorname{PV}}
+\newcommand{\Ent}{\operatorname{Ent}}
+\newcommand{\Sine}{\operatorname{Sine}}
+\newcommand{\Id}{\mathrm{Id}}
+\newcommand{\Leb}{\operatorname{Leb}}
+\DeclareMathOperator{\Law}{Law}
+\newcommand{\dd}{\,d}
+\newcommand{\gap}{\mathfrak g}
+\newcommand{\calB}{\mathcal B}
+\newcommand{\calI}{\mathcal I}
+\newcommand{\calE}{\mathcal E}
+\newcommand{\calF}{\mathcal F}
+\newcommand{\calG}{\mathcal G}
+\newcommand{\DLR}{\mathcal{K}}
+\newcommand{\fish}{\text{Fish}}
+\newcommand{\norm}[1]{\left\lVert #1\right\rVert}
+\newcommand{\abs}[1]{\left\lvert #1\right\rvert}
+\DeclareMathOperator{\supp}{supp}
+\DeclareMathOperator{\diver}{div}
+\allowdisplaybreaks[2]
+\setlength{\emergencystretch}{1.5em}
+\setlist[enumerate]{leftmargin=*,itemsep=3pt,topsep=5pt}
+\title[Uniqueness of the logarithmic DLR state]{Uniqueness of the stationary logarithmic DLR state}
+\date{Research manuscript draft\\9 September 2026; revised and simplified 10 September 2026}
+\subjclass[2020]{60G55, 60K35, 82B21, 60B20}
+\keywords{Logarithmic gas, DLR equations, Sine beta process, hyperuniformity, Palm measure, entropy}
+
+\begin{document}
+\begin{proposition}[Entropy and Fisher-information bounds for gap averages]\label{prop:gap-entropy}
+Fix $\beta>0$, an integer $r\ge1$, and $G\in C_c^2((0,\infty)^r)$.
+There is a constant $C_G<\infty$ such that, for every integer
+$K\ge2r+1$, every $T>0$, and every probability measure $\mu$ on
+$\Omega_K$,
+\begin{align}
+|\mu(F_K)-\omega_{K,T}(F_K)|^2
+&\le \frac{C_G}{K}S(\mu\mid\omega_{K,T}),\label{eq:entropy-gap}\\
+|\mu(F_K)-\omega_{K,T}(F_K)|^2
+&\le \frac{C_GT}{K}I(\mu\mid\omega_{K,T}).\label{eq:fisher-gap}
+\end{align}
+More precisely, choose $B<\infty$ so that
+$\supp G\subset(0,B)^r$, and put
+\[
+M_0=\norm G_\infty,\qquad
+M_1=\max_a\norm{\partial_aG}_\infty,\qquad
+M_2=\max_{a,b}\norm{\partial_{ab}G}_\infty.
+\]
+The constant may be chosen to depend only on
+$\beta,r,B,M_0,M_1,M_2$.
+\end{proposition}
+
+
+\begin{proof}
+Write $\Phi=\Phi_{K,T}$ and $n=K-r\ge K/2$. For $v\in\R^K$,
+extend $v$ by $v_0=v_{K+1}=0$ and put $d_i=v_{i+1}-v_i$.
+Nearest-neighbor interactions and the two endpoint charges give
+\begin{equation}\label{eq:hessian}
+v^\top\Phi''(u)v
+\ge\beta\sum_{i=0}^K\frac{d_i^2}{g_i(u)^2}
+   +\frac1T|v|^2.
+\end{equation}
+Every remaining logarithmic interaction has nonnegative Hessian.
+We use the stronger gap-dependent part of this lower bound to obtain
+the factor $K^{-1}$; the uniform part alone would not give it.
+
+\smallskip\noindent\textit{First gap derivatives.}
+Regard $F_K$ as a function of the gaps and set
+$q_j=\partial F_K/\partial g_j$. Each gap belongs to at most $r$
+windows, so
+\[
+q_j=\frac1n\sum_{\substack{1\le i\le n\\i\le j\le i+r-1}}
+  \partial_{j-i+1}G(g_i,\ldots,g_{i+r-1}),\qquad
+|q_j|\le\frac{rM_1}{n}\le\frac{2rM_1}{K}.
+\]
+The endpoint coefficients $q_0,q_K$ vanish. Since the support of
+each derivative is contained in $\supp G$, a nonzero $q_j$ requires
+$g_j\le B$. Consequently
+\[
+\sum_{j=0}^K q_j^2g_j^2\le\frac{4r^2M_1^2B^2}{K}.
+\]
+Weighted Cauchy--Schwarz and \eqref{eq:hessian} now give
+\[
+|\nabla F_K\cdot v|^2
+=\abs{\sum_jq_jd_j}^2
+\le\left(\beta^{-1}\sum_jq_j^2g_j^2\right)
+     \left(\beta\sum_j\frac{d_j^2}{g_j^2}\right)
+\le\frac{A_1}{K}v^\top\Phi''v,
+\qquad A_1=\frac{4r^2B^2M_1^2}{\beta}.
+\]
+Taking the supremum over $v$ in this quadratic-form duality yields
+\begin{equation}\label{eq:gradient-metric}
+\nabla F_K^\top(\Phi'')^{-1}\nabla F_K\le A_1/K.
+\end{equation}
+
+\smallskip\noindent\textit{Second gap derivatives and window overlap.}
+Let $w_i=(g_i,\ldots,g_{i+r-1})$ and let $J_i$ be the indicator
+that $w_i$ belongs to the support of $D^2G$. Then
+\[
+\begin{split}
+|v^\top F_K''v|
+&\le\frac{M_2}{n}\sum_{i=1}^n
+  J_i\left(\sum_{a=0}^{r-1}|d_{i+a}|\right)^2\\
+&\le\frac{rM_2}{n}\sum_{i=1}^nJ_i
+  \sum_{a=0}^{r-1}d_{i+a}^2\\
+&\le\frac{rM_2B^2}{n}\sum_{i=1}^n
+  \sum_{a=0}^{r-1}\frac{d_{i+a}^2}{g_{i+a}^2}
+\le\frac{r^2M_2B^2}{n}\sum_{j=0}^K\frac{d_j^2}{g_j^2}.
+\end{split}
+\]
+In the third line, every gap in an active window is at most $B$;
+in the last line, every gap is counted at most $r$ times. Thus
+\begin{equation}\label{eq:tilt-hessian}
+|v^\top F_K''v|
+\le\frac{A_2}{K}
+ v^\top(\beta H_K^{{\rm lat}\,\prime\prime})v,
+\qquad A_2=\frac{2r^2B^2M_2}{\beta}.
+\end{equation}
+
+\smallskip\noindent\textit{Uniformity over the tilted laws.}
+For $s\in\R$, define the exponentially tilted probability measure
+\[
+\omega_s(\dd u)=
+\frac{e^{sF_K(u)}}{\omega_{K,T}(e^{sF_K})}\,\omega_{K,T}(\dd u),
+\]
+Set $c_G=[2(1+A_2)]^{-1}$. The same pointwise estimate
+\eqref{eq:tilt-hessian}, with no dependence on $s,K,T$, gives
+for every $|s|\le c_GK$
+\[
+(\Phi-sF_K)''
+\ge\tfrac12\beta H_K^{{\rm lat}\,\prime\prime}+T^{-1}\Id_K
+\ge\tfrac12\Phi''.
+\]
+The Brascamp--Lieb inequality in Lemma~\ref{lem:convex-approx},
+followed by \eqref{eq:gradient-metric}, therefore gives
+\[
+\Var_{\omega_s}F_K
+\le\E_{\omega_s}\bigl[
+\nabla F_K^\top((\Phi-sF_K)'')^{-1}\nabla F_K\bigr]
+\le\frac{2A_1}{K}
+\qquad(|s|\le c_GK).
+\]
+This estimate first holds on each gap-truncated simplex and passes
+to $\omega_s$ with the same constants, as proved in the appendix.
+If $\psi(s)=\log\omega_{K,T}(e^{sF_K})$, then
+$\psi''(s)=\Var_{\omega_s}F_K$. Integrating twice from zero yields
+\begin{equation}\label{eq:mgf}
+\log\E_{\omega_{K,T}}
+\exp\{s(F_K-\omega_{K,T}(F_K))\}
+\le A_1s^2/K,\qquad |s|\le c_GK.
+\end{equation}
+
+\smallskip\noindent\textit{Entropy and Fisher information.}
+The entropy inequality, used with either sign, gives
+\[
+|\mu(F_K)-\omega_{K,T}(F_K)|
+\le\frac{S(\mu\mid\omega_{K,T})}{s}+\frac{D s}{K},
+\qquad 0<s\le c_GK,\qquad D=1+A_1.
+\]
+Abbreviate $S=S(\mu\mid\omega_{K,T})$ for the rest of this paragraph.
+When $0<S\le Dc_G^2K$, choose $s=\sqrt{SK/D}$ to obtain the
+square bound $4DS/K$; the case $S=0$ follows by $s\downarrow0$.
+When $S>Dc_G^2K$, use
+$|\mu(F_K)-\omega_{K,T}(F_K)|\le2M_0$ instead.
+Thus \eqref{eq:entropy-gap} holds, for example, with any
+\[
+C_G\ge\max\{4D,\,4M_0^2/(Dc_G^2)\}.
+\]
+When $S=+\infty$, \eqref{eq:entropy-gap} is immediate.
+Finally, the uniform convexity in \eqref{eq:hessian} and the
+logarithmic Sobolev part of Lemma~\ref{lem:convex-approx} imply
+\begin{equation}\label{eq:lsi}
+S(\mu\mid\omega_{K,T})\le\frac T2 I(\mu\mid\omega_{K,T}),
+\end{equation}
+which proves \eqref{eq:fisher-gap} after enlarging the constant if
+necessary. The static convexity inequalities are also used in
+\cite[Sections~3 and 5]{BEY}. The appendix makes their use on the
+singular simplex, including the weak Fisher-information domain,
+explicit for every $\beta>0$.
+\end{proof}
+\section{New Pro}
+\begin{proposition}[Entropy and Fisher-information bounds for gap averages]\label{prop:gap-entropy}
+Fix $\beta>0$, an integer $r\ge1$, and $G\in C_c^2((0,\infty)^r)$.
+There is a constant $C_G<\infty$ such that, for every integer
+$K\ge2r+1$, every $T>0$, and every probability measure $\mu$ on
+$\Omega_K$,
+\begin{align}
+|\mu(F_K)-\omega_{K,T}(F_K)|^2
+&\le \frac{C_GT}{K}\fish(\mu\mid\omega_{K,T}).\label{eq:fisher-gap}
+\end{align}
+\end{proposition}
+\begin{proof}
+Applying Lemmas \ref{lem:entropicControl} and \ref{lem:varFormula} to $|\mu(F_K)-\omega_{K,T}(F_K)|$ gives
+  $$
+|\mu(F_K)-\omega_{K,T}(F_K)|
+\le
+\frac{1}{s}\left[
+\operatorname{Ent}(\mu\mid\nu)
++\int_0^s \int_0^u \Var_{\omega_t}(f)\ dt\ du
+\right]
+$$
+where $\omega_t$ is the Gibbs measure on $\Omega_K$ with with potential $\DLR_\Z-sF_k$. Now, Lemma \ref{lem:computatialEstimates} and (trouver ref) entails that Poincaré's inequality holds for $\omega_t$ leading to
+$$
+\Var_{\omega_t}(f)\leq \E_{\omega_t}\left[\|\nabla F_K \|_{((\DLR^{\tiny pen}_\Z-sF_k)'')^{-1}}\right]
+$$
+
+
+\end{proof}
+
+\begin{lemma}
+\label{lem:entropicControl}
+    Let $\mu$ and $\nu$ be two probability measures. Then, for any measurable function $f\in L^1(\mu)\cap L^1(\nu)$ and any $s>0$, we have
+    $$
+|\mu(f)-\nu(f)|
+\le
+\frac{1}{s}\left[
+\operatorname{Ent}(\mu\mid\nu)
++
+\max\!\left\{
+\log \nu\!\left(e^{s(f-\nu (f))}\right),
+\log \nu\!\left(e^{-s(f-\nu (f))}\right)
+\right\}
+\right].
+$$
+\end{lemma}
+\begin{proof}
+    This is a direct consequence of Donsker-Varadhan inequality applied to $sf$ then to $-sf$.
+\end{proof}
+\begin{lemma}
+    Let $\nu$ be a probability measures. Then, for any bounded measurable function $f$ and any $s>0$, we have
+    $$
+\log \nu\!\left(e^{s(f-\nu (f))}\right)=\int_0^s \int_0^u \Var_{\nu_t}(f)\ dt\ du
+$$
+where $\nu_s$ is the probability such that $\nu_s(dx) \propto e^{sf(x)}\ \nu(dx) $
+\end{lemma}
+\begin{proof}
+It simply follows from differentiating two times w.r.t.\ $s$ and Lebesgue differentiation theorem.
+\end{proof}
+\begin{lemma}
+    \label{lem:computatialEstimates}
+    \begin{itemize}
+        \item 
+        $$\|\nabla F_K\|_{(\DLR^{\tiny pen}_\Z)''}\lesssim K^{-1}$$
+        \item 
+        $$F_K '' \lesssim \frac{\beta}{K} \DLR''_{\Z} $$
+        \item 
+        \[
+(\DLR^{\tiny pen}_{\Z}-sF_K)''
+\ge\tfrac12\beta H_K^{{\rm lat}\,\prime\prime}+T^{-1}\Id_K
+\ge\tfrac12 \DLR^{\tiny pen}_{\Z}''.
+\]
+    \end{itemize}
+\end{lemma}
+\end{document}
