@@ -1,77 +1,45 @@
 # Uniqueness of  DLR equation in the continuum
 
-A collaborative study of uniqueness for the logarithmic
-Dobrushin–Lanford–Ruelle (DLR) equations.
+A collaborative study of uniqueness for the
+Dobrushin–Lanford–Ruelle (DLR) equations for point processes in the continnum, mainly in dimension 1.
 
-The aim is to build a coherent, checked account of the mathematics: what is
+The aim is to build a coherent, checked, reader-friendly account of the mathematics: what is
 known, which arguments work, and which questions remain. This project follows
-the approach proposed in Benoît Henry’s essay *The Loss of Singularity*:
-shared understanding, contributions in many forms, and the possibility of a
-future manuscript under a collective name.
+the the idea of: shared understanding, contributions in many forms, and the possibility of a
+future manuscript under a collective name, with the idea of rejection of ownership of results or proofs, or of credit.
 
-**Status: private research workspace; the mathematical drafts await review.**
-The repository setup and a successful LaTeX build do not establish the
-correctness of the proofs. See the [review status](docs/STATUS.md) for the
-current starting points and known gaps.
+## Claimed results
+Claimed results are results said to be proved but have not had been checked nor rewritten. 
+The notes associated to claimed results are put in raw materials.
 
-## Start here
+- For every $\beta>0$, the one-dimensional canonical logarithmic DLR equations have at most one stationary simple solution of intensity one satisfying $\int_1^\infty \operatorname{Var}(N_{(0,t]})t^{-2}\,dt<\infty$ ([comparison theorem](<Raw materials/Revised 2/logarithmic_dlr_uniqueness_simplified.tex>)).
+- Every stationary canonical logarithmic DLR solution with finite expected renormalized energy, under the draft's unit-background and truncation conventions, equals $\mathrm{Sine}_\beta$ ([finite-energy uniqueness](<Raw materials/Revised 2/logarithmic_dlr_uniqueness_simplified.tex>)).
+- Finite expected renormalized logarithmic energy with unit background implies integrated number-variance control and hence sublinear number variance for any stationary simple point process ([energy-to-variance bound](<Raw materials/Revised 2/logarithmic_dlr_uniqueness_simplified.tex>)).
+- Every canonical logarithmic DLR law is stationary if its sums of squared unit-interval counts grow at most linearly almost surely ([automatic stationarity](<Raw materials/nonstationary_dlr_extension.tex>)).
+- The finite-energy identification with $\mathrm{Sine}_\beta$ extends to canonical logarithmic DLR laws without assuming stationarity, under the same energy conventions ([nonstationary uniqueness](<Raw materials/nonstationary_dlr_extension.tex>)).
+- At $\beta=2$, a canonical logarithmic DLR law equals $\mathrm{Sine}_2$ if its ordered points satisfy $p_k/k\to1$ in both directions and its symmetric reciprocal sum converges ([conditional-universality consequence](<Raw materials/nonstationary_dlr_extension.tex>)).
+- For smooth exponentially decaying perturbations of the logarithmic interaction that preserve the stated curvature bound, stationary simple unit-intensity canonical DLR solutions are unique under integrated number-variance control and the additional Palm crowding moment ([conditional extension](<Raw materials/dlr_generalization_note.tex>)).
+- For every $\beta>0$ and $V(r)=-a_0\log r+W(r)$ with $a_0>0$, $W\in C^2([0,\infty))$ of finite range and $V''(r)>0$, there is at most one stationary simple unit-intensity canonical DLR solution satisfying linear and sublinear number-variance bounds, integrated number-variance control and $\mathbb E_P N_{[0,1]}^3<\infty$ ([finite-range perturbations](<Raw materials/dlr_generalizations.tex>)).
+- For every $s,\beta>0$, the one-dimensional Riesz interaction $V_s(r)=r^{-s}$ has at most one stationary simple unit-intensity solution to its relative-energy canonical DLR equations satisfying linear and sublinear number-variance bounds ([Riesz uniqueness](<Raw materials/dlr_generalizations.tex>)).
+- For every $\beta,\rho>0$, the one-dimensional Coulomb interaction $g(x)=-|x|$ has exactly one translation-invariant solution of intensity $\rho$ to the stated symmetric Cesàro canonical particle DLR equations ([Coulomb uniqueness](<Raw materials/coulomb_particle_dlr_uniqueness.tex>)).
 
-| Material | Role |
-| --- | --- |
-| [Latest full draft](<Raw materials/Revised 2/logarithmic_dlr_uniqueness_simplified.tex>) | Starting point for reading the complete argument, including definitions and bibliography. |
-| [Existing draft PDF](<Raw materials/Revised 2/logarithmic_dlr_uniqueness_simplified.pdf>) | PDF supplied with that revision; use the build below to regenerate it locally. |
-| [main.tex](main.tex) | Active working fragment on the entropy/Fisher-information comparison. It contains an unfinished alternative proof and is not the full manuscript. |
-| [Raw materials](<Raw materials/README.md>) | Earlier drafts, revision notes, and patches retained for provenance. |
-| [Review status](docs/STATUS.md) | Claims awaiting review, known source issues, and immediate tasks. |
-| [Contributing](CONTRIBUTING.md) | How to propose, explain, and check a contribution. |
+## Checked results
+Results that have been verified and digested.
 
-The supplied full draft studies stationary, simple, unit-intensity point
-processes on the line. Its proposed comparison theorem assumes an integrated
-number-variance bound; a further argument aims to derive that bound from finite
-renormalized logarithmic electric energy. These are the draft’s claims, pending
-review here.
+
+## Disclaimer
+
+By participating at this project, you withdraw all you claim of ownership on the results that you provide. We believe that ownership of a proof or a mathematical result has become a non sensical concept and as such should be rejected. 
 
 ## Working principles
 
 - Questions, proofs, counterexamples, reference checks, exposition, and computation
   all contribute to the project.
 - AI use is optional. Contributions are assessed through their mathematical
-  content and checks. Record useful provenance when it is known.
+  content and checks. Record useful provenance when it is known but it is optional we don't really care. Consider that AI use is assumed.
 - Keep established results, proposed arguments, and open gaps distinguishable.
   Cite sources precisely, including the version used when numbering matters.
 - Git history records who changed what; it is not a ranking or a claim of
   ownership of a theorem. A collective publication name and acknowledgments
   remain to be discussed with contributors.
 
-## Build locally
-
-With GNU Make, `latexmk`, and a TeX installation containing the packages used
-by the sources:
-
-```sh
-make manuscript
-```
-
-This compiles the latest full draft to
-`build/manuscript/logarithmic_dlr_uniqueness_simplified.pdf`.
-
-```sh
-make working
-```
-
-This attempts to compile `main.tex` to `build/working/main.pdf`. It currently
-stops at an existing double-superscript error on line 273. The working fragment
-also has unresolved references and duplicate labels, listed in
-[the status file](docs/STATUS.md). Neither command uploads files or installs
-dependencies.
-
-## Repository access
-
-Any hosted repository must be **private**. Creating it, pushing content,
-inviting collaborators, changing settings, or publishing material requires
-Benoît’s approval before the online operation. No hosted service or remote is
-configured by these project files.
-
-The personal essay `TheLossOfSingularity.pdf` stays local and is excluded from
-Git. The mathematical drafts and their supplied PDFs are intended to be
-tracked. Generated build files and local credentials are ignored.
