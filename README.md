@@ -2,7 +2,7 @@
 
 A collaborative study of uniqueness for the Dobrushin–Lanford–Ruelle (DLR) equations for point processes in the continuum, mainly in dimension 1.
 
-Every result, method, or proof on this Git repository is completely free to use (under a very permissive license). If you want to take it, write your own article, and add to the noise, you are free to do so. However, we believe that the current capabilities of AI should push us toward a more collaborative, less ego-driven way of doing mathematics. We generally believe that there is no point in claiming for yourself results that are or can be easily AI-generated (more info in the manifesto). You are very welcome to join us.
+Every result, method, or proof on this Git repository is completely free to reuse. If you want to take it, write your own article, and add to the noise, you are free to do so. However, we believe that the current capabilities of AI should push us toward a more collaborative, less ego-driven way of doing mathematics. We generally believe that there is no point in claiming for yourself results that are or can be easily AI-generated (more info in the manifesto). So we advice against participating to the noise and to join us. You are very welcome.
 
 It is still not very clear how we will work together, but there is a Discord server available for discussion.
 
