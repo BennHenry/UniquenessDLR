@@ -14,9 +14,9 @@ The final aim is to build a coherent, checked, reader-friendly account of the ma
 
 * This project started with an attempt to produce a fully automated proof of uniqueness for the DLR equations of $\mathrm{Sine}_\beta$. The goal was to prove that this was possible. To avoid contamination from a recent preprint, the first attempt was produced without internet access for the model, allowing it to generate what we think is a very simple proof. Extensions were then produced for different models under different hypotheses.
 
-## Promised results
+## Announced results
 
-Promised results are results claimed to be proved but that have not yet been checked or rewritten.
+Announced results are results claimed to be proved but that have not yet been checked or rewritten.
 
 The notes associated with the claimed results are placed in Raw materials.
 
