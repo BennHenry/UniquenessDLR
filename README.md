@@ -12,7 +12,7 @@ The final aim is to build a coherent, checked, reader-friendly account of the ma
 
 ## History
 
-* This project started with an attempt to produce a fully automated proof of uniqueness for the DLR equations of $\mathrm{Sine}_\beta$. The goal was to prove that this was possible. To avoid contamination from a recent preprint, the first attempt was produced without internet access for the model, allowing it to generate what we think is a very simple proof. Extensions were then produced for different models under different hypotheses.
+* This project started with an attempt to produce a fully automated proof of uniqueness for the DLR equations of $\mathrm{Sine}_\beta$. The goal was to prove that this was possible. To avoid contamination from a recent preprint of Theodoros Assiotis, the first attempt was produced without internet access for the model, allowing it to generate what we think is a very simple proof. Extensions were then produced for different models under different hypotheses.
 
 ## Announced results
 
