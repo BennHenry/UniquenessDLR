@@ -1,0 +1,1031 @@
+\documentclass[11pt,reqno]{amsart}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,microtype,amsmath,amssymb,mathtools}
+\usepackage[margin=1in]{geometry}
+\usepackage[hidelinks]{hyperref}
+\usepackage{enumitem,needspace}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newcommand{\R}{\mathbb R}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\E}{\mathbb E}
+\newcommand{\1}{\mathbf 1}
+\newcommand{\dd}{\,d}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\Ent}{\operatorname{Ent}}
+\newcommand{\Lip}{\operatorname{Lip}}
+\newcommand{\Conf}{\operatorname{Conf}}
+\newcommand{\cF}{\mathcal F}
+\newcommand{\cA}{\mathcal A}
+\numberwithin{equation}{section}
+\allowdisplaybreaks[2]
+\setlength{\emergencystretch}{2em}
+\setlist[enumerate]{leftmargin=*,itemsep=4pt}
+\title[Particle DLR and stationary uniqueness for 1D jellium]{Particle-only DLR equations and stationary uniqueness\\for one-dimensional Coulomb jellium}
+\date{14 September 2026}
+\hypersetup{pdftitle={Particle-only DLR equations and stationary uniqueness for one-dimensional Coulomb jellium},pdfsubject={Canonical Coulomb specifications, field reconstruction, and stationary uniqueness}}
+\begin{document}
+\begin{abstract}
+We specify canonical particle-only DLR equations for the genuine
+one-dimensional Coulomb potential $g(x)=-|x|$, using symmetric Ces\`aro
+averages of particle--background energy differences and an explicit
+summability domain. At every inverse temperature $\beta>0$ and background
+density $\rho>0$, these equations have exactly one point-process solution
+of intensity $\rho$ invariant under all real translations. The principal
+step is a more general lifting theorem: finite Gaussian conditional
+densities with the Coulomb curvature determine a measurable stationary
+electric field through consistency on nested intervals. The exterior
+field contains exactly the information in the exterior particles and
+the interior count. No discrepancy bound, field moment, or deterministic
+asymptotic density is assumed in this theorem. A complete entropy and
+Palm proof of stationary field-DLR uniqueness is included. Existence is
+deduced from published finite-volume field estimates. The argument does
+not require a classification of all nonstationary crystalline phases.
+\end{abstract}
+\maketitle
+
+\section{Introduction and main conclusions}
+
+The potential considered throughout is
+\[
+g(x)=-|x|,\qquad -g''=2\delta_0,
+\]
+with background charge $-\rho\dd x$ and particles of charge $+1$.
+This is not the logarithmic interaction, nor the three-dimensional
+Coulomb potential restricted to a line. Our pair--background energy
+includes a factor $1/2$ in the double integral; its field representation
+is $\int E^2$ when $E'=\gamma-\rho\dd x$.
+
+Long-range interactions require a summation convention before an
+infinite-volume DLR statement has a definite meaning. Section~\ref{sec:spec}
+defines such a convention directly from finite particle--background
+energies. It does not put existence of a field lift into the definition.
+
+\begin{theorem}[Stationary particle uniqueness]\label{thm:particle-main}
+For every $\beta,\rho>0$, the symmetric Ces\`aro canonical specification
+of Definition~\ref{def:particle-dlr} has exactly one probability solution
+$P_{\beta,\rho}$ on $\Conf(\R)$ which has intensity $\rho$ and is
+invariant under all real translations. Every such solution admits the
+deterministic jointly stationary field-DLR lift
+\[
+Q(\dd\gamma,\dd c)=P_{\beta,\rho}(\dd\gamma)
+\delta_{-L_\rho(\gamma)}(\dd c),
+\]
+where $L_\rho$ is the particle statistic in \eqref{eq:cesaro}.
+Its almost-sure density in each direction is $\rho$.
+\end{theorem}
+
+There are three separate ingredients. The lifting theorem in
+Section~\ref{sec:lift} applies to any particle law with finite,
+exterior-measurable Gaussian conditional coefficients. It uses neither
+Ces\`aro summability nor a field moment. Sections~\ref{sec:quadratic}--\ref{sec:palm}
+prove at most one stationary field-DLR law by a finite-block entropy
+comparison. Section~\ref{sec:existence} supplies existence for the
+specified normalization using established finite-volume estimates.
+
+The distinction between a prescribed mean intensity and an almost-sure
+density is essential: the latter is derived, including for nonergodic
+laws. Empty configurations require separate treatment because canonical
+resampling can never insert the first particle. They are explicitly
+accounted for in Theorem~\ref{thm:lift}.
+
+The classical works of Kunz~\cite{Kunz} and Aizenman--Martin~\cite{AM}
+are the relevant historical background. Aizenman--Jansen--Jung~\cite{AJJ}
+give an accessible field formulation and the estimates used here.
+Our claim is a theorem for the standalone specification stated below;
+we make no claim of priority for stationary uniqueness and do not use
+a classical classification theorem with an unspecified admissibility class.
+
+\section{Configuration space and field kernels}\label{sec:setup}
+
+Let $\Conf(\R)$ be the space of locally finite simple counting measures,
+with its usual Borel structure. Write $N_B(\gamma)=\gamma(B)$ and
+$\theta_t\gamma=\gamma-t$. A stationary law of finite intensity
+$\lambda$ satisfies $\E N_B=\lambda|B|$ for bounded Borel $B$.
+In particular, every deterministic location is unoccupied almost surely.
+The background parameter $\rho$ need not initially equal $\lambda$.
+
+For any configuration define the right-continuous anchored primitive
+\begin{equation}\label{eq:primitive}
+D_\gamma(t)=
+\begin{cases}
+N_{(0,t]}(\gamma)-\rho t,&t\ge0,\\
+-N_{(t,0]}(\gamma)-\rho t,&t<0.
+\end{cases}
+\end{equation}
+Then $D_\gamma(0)=0$, $D_\gamma'=\gamma-\rho\dd x$, and, for $s<t$,
+\begin{equation}\label{eq:cocycle}
+D_\gamma(t)-D_\gamma(s)=N_{(s,t]}-\rho(t-s).
+\end{equation}
+All finite-valued right-continuous fields with this derivative have the
+form $E_\gamma(x)=C+D_\gamma(x)$.
+
+For $I=(a,b)$ let
+\[
+\cF_I=\sigma(\gamma_{I^c},N_I).
+\]
+This is the conditioning sigma-field for a canonical particle kernel.
+For $n\ge0$ and $e\in\R$, let $K_{I,n,e}$ be the probability on
+ordered points in $I$ with density
+\begin{equation}\label{eq:gaussian-kernel}
+\frac1{Z_{I,n,e}}\exp\left\{-\beta\rho\sum_{i=1}^n
+\left(x_i-a-\frac{e+i-\frac12}{\rho}\right)^2\right\}
+\1_{\{a<x_1<\cdots<x_n<b\}}\dd x_1\cdots\dd x_n.
+\end{equation}
+For $n=0$ this is the point mass on the empty configuration. The
+normalizing constant is finite and positive for every finite $e,n$.
+
+\begin{definition}[Canonical field-DLR]\label{def:field-dlr}
+A law of $(\gamma,C)$, with $E=C+D_\gamma$, satisfies field-DLR if,
+conditionally on the particles and field outside each bounded
+deterministic interval $I=(a,b)$, the interior particles have law
+$K_{I,N_I,E(a)}$. The exterior field is retained and the interior field is
+\begin{equation}\label{eq:dlr}
+E(t)=E(a)+\sum_{i=1}^{N_I}\1_{\{x_i\le t\}}-\rho(t-a),
+\qquad a<t<b.
+\end{equation}
+For stationary finite-intensity laws, endpoint particles have probability
+zero, and the exterior field determines $N_I=E(b)-E(a)+\rho(b-a)$.
+If $0\in I$, $C$ is updated to the value of the resampled field at zero.
+\end{definition}
+
+Translations of fields are $E(x)\mapsto E(x+t)$. Joint stationarity is
+equivalent to invariance in law under
+\[
+(\gamma,C)\mapsto(\theta_t\gamma,C+D_\gamma(t)).
+\]
+Equality of this law for each fixed real $t$ is the stationarity
+requirement; a single exceptional null set valid for all $t$ is not
+needed.
+
+\section{A particle-only Ces\`aro specification}\label{sec:spec}
+
+\begin{definition}[Summability domain]\label{def:domain}
+Let $\cA_\rho$ consist of configurations for which the following limit
+exists and is finite:
+\begin{equation}\label{eq:cesaro}
+L_\rho(\gamma)=\lim_{T\to\infty}\frac1{2T}
+\int_{-T}^T D_\gamma(u)\dd u.
+\end{equation}
+\end{definition}
+
+This is a Borel set: the finite-$T$ expressions are Borel in $\gamma$
+and continuous in $T>0$, so rational $T$ suffice to test the limit.
+No discrepancy bound or asymptotic density is part of the definition.
+The cancellation of the odd function $\rho u$ also shows that the
+set and statistic in \eqref{eq:cesaro} are independent of $\rho$;
+the background parameter still enters all local energies.
+
+For $I=(a,b)$, an exterior configuration $\zeta$, and an interior
+configuration $\xi$, write
+\[
+\mu_R^\xi=(\xi+\zeta-\rho\dd x)|_{(-R,R]},\qquad
+U_R(\xi)=\frac12\iint g(x-y)\dd\mu_R^\xi(x)\dd\mu_R^\xi(y).
+\]
+Endpoint conventions for $R$ do not change any of the averages below.
+There is no point self-energy divergence since $g(0)=0$.
+For two interiors $\xi,\eta$ of equal cardinality define
+\begin{equation}\label{eq:relative-energy}
+\Delta H_I(\xi,\eta;\zeta)
+=\lim_{T\to\infty}\frac1T\int_{R_0}^T
+\bigl(U_R(\xi)-U_R(\eta)\bigr)\dd R,
+\end{equation}
+where $(-R_0,R_0)$ contains $\overline I$.
+
+\begin{proposition}[Finite local energies and canonical closure]\label{prop:energy}
+Suppose $\eta+\zeta\in\cA_\rho$ and $|\xi|=|\eta|$. Then
+$\xi+\zeta\in\cA_\rho$, \eqref{eq:relative-energy} exists, and,
+on writing
+\begin{equation}\label{eq:normalized-field}
+\mathcal E_\gamma(x)=D_\gamma(x)-L_\rho(\gamma),
+\end{equation}
+one has
+\begin{align}
+\mathcal E_{\xi+\zeta}&=\mathcal E_{\eta+\zeta}
+&&\text{outside }I,\label{eq:retained-field}\\
+\Delta H_I(\xi,\eta;\zeta)
+&=\int_a^b\left(\mathcal E_{\xi+\zeta}^2
+-\mathcal E_{\eta+\zeta}^2\right)\dd t.\label{eq:energy-field}
+\end{align}
+The relative energy is independent of $R_0$ and satisfies the cocycle
+identity in its two interior arguments.
+\end{proposition}
+
+\begin{proof}
+Let $\delta=\xi-\eta$ and let $d(t)=\delta(( -\infty,t])$.
+Since $\delta(\R)=0$, $d$ vanishes outside $I$. The anchored
+primitives satisfy
+\[
+D_{\xi+\zeta}(t)-D_{\eta+\zeta}(t)=d(t)-d(0).
+\]
+Taking symmetric means gives
+$L_\rho(\xi+\zeta)-L_\rho(\eta+\zeta)=-d(0)$.
+This proves canonical closure and
+$\mathcal E_{\xi+\zeta}-\mathcal E_{\eta+\zeta}=d$.
+
+For $|t|<R$, the right-continuous field $-\frac12(g*\mu_R^\eta)'$
+is
+\begin{equation}\label{eq:cutoff-field}
+E_R^\eta(t)=D_{\eta+\zeta}(t)
+-\frac{D_{\eta+\zeta}(R)+D_{\eta+\zeta}(-R)}2.
+\end{equation}
+The integration-by-parts identity for the neutral compactly supported
+measure $\delta=d'$ gives
+\[
+U_R(\xi)-U_R(\eta)=\int_I\left(2E_R^\eta(t)d(t)+d(t)^2\right)\dd t.
+\]
+No neutrality assumption on $\mu_R^\eta$ is necessary: $d$ is compactly
+supported, so no boundary term remains. The Ces\`aro mean of the last
+term in \eqref{eq:cutoff-field} is $L_\rho(\eta+\zeta)$, which proves
+\eqref{eq:energy-field}. The remaining statements follow directly.
+\end{proof}
+
+\begin{definition}[Symmetric Ces\`aro canonical particle-DLR]\label{def:particle-dlr}
+For $\gamma\in\cA_\rho$, retain $\zeta=\gamma_{I^c}$ and $n=N_I$.
+The conditional density of $n$ ordered interior points is proportional
+to
+\begin{equation}\label{eq:particle-dlr}
+\exp[-\beta\Delta H_I(\xi,\eta;\zeta)]
+\1_{\{a<x_1<\cdots<x_n<b\}}\dd x_1\cdots\dd x_n,
+\end{equation}
+where $\eta$ is any $n$-point completion in $I$. A probability $P$
+satisfies these DLR equations if $P(\cA_\rho)=1$ and
+\eqref{eq:particle-dlr} is its conditional law given $\cF_I$ for
+every bounded deterministic interval $I$.
+\end{definition}
+
+The definition is standalone and uses only particle--background
+energies. Formula \eqref{eq:normalized-field} is a derived statistic,
+not an assumption about a jointly stationary extension.
+
+For explicit measurability, choose the reference completion
+$\eta=\sum_{i=1}^n\delta_{a+i(b-a)/(n+1)}$. Canonical closure shows
+that admissibility can be tested on this completion. The parameter
+\begin{equation}\label{eq:particle-coefficient}
+e_I(\zeta,n)=\mathcal E_{\eta+\zeta}(a)
+\end{equation}
+is therefore a Borel function of the retained data. It agrees with
+$\mathcal E_\gamma(a)$ for any admissible completion.
+Moving the $i$th ordered jump gives
+\[
+\partial_{x_i}\int_I\mathcal E^2
+=2\rho(x_i-a)-2e_I-2i+1.
+\]
+Thus \eqref{eq:particle-dlr} is exactly $K_{I,n,e_I}$. In particular,
+its normalization is finite and positive. The kernels retain
+admissibility and are consistent under nesting: their exterior field
+is fixed by \eqref{eq:retained-field}, and the integral energy splits
+over subintervals. These statements also follow by conditioning the
+explicit ordered Gaussian density.
+
+\begin{remark}[Scope of the normalization]\label{rem:scope}
+On arbitrary configurations $\cA_\rho$ need not be invariant under
+translation, and the normalized primitive need not be covariant.
+We assert neither property. They hold almost surely in the sense needed
+for stationary candidate laws by Theorem~\ref{thm:lift} below.
+The zero symmetric mean of $\mathcal E$ is a consequence of the declared
+summation convention, not a field-moment assumption or a consequence
+claimed from mean intensity alone.
+
+The summability issue is intrinsic to \eqref{eq:relative-energy}:
+moving one particle so that $\int_I d\ne0$ makes the averaged energy
+difference a constant minus a nonzero multiple of the symmetric average
+in \eqref{eq:cesaro}. Thus finite local-move energy differences for this
+convention require that limit. Alternative renormalizations must be
+specified separately.
+\end{remark}
+
+\section{Lifting finite Gaussian particle kernels}\label{sec:lift}
+
+The following theorem is independent of Section~\ref{sec:spec}.
+It is the link between particle-only conditional laws and a stationary
+field formulation.
+
+\begin{theorem}[Lifting theorem]\label{thm:lift}
+Let $P$ be a stationary law on $\Conf(\R)$ of finite positive intensity
+$\lambda$. Suppose that for every bounded deterministic interval
+$I=(a,b)$ there is a finite real $\cF_I$-measurable variable $e_I$ such
+that, on $\{N_I=n>0\}$, the conditional interior law is
+$K_{I,n,e_I}$. No condition on $e_I$ on $\{N_I=0\}$ is needed.
+Then, conditional on nonemptiness, $P$ admits a measurable deterministic
+jointly stationary field-DLR lift $E=C(\gamma)+D_\gamma$.
+The conditional law on nonempty configurations has intensity and
+almost-sure forward and backward density $\rho$. Consequently
+\begin{equation}\label{eq:empty-mass}
+P(\varnothing)=1-\lambda/\rho,
+\end{equation}
+so necessarily $\lambda\le\rho$. In particular, if $\lambda=\rho$,
+the whole law lifts. For every fixed $t\in\R$,
+\begin{equation}\label{eq:lift-covariance}
+C(\theta_t\gamma)=C(\gamma)+D_\gamma(t)\qquad P\text{-a.s.}
+\end{equation}
+on the nonempty component.
+\end{theorem}
+
+\begin{proof}
+The event $\{\gamma\ne\varnothing\}$ is measurable from $\cF_I$
+for every $I$: either the retained exterior is nonempty or $N_I>0$.
+Conditioning on this event preserves all the conditional laws and
+stationarity. Its probability is positive and its conditional intensity
+is finite. Work on that component until the final paragraph.
+
+\emph{Compatibility and identifiability.}
+Let $I=(a,b)\subset J=(c,d)$. Then $\cF_J\subset\cF_I$.
+Further conditioning the $J$-density on the exterior of $I$ fixes the
+number $k=N_{(c,a]}$ of particles to the left of $I$. The remaining
+ordered density in $I$ is Gaussian with coefficient
+$e_J+k-\rho(a-c)$. This follows by replacing the rank $i$ in the
+$I$-block with $k+i$ in the $J$-block. Disintegration is legitimate
+because the $J$-density is strictly positive on its ordered chamber.
+
+Two coefficients $e,e'$ in $K_{I,n,e}$, $n\ge1$, have likelihood ratio
+\[
+\text{constant}\times\exp\left(2\beta(e-e')\sum_{i=1}^n x_i\right).
+\]
+This ratio can be constant almost everywhere on the chamber only if
+$e=e'$. Uniqueness of conditional laws therefore gives
+\begin{equation}\label{eq:nested-coefficient}
+e_I=e_J+N_{(c,a]}-\rho(a-c)
+\quad\text{on }\{N_I>0\},\quad P\text{-a.s.}
+\end{equation}
+
+\emph{Measurable patching.}
+Take all rational bounded intervals, together with countably many
+rational enclosing intervals as needed. Their identities
+\eqref{eq:nested-coefficient} hold simultaneously outside one null set.
+For occupied intervals, \eqref{eq:cocycle} implies that
+\begin{equation}\label{eq:patch-C}
+e_I-D_\gamma(a)
+\end{equation}
+has the same value for any two choices of $I$: compare both to a common
+occupied enclosing interval. Select the first occupied member of the
+sequence $(-m,m)$, $m\ge1$, and use \eqref{eq:patch-C} to define $C$.
+This is finite and measurable. Define $E=C+D_\gamma$.
+For any additional fixed interval, the same identity follows by
+comparison to the exhausting rational sequence.
+
+\emph{The conditioning sigma-fields.}
+Fix $I=(a,b)$, whether or not it is occupied. Take a deterministic
+increasing sequence of intervals $K_m=(u_m,v_m)\supset I$ exhausting
+$\R$ and choose its first occupied member $K$. This choice is
+$\cF_I$-measurable, since $N_{K_m}=N_I+N_{K_m\setminus I}$.
+Both $e_K$ and the count $N_{(u_K,a]}$ are $\cF_I$-measurable.
+Patching gives
+\begin{equation}\label{eq:outside-measurability}
+E(a)=e_K+N_{(u_K,a]}-\rho(a-u_K).
+\end{equation}
+Every exterior field value follows from this boundary value and the
+exterior counts, adding the known total $N_I$ when crossing $I$.
+Hence the exterior field is $\cF_I$-measurable. Conversely it recovers
+$N_I$ from $E(b)-E(a)+\rho(b-a)$. It follows that
+\begin{equation}\label{eq:sigma-equality}
+\sigma(\gamma_{I^c},E|_{I^c})=\cF_I\quad\text{modulo null sets}.
+\end{equation}
+Right continuity permits use of countably many field evaluations here;
+the left boundary value is also recovered by a limit from the exterior.
+Deterministic endpoints are unoccupied almost surely.
+
+On $N_I>0$, \eqref{eq:nested-coefficient} identifies $E(a)=e_I$.
+On $N_I=0$ the conditional configuration is empty. Thus
+\eqref{eq:sigma-equality} proves field-DLR. Formula
+\eqref{eq:outside-measurability} also shows that exterior field values
+are retained under conditional resampling. When $0\in I$, the new
+value of $C$ is the value at zero of the bridge \eqref{eq:dlr}, so it
+is updated rather than retained.
+
+\emph{Stationarity of the lift.}
+For each fixed real $t$, stationarity of $P$ makes the translated
+$I+t$ conditional law another version of the $I$ conditional law.
+Identifiability yields
+\[
+e_I(\theta_t\gamma)=e_{I+t}(\gamma)
+\quad\text{on }\{N_{I+t}>0\},\quad P\text{-a.s.}
+\]
+Compare the countable rational family, its $t$-translate, and a
+countable family of enclosing intervals on one full-measure set.
+Since $D_{\theta_t\gamma}(a)=D_\gamma(a+t)-D_\gamma(t)$,
+\eqref{eq:patch-C} gives \eqref{eq:lift-covariance}. This proves joint
+stationarity, without asserting an uncountable intersection of null-set
+complements.
+
+\emph{Density and the empty component.}
+Stationarity of the finite-valued field gives
+\[
+\frac{N_{(0,t]}}t-\rho=\frac{E(t)-E(0)}t\longrightarrow0
+\quad\text{in probability}.
+\]
+Indeed, each of $E(t)$ and $E(0)$ has the same fixed tight distribution.
+The point-process ergodic theorem at finite intensity gives almost-sure
+and $L^1$ convergence of $N_{(0,t]}/t$ to the invariant-component
+intensity. It must therefore equal $\rho$. The backward argument is
+identical. In particular the nonempty component has mean intensity
+$\rho$. If $p=P(\varnothing)$ for the original law, its intensity is
+$\lambda=(1-p)\rho$, proving \eqref{eq:empty-mass}.
+\end{proof}
+
+\begin{corollary}[Application to the particle specification]\label{cor:cesaro-lift}
+Every stationary solution of Definition~\ref{def:particle-dlr} of
+intensity $\rho$ has the lift $C=-L_\rho(\gamma)$ in
+Theorem~\ref{thm:particle-main}.
+\end{corollary}
+\begin{proof}
+The coefficient \eqref{eq:particle-coefficient} is finite and
+$\cF_I$-measurable. Apply Theorem~\ref{thm:lift}; on any occupied
+interval, \eqref{eq:patch-C} equals $-L_\rho(\gamma)$.
+\end{proof}
+
+\begin{remark}[Which other specifications are covered?]
+The theorem concerns conditional densities, not names of normalization
+schemes. For $g=-|x|$, an exterior particle potential is affine on $I$;
+the local background has second derivative $2\rho$, and the ordered
+pair energy is linear. Consequently every finite real exterior-potential
+prescription of this form yields \eqref{eq:gaussian-kernel} and is
+covered once its measurability and admissibility have been checked.
+A kernel obtained by mixing distinct unobserved field coefficients
+need not have this form. Neither such mixtures nor kernels singular
+with respect to ordered Lebesgue measure are included by assertion.
+\end{remark}
+
+\section{Stationary field uniqueness and quadratic coordinates}\label{sec:quadratic}
+
+\begin{theorem}[Stationary field-DLR uniqueness]\label{thm:field-unique}
+Fix $\beta,\rho>0$. There is at most one jointly stationary law of
+$(\gamma,C)$ of particle intensity $\rho$ with finite-valued
+$E=C+D_\gamma$ satisfying Definition~\ref{def:field-dlr}.
+No field-moment assumption is required.
+\end{theorem}
+
+We give the proof in full in this and the next three sections.
+
+
+
+For $a<x_1<\cdots<x_n<b$, write
+\[
+ H_{a,b,e}(x)=\int_a^b
+ \left(e+\sum_{i=1}^n\1_{\{x_i\le t\}}-\rho(t-a)\right)^2\dd t.
+\]
+Moving the $i$th jump gives
+\begin{align*}
+ \partial_{x_i}H_{a,b,e}
+ &=\big(e+i-1-\rho(x_i-a)\big)^2
+   -\big(e+i-\rho(x_i-a)\big)^2\\
+ &=2\rho(x_i-a)-2e-2i+1.
+\end{align*}
+Consequently, on the ordered chamber,
+\begin{equation}\label{eq:quadratic}
+ H_{a,b,e}(x)=\rho\sum_{i=1}^n
+ \left(x_i-a-\frac{e+i-\frac12}{\rho}\right)^2+C(a,b,e,n),
+ \qquad H_{a,b,e}''=2\rho I_n.
+\end{equation}
+No neutrality relation $n=\rho(b-a)$ is required here. The background
+provides the entire Hessian; the ordered pair interaction is linear.
+
+Set
+\begin{equation}\label{eq:y}
+ y_i=\rho(x_i-a)-e+\tfrac12,\qquad \alpha=\beta/\rho.
+\end{equation}
+Let $\nu_n=\nu_{n,\alpha}$ be the probability measure on the unbounded
+ordered chamber $\mathcal O_n=\{y_1<\cdots<y_n\}$ with density
+\begin{equation}\label{eq:nu}
+ \nu_n(\dd y)=Z_n^{-1}
+ \exp\left[-\alpha\sum_{i=1}^n(y_i-i)^2\right]\dd y.
+\end{equation}
+Then the conditional law of $y$ is precisely
+\begin{equation}\label{eq:walls}
+ \mu_{n;A,B}=\nu_n(\,\cdot\mid W_{A,B}),\qquad
+ W_{A,B}=\{A<y_1,\ y_n<B\},
+\end{equation}
+where
+\begin{equation}\label{eq:AB}
+ A=\tfrac12-e,\qquad B-n=\tfrac12-f,
+ \qquad f=e+n-\rho(b-a).
+\end{equation}
+For particle endpoints, the same formulas hold with $e=E(a+)$ and
+$f=E(b-)$, since the endpoints themselves are retained.
+
+There are two useful cancellation identities:
+\begin{equation}\label{eq:marks}
+ y_{i+1}-y_i=\rho(x_{i+1}-x_i),\qquad
+ z_i:=y_i-i=\tfrac12-E(x_i+).
+\end{equation}
+Thus the unknown common shift of the centers disappears from physical
+gaps, while the displacements $z_i$ encode field marks exactly.
+
+\section{The entropy cost of the walls}\label{sec:wall}
+
+\begin{lemma}[A uniform sublinear wall cost]\label{lem:wall}
+For every $\alpha>0$ and $M<\infty$,
+\begin{equation}\label{eq:wall-small}
+ \sup_{|A|\le M,\ |B-n|\le M}
+ \frac{-\log\nu_n(W_{A,B})}{n}\longrightarrow0.
+\end{equation}
+More explicitly, for all sufficiently large $n$ depending on $\alpha,M$,
+\begin{equation}\label{eq:wall-rate}
+ -\log\nu_n(W_{A,B})
+ \le C_\alpha\big(M+2+\sqrt{\log(4n)/\alpha}\big)n^{2/3}.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+We first bound the two extreme coordinates. Let $\sigma_c$ be the law
+of the ordered values of $n$ independent Gaussians of mean $c$ and
+variance $(2\alpha)^{-1}$. This law is positively associated: sorting is
+coordinatewise increasing, and independent variables are associated.
+On $\mathcal O_n$,
+\[
+ \frac{\dd\nu_n}{\dd\sigma_c}(y)
+ =\text{constant}\times
+ \exp\left(2\alpha\sum_{i=1}^n(i-c)y_i\right).
+\]
+For $c=1$ the ratio is increasing in every coordinate, so association
+implies $\sigma_1\preceq\nu_n$ in stochastic order. For $c=n$ the ratio
+is decreasing, and $\nu_n\preceq\sigma_n$. The covariance inequalities
+extend to these integrable exponential ratios by truncation. Gaussian
+tail bounds and a union bound therefore give, for $R>0$,
+\begin{equation}\label{eq:extreme}
+ \nu_n(y_1<-R)+\nu_n(y_n>n+R)
+ \le 2n e^{-\alpha R^2}.
+\end{equation}
+In particular, with $R=\sqrt{\log(4n)/\alpha}$, the event
+\[
+ C_n=\{y_1\ge -R,\ y_n\le n+R\}
+\]
+has probability at least $1/2$.
+
+Put $r=R+M+2$, $m=\lceil n^{1/3}\rceil$, and
+$\varepsilon=rn^{-1/3}$. For sufficiently large $n$, we have
+$\varepsilon<1/2$ and $n>2m+1$. Define
+\[
+ d_i=r\left(1-\frac{i-1}{m}\right)_+
+     -r\left(1-\frac{n-i}{m}\right)_+,
+ \qquad
+ T_i(y)=(1-\varepsilon)y_i+\varepsilon i+d_i.
+\]
+The two supports in $d_i$ are disjoint, and
+$d_{i+1}-d_i\ge-r/m\ge-\varepsilon$. Hence
+\[
+ T_{i+1}(y)-T_i(y)
+ \ge(1-\varepsilon)(y_{i+1}-y_i)>0.
+\]
+For $y\in C_n$,
+\[
+ T_1(y)\ge M+2+\varepsilon(R+1)>A,
+ \qquad
+ T_n(y)\le n-M-2-\varepsilon R<B.
+\]
+Thus $T(C_n)\subset W_{A,B}$. This affine map is injective and has
+Jacobian $(1-\varepsilon)^n$.
+
+Writing $q_i=y_i-i$, convexity of the square gives
+\[
+ (T_i(y)-i)^2=((1-\varepsilon)q_i+d_i)^2
+ \le(1-\varepsilon)q_i^2+\frac{d_i^2}{\varepsilon}
+ \le q_i^2+\frac{d_i^2}{\varepsilon}.
+\]
+Also $\sum_i d_i^2\le2(m+1)r^2$. Changing variables on $T(C_n)$ yields
+\[
+ \nu_n(W_{A,B})
+ \ge\frac12(1-\varepsilon)^n
+ \exp\left[-\frac{2\alpha(m+1)r^2}{\varepsilon}\right].
+\]
+Since $-\log(1-\varepsilon)\le2\varepsilon$,
+\[
+ -\log\nu_n(W_{A,B})
+ \le\log2+2n\varepsilon+
+       \frac{2\alpha(m+1)r^2}{\varepsilon}
+ \le C_\alpha r n^{2/3}.
+\]
+This proves both claims.
+\end{proof}
+
+\section{Gaussian entropy comparison for block averages}\label{sec:comparison}
+
+Write $S(\mu\mid\nu)=\int\log(\dd\mu/\dd\nu)\dd\mu$.
+The Hessian of the exponent of \eqref{eq:nu} is $2\alpha I_n$.
+The logarithmic Sobolev inequality on a convex domain and its Herbst
+consequence imply, for an $L$-Lipschitz $F$,
+\[
+ \log\nu_n\!\left(e^{t(F-\nu_nF)}\right)
+ \le\frac{t^2L^2}{4\alpha},\qquad t\in\R.
+\]
+For the concentration and logarithmic Sobolev inequalities, see
+\cite{BGL}. They apply here by approximating the indicator of the
+closed ordered chamber by smooth convex penalties, retaining Hessian
+at least $2\alpha I_n$, and passing to the limit. The boundary has
+zero Lebesgue measure; the limiting density need not vanish there. Applying the entropy variational inequality with either sign
+and optimizing $t$ gives
+\begin{equation}\label{eq:entropy}
+ |\mu F-\nu_nF|^2\le\frac{L^2}{\alpha}S(\mu\mid\nu_n).
+\end{equation}
+
+For a fixed integer $r\ge1$ and bounded Lipschitz $G:\R^r\to\R$, define
+the displacement-mark average
+\begin{equation}\label{eq:mark-stat}
+ F_n(y)=\frac1{n-r+1}\sum_{i=1}^{n-r+1}
+ G(y_i-i,\ldots,y_{i+r-1}-(i+r-1)).
+\end{equation}
+Bounded overlap of windows gives the explicit bound
+$\Lip(F_n)^2\le r\Lip(G)^2/(n-r+1)$, hence
+$\Lip(F_n)^2\le C_{G,r}/n$ for $n\ge2r$. The same estimate holds for
+averages of bounded Lipschitz functions of any fixed number of
+consecutive gaps $y_{i+1}-y_i$.
+
+For the conditioned law in \eqref{eq:walls}, exactly
+\begin{equation}\label{eq:entropy-exact}
+ S(\mu_{n;A,B}\mid\nu_n)=-\log\nu_n(W_{A,B}).
+\end{equation}
+Combining \eqref{eq:entropy}, \eqref{eq:entropy-exact}, and
+Lemma~\ref{lem:wall} proves
+\begin{equation}\label{eq:uniform-comparison}
+ \sup_{|A|\le M,\ |B-n|\le M}
+ |\mu_{n;A,B}F_n-\nu_nF_n|\longrightarrow0.
+\end{equation}
+In particular, its square is bounded by
+$C_{\alpha,G,r}(M+2+\sqrt{\log(4n)/\alpha})n^{-1/3}$ for large $n$.
+
+\begin{remark}[Why use entropy directly?]
+The wall indicator makes a direct relative-Fisher-information comparison
+with the unbounded reference generally infinite. Equation
+\eqref{eq:entropy-exact} is finite and is the appropriate replacement.
+
+\end{remark}
+
+\section{Stationary random blocks and Palm identification}\label{sec:palm}
+
+Let $P$ be a law in Theorem~\ref{thm:field-unique}, and write $P^0$ for its
+marked Palm law. First, the density is $\rho$ almost surely in both
+directions. Indeed, stationarity of the finite-valued field gives
+\[
+ \frac{N_{(0,t]}}t-\rho=\frac{E(t)-E(0)}t\longrightarrow0
+ \quad\hbox{in probability}.
+\]
+The stationary ergodic theorem for the finite-intensity point process
+gives an almost-sure count-density limit, which must therefore be
+$\rho$, even if $P$ is not ergodic. The backward argument is identical.
+This translation-invariant property passes to Palm measure.
+
+Under $P^0$ enumerate the points by
+$\cdots<p_{-1}<p_0=0<p_1<\cdots$, put $g_i=p_{i+1}-p_i$, and let
+$T_*$ be the shift to the successor, translating the field as well.
+Marked Palm measure is $T_*$-invariant and $\E_{P^0}g_{-1}=1/\rho$.
+For a spatial sample, let $a$ be its first positive particle.
+The law of the marked environment viewed from $a$ is
+\begin{equation}\label{eq:bias}
+ \widetilde P^0(\dd\omega)=\rho g_{-1}(\omega)P^0(\dd\omega).
+\end{equation}
+Indeed, Palm inversion over the preceding gap gives
+$\E_P h(\theta_a\omega)=\rho\E_{P^0}[g_{-1}h]$ for bounded
+measurable $h$. This proves the displayed length-bias formula; see
+\cite[Chapter~9]{LastPenrose} for Palm inversion.
+
+Let $b$ be the $(n+2)$nd positive particle, so that $(a,b)$ contains
+exactly $n$ points $x_1<\cdots<x_n$. Retain $a,b$, every other exterior
+particle, and the field outside $(a,b)$.
+
+\begin{lemma}[Random-block disintegration and tight walls]\label{lem:block}
+Conditionally on this retained information, the transformed interior
+coordinates \eqref{eq:y}, with $e=E(a+)$, have law $\mu_{n;A,B}$ in
+\eqref{eq:walls}. The family $(A,B-n)$ is tight as $n\to\infty$.
+\end{lemma}
+
+\begin{proof}
+For disintegration, first restrict to $b<R$ for a deterministic integer
+$R$. Apply field-DLR in $(0,R)$ and condition further on every ordered
+coordinate except the $n$ middle particles, retaining the resulting
+exterior field. Moving these middle particles within $(a,b)$ preserves
+the selected ranks. The part of $\int_0^R E^2$ outside $(a,b)$ is fixed.
+Thus the remaining density is \eqref{eq:dlr} on $(a,b)$. The events
+$\{b<R\}$ are retained-information measurable and exhaust probability
+one. Equations~\eqref{eq:quadratic}--\eqref{eq:AB} identify the law.
+
+To prove tightness, let $g_*$ be the entire gap containing the spatial
+origin. On $\{g_*\le L\}$, the density in \eqref{eq:bias} is bounded
+by $\rho L$. Invariance under $T_*$ gives, uniformly in $n$,
+\begin{align*}
+ &P\big(|E(a+)|>R\ \hbox{or}\ |E(b-)|>R\big)\\
+ &\quad\le P(g_*>L)+\rho L\left\{
+ P^0(|E(0+)|>R)+P^0(|E(0-)|>R)\right\}.
+\end{align*}
+The Palm field values are finite almost surely. First choose $L$ large,
+then $R$ large. Formula~\eqref{eq:AB} proves the claim. No Palm moment
+of the field is being assumed.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:field-unique}]
+Fix $r$ and a bounded Lipschitz $G$ as in \eqref{eq:mark-stat}.
+By \eqref{eq:marks}, the physical block statistic is
+\[
+ \mathfrak F_n(\gamma,E)=\frac1{n-r+1}\sum_{i=1}^{n-r+1}
+ G\big(\tfrac12-E(x_i+),\ldots,
+       \tfrac12-E(x_{i+r-1}+ )\big).
+\]
+Its conditional expectation is $\mu_{n;A,B}F_n$.
+Lemma~\ref{lem:block}, \eqref{eq:uniform-comparison}, and boundedness
+give
+\begin{equation}\label{eq:limit-reference}
+ \E_P\mathfrak F_n-\nu_nF_n\longrightarrow0.
+\end{equation}
+Explicitly, restrict first to $|A|,|B-n|\le M$, take $n\to\infty$,
+and then let $M\to\infty$ using uniform tightness.
+
+We identify the limit on the left via marked Palm measure. Let
+$\mathcal I$ be the $T_*$-invariant sigma-algebra. Birkhoff's theorem
+for the bounded mark observable $G$ yields the conditional limit
+$\E_{P^0}[G\mid\mathcal I]$ for the successive block averages.
+The derived spatial density implies $p_m/m\to1/\rho$ under Palm
+measure. Birkhoff applied to the integrable gap therefore gives
+\[
+ \E_{P^0}[g_{-1}\mid\mathcal I]=1/\rho.
+\]
+Use \eqref{eq:bias}, dominated convergence with weight $\rho g_{-1}$,
+and conditioning on $\mathcal I$. It follows that
+\begin{equation}\label{eq:palm-limit}
+ \E_P\mathfrak F_n\longrightarrow
+ \E_{P^0}G\big(\tfrac12-E(p_0+),\ldots,
+              \tfrac12-E(p_{r-1}+ )\big).
+\end{equation}
+The finitely shifted starting index does not change this limit.
+
+For any second candidate $Q$, the same deterministic $\nu_nF_n$ occurs
+in \eqref{eq:limit-reference}. Equations
+\eqref{eq:limit-reference}--\eqref{eq:palm-limit} therefore identify
+all finite consecutive distributions of
+$z_i=\tfrac12-E(p_i+)$ under $P^0$ and $Q^0$. Successor invariance
+identifies every finite window with arbitrary integer indices.
+
+The entire marked Palm configuration is determined by this sequence:
+\begin{equation}\label{eq:reconstruct}
+ \rho g_i=1+z_{i+1}-z_i,\qquad p_0=0,
+ \qquad E(p_i+)=\tfrac12-z_i,
+\end{equation}
+and the field has slope $-\rho$ between particles. Thus the marked
+Palm laws coincide. Marked Palm inversion, for bounded measurable $h$,
+\[
+ \E_Ph=\rho\E_{P^0}\int_0^{g_0}
+ h\big(\theta_t(\gamma,E)\big)\dd t,
+\]
+now proves $P=Q$.
+\end{proof}
+
+
+
+
+\section{Existence for the specified normalization}\label{sec:existence}
+
+Only existence uses estimates from the classical finite-volume
+construction.  The preceding lifting and uniqueness arguments apply to
+every candidate in their stated classes.
+
+For $N\in\mathbb N$, let $P_N$ be the law of $2N$ ordered particles in
+$B_N=(-N/\rho,N/\rho)$, with density proportional to
+\[
+ \exp\left[-\beta\int_{B_N} E_N(x)^2\,dx\right],\qquad
+ E_N(x)=N_{(-N/\rho,x]}-\rho(x+N/\rho),\quad x\in B_N.
+\]
+The field has value zero at both endpoints. Extend it to the whole line
+with derivative $\gamma_N-\rho\,dx$, where $\gamma_N$ has no particles
+outside $B_N$. This extension is used only to put all laws on one state
+space; finite-volume energies are integrated over $B_N$.
+
+\begin{lemma}[Imported finite-volume estimates]\label{lem:fv-estimates}
+For fixed $\beta,\rho>0$, there are positive constants $A,B$ such that,
+uniformly in $N$ and $x\in B_N$,
+\begin{equation}\label{eq:fv-tail}
+ P_N(|E_N(x)|>u)\le A e^{-Bu^3},\qquad u\ge0.
+\end{equation}
+For every $\delta>0$, there are $A_\delta,B_\delta>0$ such that, uniformly
+over intervals $J\subset B_N$,
+\begin{equation}\label{eq:fv-average}
+ P_N\left(\left|\frac1{|J|}\int_J E_N(x)\,dx\right|>\delta\right)
+ \le A_\delta e^{-B_\delta |J|}.
+\end{equation}
+\end{lemma}
+
+These are the strictly one-dimensional estimates of
+\cite[Theorem~6.2 and Proposition~8.1]{AJJ}; the latter is the
+one-dimensional proof of their volume-average bound, Theorem~3.4.
+Their unit-density convention is $U=\frac12\int K^2$.
+The conversion is $y=\rho x$, $K(y)=-E_N(y/\rho)$, and
+$\beta_{\mathrm{AJJ}}=2\beta/\rho$. No numerical value of an exponential
+constant is needed here. The displayed bounds at arbitrary spatial
+endpoints follow from the bounds on the density grid: on each grid cell,
+the field is bounded in absolute value by one plus the larger absolute
+endpoint value. Rounding the endpoints of $J$ changes its integral only
+by two such cell integrals; \eqref{eq:fv-tail} controls those errors.
+Thus the constants are uniform in the box and the interval.
+
+\begin{proposition}\label{prop:existence}
+There exists a jointly stationary field-DLR law of intensity $\rho$.
+It has $\E|E(0)|<\infty$ and almost surely
+\begin{equation}\label{eq:constructed-zero-mean}
+ \lim_{R\to\infty}\frac1{2R}\int_{-R}^{R}E(x)\,dx=0.
+\end{equation}
+Its particle marginal satisfies Definition~\ref{def:particle-dlr}.
+The field has finite moments of every finite order.
+\end{proposition}
+
+\begin{proof}
+Independently choose $U_N$ uniformly in
+$[-N/(2\rho),N/(2\rho)]$ and let $\overline Q_N$ be the law of
+$(\theta_{U_N}\gamma_N,E_N(\,\cdot+U_N))$.
+Use vague convergence for locally finite integer-valued measures
+(temporarily allowing multiple points), and $L^1_{\mathrm{loc}}$
+convergence for fields. Translations are continuous in this topology.
+Changing $U_N$ to $U_N+t$ changes its law in total variation by
+$O(\rho|t|/N)$. Consequently every subsequential limit is stationary.
+
+Here is the required compactness argument. For every fixed compact
+interval $K$, all its shifted points lie inside $B_N$ for large $N$.
+Equation~\eqref{eq:fv-tail} bounds the expectation of the field's
+$L^1(K)$ norm uniformly. For fixed $a<b$ in that region,
+\[
+ N_{(a,b]}=E_N(b)-E_N(a)+\rho(b-a).
+\]
+The same estimate therefore bounds the expected number of particles
+on $K$. Since the distributional derivative is
+$\gamma_N-\rho\,dx$, this also bounds the expected total variation
+on $K$. Compactness of bounded sets of $BV(K)$ in $L^1(K)$, followed
+by a diagonal argument and the corresponding vague compactness for
+counting measures, proves tightness. Choose a limit $Q$.
+The distributional identity passes to the limit, so
+$E'=\gamma-\rho\,dx$. The field admits a unique right-continuous
+representative and is finite-valued. The limit counting measure remains
+integer-valued, with possible multiplicities at this stage.
+
+Stationarity and the count bounds imply that its mean counting measure
+is a finite constant times Lebesgue measure. In particular, no
+deterministic point is an atom almost surely. The local $L^1$ bound
+passes to the limit; stationarity then gives $\E_Q|E(0)|<\infty$.
+Taking expectations in the charge identity proves
+$\E_Q N_{(a,b]}=\rho(b-a)$.
+
+We next pass the conditional equations, spelling out the continuity
+point that prevents a hidden simplicity assumption. For a fixed
+deterministic $I=(a,b)$ let $\Gamma_I$ replace its particles by the
+Gaussian density in Definition~\ref{def:field-dlr} and retain its
+exterior field. Define this kernel also for integer-valued incoming
+measures with multiple points. If the incoming measure has no atoms at
+$a,b$, its interior count is locally constant under vague convergence,
+and its boundary field value converges under the joint topology above.
+The latter assertion follows from $E'=\gamma-\rho\,dx$: convergence
+of monotone primitives holds at their continuity points.
+For each fixed count, the ordered Gaussian density depends
+continuously on the finite boundary value, by dominated convergence on
+the bounded chamber. Hence $\Gamma_I f$ is continuous there for every
+bounded continuous $f$ on the joint state space. Resampled fields also
+converge in $L^1_{\mathrm{loc}}$.
+
+For large $N$, every shifted box contains $I$, and the finite-volume
+conditional equation holds for each origin in the averaging range.
+Thus $\overline Q_N\Gamma_I=\overline Q_N$. The almost-sure continuity
+just established gives $Q\Gamma_I=Q$. As $\Gamma_I$ retains the
+exterior information, this identity is equivalent to the conditional
+field-DLR equation. Moreover, $\Gamma_I$ produces distinct interior
+points with probability one. Applying this to a countable covering of
+the line proves that $\gamma$ is simple almost surely.
+The boundary-evaluation continuity also transfers \eqref{eq:fv-tail}
+to the limiting field at each deterministic point (with an arbitrarily
+smaller threshold before passage to the limit). Thus the limiting field
+has finite moments of every finite order.
+
+For each fixed $R$, \eqref{eq:fv-average} passes to the averaged laws
+and their limit, because integration on $[-R,R]$ is continuous in
+$L^1_{\mathrm{loc}}$. It bounds the probability that the absolute
+average exceeds $\delta$ by
+$A_\delta e^{-2B_\delta R}$. Borel--Cantelli gives zero limiting average
+along integer $R$. The stationary ergodic theorem, applicable because
+$\E_Q|E(0)|<\infty$, gives an almost-sure limit for the full real
+parameter; that limit must be zero. This proves
+\eqref{eq:constructed-zero-mean} without asserting ergodicity.
+
+Finally, writing $C=E(0)$ gives $D_\gamma(x)=E(x)-C$.
+Equation~\eqref{eq:constructed-zero-mean} therefore gives the Ces\`aro
+limit in \eqref{eq:cesaro}, with $L_\rho(\gamma)=-C$.
+The particle law is supported on the declared admissibility domain.
+Canonical replacement leaves the reconstructed exterior field
+unchanged, so that exterior particles and their retained interior
+count determine the boundary value. Its field-DLR kernel is thus
+exactly the particle kernel of Definition~\ref{def:particle-dlr}.
+\end{proof}
+
+Combining Proposition~\ref{prop:existence} with
+Theorem~\ref{thm:field-unique} and the lifting theorem completes
+existence and uniqueness for the particle specification. The moments
+and zero-mean property used in this section were obtained for the
+constructed law; they were not hypotheses on the competing laws in
+the uniqueness theorem.
+
+\section{Consequences and relation to the literature}\label{sec:discussion}
+
+\begin{proof}[Proof of Theorem~\ref{thm:particle-main}]
+Corollary~\ref{cor:cesaro-lift} maps every candidate to a jointly
+stationary field-DLR law. Theorem~\ref{thm:field-unique} identifies
+all such lifts and hence their particle marginals. Proposition~\ref{prop:existence}
+supplies a candidate for the declared summation convention. The
+almost-sure density statement is part of Theorem~\ref{thm:lift}.
+\end{proof}
+
+\begin{corollary}[All finite-intensity stationary Gaussian-kernel laws]
+Let $P$ be stationary and satisfy the conditional-density hypothesis of
+Theorem~\ref{thm:lift} with finite intensity $\lambda\ge0$.
+Then $0\le\lambda\le\rho$ and
+\[
+P=\frac{\lambda}{\rho}P_{\beta,\rho}
++\left(1-\frac{\lambda}{\rho}\right)\delta_{\varnothing}.
+\]
+\end{corollary}
+\begin{proof}
+For $\lambda>0$, Theorem~\ref{thm:lift} determines the empty mass,
+and Theorem~\ref{thm:field-unique} identifies the lifted nonempty
+component with the constructed law. A stationary zero-intensity
+counting measure is empty almost surely.
+\end{proof}
+
+This corollary underscores why mean intensity cannot simply be replaced
+by an unproved almost-sure density assertion. The extra canonical vacuum
+component is a real possibility when intensity is not fixed to the
+background. Conversely, no random conditional distribution of the
+additive field constant is needed for the particle laws treated here:
+their finite Gaussian conditional coefficients already determine it.
+
+For the unique law, the moment estimates imported only for existence
+now hold automatically. In particular, the construction and uniqueness
+give $\E E(0)^2<\infty$ and
+\[
+\Var N_{(0,t]}=\E(E(t)-E(0))^2\le4\E E(0)^2.
+\]
+These are conclusions, not requirements placed on competitors.
+
+Kunz's transfer-operator analysis~\cite{Kunz} and the field viewpoint
+of Aizenman--Martin~\cite{AM} are classical foundations of this model.
+The published overview~\cite[Section~VI.A.2.e]{Lewin} describes the
+periodic crystal states, their uniform phase average, and the
+renormalized canonical equations. We do not use that overview's
+classification statement as a theorem covering the present candidate
+class: the summation convention and the conditional lifting argument
+are supplied explicitly above. Nor do we assign an unverified exact
+admissibility class to either of the original classical papers.
+
+The reconstruction discussion in \cite[Section~5, equations~(30)--(32)
+and the ensuing remarks]{AJJ} uses estimates for finite-volume limits.
+It does not by itself establish those estimates for every arbitrary
+particle-DLR solution. Theorem~\ref{thm:lift} supplies that missing
+logical implication here through nested conditional densities.
+
+Crystalline phase multiplicity is compatible with the theorem. A
+fixed-phase law need not be invariant under all real translations; a
+uniform average over a periodic phase family is stationary. No
+classification of all nonstationary phases was used at any step of the
+uniqueness proof. The scope is precisely the finite-coefficient
+conditional-density class of Theorem~\ref{thm:lift}, and, for the
+existence-and-uniqueness assertion, the particle summation convention
+of Definition~\ref{def:particle-dlr}.
+
+\begin{thebibliography}{9}
+
+\bibitem{AM}
+M.~Aizenman and P.~A.~Martin,
+\emph{Structure of Gibbs states of one dimensional Coulomb systems},
+Communications in Mathematical Physics \textbf{78} (1980), 99--116.
+\href{https://doi.org/10.1007/BF01941972}{doi:10.1007/BF01941972}.
+
+\bibitem{AJJ}
+M.~Aizenman, S.~Jansen and P.~Jung,
+\emph{Symmetry breaking in quasi-1D Coulomb systems},
+Annales Henri Poincar\'e \textbf{11} (2010), 1453--1485.
+\href{https://arxiv.org/abs/1008.3678}{arXiv:1008.3678};
+\href{https://doi.org/10.1007/s00023-010-0067-y}{doi:10.1007/s00023-010-0067-y}.
+Numbered references in the text use arXiv version~2.
+
+\bibitem{BGL}
+D.~Bakry, I.~Gentil and M.~Ledoux,
+\emph{Analysis and Geometry of Markov Diffusion Operators},
+Grundlehren der mathematischen Wissenschaften, vol.~348,
+Springer, Cham, 2014.
+\href{https://doi.org/10.1007/978-3-319-00227-9}{doi:10.1007/978-3-319-00227-9}.
+
+\bibitem{Kunz}
+H.~Kunz, \emph{The one-dimensional classical electron gas},
+Annals of Physics \textbf{85} (1974), 303--335.
+\href{https://doi.org/10.1016/0003-4916(74)90413-8}{doi:10.1016/0003-4916(74)90413-8}.
+
+\bibitem{LastPenrose}
+G.~Last and M.~Penrose, \emph{Lectures on the Poisson Process},
+Institute of Mathematical Statistics Textbooks, vol.~7,
+Cambridge University Press, Cambridge, 2017.
+\href{https://doi.org/10.1017/9781316104477}{doi:10.1017/9781316104477}.
+
+\bibitem{Lewin}
+M.~Lewin, \emph{Coulomb and Riesz gases: The known and the unknown},
+Journal of Mathematical Physics \textbf{63} (2022), 061101.
+\href{https://arxiv.org/abs/2202.09240}{arXiv:2202.09240};
+\href{https://doi.org/10.1063/5.0086835}{doi:10.1063/5.0086835}.
+
+\end{thebibliography}
+\end{document}

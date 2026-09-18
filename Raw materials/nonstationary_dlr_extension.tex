@@ -1,0 +1,569 @@
+\documentclass[11pt,reqno]{amsart}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[margin=1in]{geometry}
+\usepackage{microtype,amsmath,amssymb,mathtools}
+\usepackage[hidelinks]{hyperref}
+\hypersetup{pdftitle={Removing stationarity from logarithmic DLR uniqueness}}
+\usepackage{enumitem}
+\numberwithin{equation}{section}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newcommand{\R}{\mathbb R}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\N}{\mathbb N}
+\newcommand{\E}{\mathbb E}
+\newcommand{\1}{\mathbf1}
+\newcommand{\Sine}{\operatorname{Sine}}
+\newcommand{\Conf}{\operatorname{Conf}}
+\newcommand{\dd}{\,d}
+\DeclareMathOperator{\supp}{supp}
+\DeclareMathOperator{\diver}{div}
+\allowdisplaybreaks[2]
+\setlength{\emergencystretch}{2em}
+\setlist[enumerate]{leftmargin=*,itemsep=3pt}
+\title[Removing stationarity from logarithmic DLR uniqueness]{Removing stationarity from logarithmic DLR uniqueness}
+\date{14 September 2026}
+
+\begin{document}
+\begin{abstract}
+We prove that a canonical one-dimensional logarithmic DLR law at any
+inverse temperature $\beta>0$ is translation-invariant whenever the sums
+of squared unit-interval counts grow at most linearly, almost surely.
+The hypothesis is pathwise; its random constant need not be integrable.
+Finite spatial mean energy of one regularized electric field implies this
+count condition. Consequently the finite-energy uniqueness theorem in the
+accompanying manuscript extends to laws not assumed stationary, under
+the same regularization convention. The argument uses compactly supported
+translations with a logarithmic taper and an exact product identity for
+two Radon--Nikodym derivatives. A Hellinger estimate avoids expectations
+of the energy errors. We also record a separate nonstationary
+$\beta=2$ consequence of deterministic conditional universality.
+\end{abstract}
+\maketitle
+
+\noindent\textit{Scope.}
+This is a supplement to the supplied manuscript
+\emph{Uniqueness of the stationary logarithmic DLR state}, file
+\texttt{logarithmic\_dlr\_uniqueness(2).tex}, denoted by [M] below.
+The automatic-stationarity theorem and its proof are given in full.
+Identification with $\Sine_\beta$ then invokes the stationary uniqueness
+theorem of [M]; this supplement does not reprove that theorem.
+
+\section{The nonstationary statements}
+
+Write $\theta_a\gamma=\gamma-a$ and
+$N_j(\gamma)=\gamma([j,j+1))$, $j\in\Z$.
+We use the canonical logarithmic conditional densities of
+Dereudre--Hardy--Lebl\'e--Ma\"ida~\cite{DHLM}: condition on both the
+configuration outside a bounded interval $\Lambda$ and the number of
+points inside it. On the ordered configuration simplex the conditional
+density is positive almost everywhere and proportional to
+$\exp(-\beta H_\Lambda)$, relative to Lebesgue measure.
+All exterior energy differences use common symmetric spatial cutoffs.
+In particular they exist as finite relative energies on the conditional
+full-measure sets. We retain these Gibbs-kernel equations, without
+including stationarity in the definition of a solution. This distinction
+matters because \cite[Definition 3.1]{DHLM} packages stationarity and
+energy assumptions together with the equations.
+
+More explicitly, if $T$ is an increasing $C^1$ diffeomorphism equal to
+the identity outside a compact subset of $\Lambda$, its energy change is
+\begin{equation}\label{eq:move}
+\begin{split}
+\Delta H_T(\gamma)={}&
+-\sum_{\{x,y\}\subset\gamma\cap\Lambda}
+ \log\frac{|T(x)-T(y)|}{|x-y|}\\
+&-\lim_{S\to\infty}
+ \sum_{\substack{x\in\gamma\cap\Lambda\\
+                   y\in\gamma\setminus\Lambda,\ |y|\le S}}
+ \log\frac{|T(x)-y|}{|x-y|}.
+\end{split}
+\end{equation}
+The first sum is over unordered distinct pairs. Normalizing constants
+and reference configurations disappear in this difference.
+
+\begin{definition}[A pathwise count condition]\label{def:temper}
+A configuration is square-count tempered if
+\begin{equation}\label{eq:temper}
+M(\gamma):=\sup_{m\in\N,\ m\ge1}
+\frac{1}{m+1}\sum_{|j|\le m}N_j(\gamma)^2<\infty.
+\end{equation}
+\end{definition}
+
+\begin{theorem}[Automatic stationarity]\label{thm:auto}
+Fix $\beta>0$. Let $P$ be a law on locally finite simple configurations
+on $\R$ satisfying the canonical logarithmic Gibbs-kernel equations
+described above. If \eqref{eq:temper} holds $P$-almost surely, then
+\[
+P\circ\theta_a^{-1}=P\qquad\text{for every }a\in\R.
+\]
+No moment assumption on $M(\gamma)$, no prescribed intensity, and no
+number-rigidity assumption are required.
+\end{theorem}
+
+For the electric formulation, let $\rho_\eta$ be uniform probability
+measure on the circle of radius $\eta$ in $\R^2$, and regard points of
+$\gamma$ as points on the horizontal axis. Consider the pathwise condition
+that there exist $0<\eta<1$ and $F\in L^2_{\mathrm{loc}}(\R^2;\R^2)$ with
+\begin{align}
+-\diver F&=2\pi(\gamma*\rho_\eta-dx\,\delta_0),\label{eq:div}\\
+\limsup_{R\to\infty}\frac1{2R}
+\int_{[-R,R]\times\R}|F|^2&<\infty.\label{eq:field}
+\end{align}
+Both $\eta$ and $F$ may depend on the configuration; a measurable
+selection is unnecessary.
+
+\begin{corollary}[Finite energy forces stationarity]\label{cor:energy-stationarity}
+A law satisfying the canonical logarithmic Gibbs-kernel equations and
+supported on configurations satisfying \eqref{eq:div}--\eqref{eq:field}
+is stationary.
+\end{corollary}
+
+\begin{corollary}[Nonstationary finite-energy uniqueness]\label{cor:uniqueness}
+Use the standard inner electric-field truncation and the renormalized
+energy $W$ specified in [M, Section 7]. Let $P$, not assumed stationary,
+be a simple point process satisfying the canonical logarithmic
+Gibbs-kernel equations, and suppose $\E_P W<\infty$ in the same sense as
+[M, Theorem 1.2]. Then, using that stationary theorem,
+\[
+P=\Sine_\beta.
+\]
+\end{corollary}
+
+The proof of automatic stationarity is a localized-translation argument
+of the type used for conservation of continuous symmetries; see
+Georgii~\cite{Geo} and, for the two-dimensional plasma,
+Lebl\'e~\cite[Section 8]{Leble}. Those results concern different settings.
+We establish all estimates needed for the one-dimensional logarithmic
+interaction directly below.
+
+\section{Cutoffs with vanishing deformation cost}
+
+For $f\in C_c^1(\R)$ define
+\[
+q_f(x,y)=\frac{f(x)-f(y)}{x-y}\quad(x\ne y),
+\qquad q_f(x,x)=f'(x).
+\]
+The diagonal definition makes this a continuous divided difference.
+
+\begin{lemma}[Deterministic cutoff estimate]\label{lem:cutoff}
+Fix $A\ge2$. There exist even functions $f_n\in C_c^\infty(\R)$,
+$0\le f_n\le1$, such that $f_n=1$ on $[-A,A]$,
+$\supp f_n\subset[-R_n,R_n]$, $R_n=A2^n$, and
+\begin{equation}\label{eq:lip}
+\|f_n'\|_\infty\le\frac{C}{An}.
+\end{equation}
+For every configuration satisfying \eqref{eq:temper},
+\begin{equation}\label{eq:cost}
+\sum_{\{x,y\}\subset\gamma}q_{f_n}(x,y)^2
++\sum_{x\in\gamma}f_n'(x)^2
+\le\frac{C_A M(\gamma)}{n}.
+\end{equation}
+The sums over pairs are unordered and exclude the diagonal.
+\end{lemma}
+
+\begin{proof}
+Choose an even smooth function $\psi$, nonincreasing on $[0,\infty)$,
+equal to one on $[-1,1]$ and zero outside $[-2,2]$. Put
+\begin{equation}\label{eq:cutoff}
+f_n(x)=\frac1n\sum_{k=0}^{n-1}\psi\!\left(\frac{x}{A2^k}\right).
+\end{equation}
+The derivative supports lie in the disjoint open annuli
+$A2^k<|x|<A2^{k+1}$. In particular
+\begin{align}
+|f_n'(x)|&\le\frac{C}{n(A+|x|)},\label{eq:derivative}\\
+|f_n(x)-f_n(y)|&\le\frac Cn
+\left|\log\frac{A+|x|}{A+|y|}\right|.\label{eq:logdiff}
+\end{align}
+The second bound follows by integrating the first along the radial
+variable and using evenness. The derivative vanishes outside
+$[-R_n,R_n]$.
+
+Let $I_j=[j,j+1]$ and set
+\[
+d_j=\sup_{I_j}|f_n'|,\qquad
+b_j=\sum_{k\in\Z}\sup_{I_j\times I_k}|q_{f_n}|^2.
+\]
+We claim the row estimates
+\begin{equation}\label{eq:row}
+b_j\le\frac{C_A}{n^2}
+\begin{cases}
+(A+|j|)^{-1},& |j|\le4R_n,\\
+R_n|j|^{-2},& |j|>4R_n.
+\end{cases}
+\end{equation}
+Here and below constants may depend on the fixed core size $A$, but
+never on $n$ or the configuration.
+
+First, the elementary integral
+\[
+\int_0^\infty\frac{\log^2 t}{(1-t)^2}\dd t<\infty
+\]
+and the change of variable $t=(A+y)/(A+x)$ show, for $x\ge0$, that
+\[
+\int_0^\infty
+\frac{\log^2((A+x)/(A+y))}{(x-y)^2}\dd y
+\le\frac{C}{A+x}.
+\]
+For negative $y$, replace $y$ by $|y|$ and use
+$|x-y|\ge|x-|y||$. Reflection covers $x<0$. Thus
+\begin{equation}\label{eq:continuous-row}
+\int_\R |q_{f_n}(x,y)|^2\dd y
+\le\frac{C}{n^2(A+|x|)}.
+\end{equation}
+
+To pass to cell suprema, neighboring cells are bounded by the
+mean-value theorem. For $|j-k|\ge2$, distances between the two cells
+are comparable to $|j-k|$, and changing either endpoint to the left
+endpoint of its cell changes $f_n$ by at most $d_j$ or $d_k$.
+Comparing the remaining value at $k$ with its average over $I_k$ gives
+\begin{equation}\label{eq:cell-row}
+b_j\le C\int_\R |q_{f_n}(j,y)|^2\dd y
+ +C\sum_{k\in\Z}\frac{d_j^2\1_{\{k=j\}}+d_k^2}
+                         {(1+|j-k|)^2}.
+\end{equation}
+For clarity, the $d_j^2$ errors of all distant cells have already
+been summed, using $\sum_{h\ne0}h^{-2}<\infty$.
+Since $d_k\le C/[n(A+|k|)]$, splitting the convolution into
+$|k|\ge|j|/2$ and $|k|<|j|/2$ bounds the second term in
+\eqref{eq:cell-row} by $C_A/[n^2(A+|j|)^2]$.
+Together with \eqref{eq:continuous-row}, this proves the first row bound
+(in fact that bound holds for every $j$).
+
+For the summable far-tail improvement, observe that
+\begin{equation}\label{eq:l2cells}
+\sum_{k\in\Z}\sup_{I_k}f_n^2\le\frac{C_A R_n}{n^2}.
+\end{equation}
+Indeed, on the annulus $A2^\ell\le|x|\le A2^{\ell+1}$,
+$f_n(x)\le(n-\ell)/n$. Summing its squared upper bound times the
+number of cells gives
+$C_A n^{-2}\sum_{\ell=0}^{n-1}2^\ell(n-\ell)^2
+\le C_A R_n/n^2$; the fixed central interval obeys the same bound
+after increasing $C_A$. Cells meeting annulus endpoints are covered
+by enlarging the annuli by one unit. If $|j|>4R_n$, $f_n=0$ on $I_j$
+and every contributing $I_k$ has distance comparable to $|j|$ from
+$I_j$. Equation~\eqref{eq:l2cells} proves the second row bound.
+
+Put $a_j=N_j(\gamma)^2$. Since
+$N_jN_k\le(a_j+a_k)/2$, symmetry of the cell kernel gives
+\begin{equation}\label{eq:weighted-row}
+\sum_{\{x,y\}\subset\gamma}q_{f_n}(x,y)^2
+\le\frac12\sum_j a_j b_j.
+\end{equation}
+The harmless diagonal overcount only increases the right side.
+By \eqref{eq:temper}, the sum of the $a_j$ in a dyadic shell of
+radius $s\ge1$ is at most $C M(\gamma)s$.
+Each shell inside $4R_n$ therefore contributes at most
+$C_A M(\gamma)/n^2$ to \eqref{eq:weighted-row}, and there are
+$n+O_A(1)$ such shells. Beyond $4R_n$, the shell of radius $2^\ell R_n$
+contributes at most $C_A M(\gamma)2^{-\ell}/n^2$.
+This proves the pair part of \eqref{eq:cost}.
+
+Finally $N_j\le N_j^2$, because counts are nonnegative integers.
+The derivative bound on each annulus gives
+\[
+\sum_{x\in\gamma}f_n'(x)^2
+\le\sum_j a_jd_j^2
+\le\frac{C_A M(\gamma)}{n^2},
+\]
+by the same dyadic decomposition, now with summable shell contributions.
+This completes the proof.
+\end{proof}
+
+\begin{remark}
+The essential feature is the critical divided-difference kernel
+$|x-y|^{-2}$. Distributing the change over $n$ dyadic scales costs
+$O(n^{-1})$. One may also view \eqref{eq:cutoff} as the trace of radial
+cutoffs in $\R^2$ with Dirichlet energy $O(n^{-1})$, that is, vanishing
+homogeneous $H^{1/2}$ cutoff energy for a fixed interval. The cell estimates above are
+needed to accommodate arbitrary locally finite configurations.
+\end{remark}
+
+\section{DLR changes of variables and the Hellinger estimate}
+
+\begin{proof}[Proof of Theorem~\ref{thm:auto}]
+Fix a translation $a\in\R$ and a bounded measurable local observable
+$G$, determined by the configuration in a bounded interval $B$.
+Choose $A\ge2$ with $B\subset[-A,A]$, and use Lemma~\ref{lem:cutoff}.
+For all sufficiently large $n$, define
+\[
+T_{n,\pm}(x)=x\pm af_n(x).
+\]
+By \eqref{eq:lip} we may assume
+$|a|\|f_n'\|_\infty\le1/2$. These maps are increasing smooth
+diffeomorphisms, equal to the identity outside $[-R_n,R_n]$.
+They act on configurations by moving every point.
+Let
+\[
+Q_{n,\pm}=(T_{n,\pm}^{-1})_*P.
+\]
+We deliberately use the inverse maps in this pushforward.
+
+Choose a bounded interval $\Lambda_n$ containing $[-R_n,R_n]$ in
+its interior. Each $T_{n,\pm}$ maps $\Lambda_n$ onto itself, fixes
+its exterior, and preserves its number of points. On every conditional
+fiber of $(\gamma_{\Lambda_n^c},N_{\Lambda_n})$, the canonical DLR
+density and ordinary change of variables therefore give
+\begin{equation}\label{eq:RN}
+w_{n,\pm}(\gamma):=\frac{dQ_{n,\pm}}{dP}(\gamma)
+=\exp\{-\beta\Delta H_{T_{n,\pm}}(\gamma)\}
+ \prod_{x\in\gamma}(1\pm af_n'(x)).
+\end{equation}
+The product is finite. Positivity of the conditional densities and
+the diffeomorphism property give equivalence of the measures and
+$\E_Pw_{n,\pm}=1$. Conditional exceptional Lebesgue-null sets remain
+null under these diffeomorphisms.
+
+Put $q_n=q_{f_n}$. For every distinct pair $x,y$,
+\[
+\frac{|T_{n,+}(x)-T_{n,+}(y)|}{|x-y|}
+\frac{|T_{n,-}(x)-T_{n,-}(y)|}{|x-y|}
+=1-a^2q_n(x,y)^2.
+\]
+Applying this identity to the interior pairs and then to the exterior
+pairs at a common finite cutoff yields
+\begin{equation}\label{eq:product}
+w_{n,+}w_{n,-}=e^{-\mathcal A_n},
+\end{equation}
+where
+\begin{equation}\label{eq:An}
+\mathcal A_n(\gamma)=
+-\beta\sum_{\{x,y\}\subset\gamma}\log(1-a^2q_n(x,y)^2)
+-\sum_{x\in\gamma}\log(1-a^2f_n'(x)^2).
+\end{equation}
+There is no uncontrolled linear exterior-force term: it cancels at
+the common cutoff before the limit is taken. The individual relative
+energies exist by the specification. The paired infinite sum is
+absolutely convergent by \eqref{eq:cost} and the bound below, so passing
+to the limit preserves \eqref{eq:product}.
+
+The mean-value theorem gives $|a q_n(x,y)|\le1/2$. Using
+$0\le-\log(1-z)\le2z$ for $0\le z\le1/4$, we obtain, $P$-almost surely,
+\begin{equation}\label{eq:An-small}
+0\le\mathcal A_n(\gamma)
+\le2a^2\left(\beta\sum_{\{x,y\}\subset\gamma}q_n(x,y)^2
+             +\sum_{x\in\gamma}f_n'(x)^2\right)
+\le\frac{C_{A,a,\beta}M(\gamma)}n\longrightarrow0
+\end{equation}
+For $Q\ll P$ use the convention
+$\mathsf H^2(Q,P)=\int(\sqrt{dQ/dP}-1)^2\dd P$.
+The arithmetic--geometric mean inequality and \eqref{eq:product} give
+\begin{align}
+\mathsf H^2(Q_{n,+},P)+\mathsf H^2(Q_{n,-},P)
+&=4-2\E_P(\sqrt{w_{n,+}}+\sqrt{w_{n,-}})\notag\\
+&\le4\E_P[1-e^{-\mathcal A_n/4}]\longrightarrow0.\label{eq:hellinger}
+\end{align}
+The last step is bounded convergence. In particular we have not
+assumed $\E_PM<\infty$, $\E_P\mathcal A_n<\infty$, or integrability
+of individual energy changes. Cauchy--Schwarz gives
+\[
+\|Q-P\|_{\mathrm{TV}}
+=\frac12\int|dQ/dP-1|\dd P\le\mathsf H(Q,P),
+\]
+so $Q_{n,+}\to P$ in total variation.
+
+Since $T_{n,+}(x)=x+a$ on $B$, the restriction of
+$T_{n,+}^{-1}\gamma$ to $B$ is exactly the restriction of
+$\theta_a\gamma$ to $B$. The assertion includes particles entering the
+interval: $T_{n,+}(B)=B+a$, and the map is one-to-one. Hence
+\[
+\E_{Q_{n,+}}G=\E_P[G\circ\theta_a].
+\]
+The left side tends to $\E_PG$. Equality for every bounded local
+observable identifies the two probability measures, and $a$ was
+arbitrary. This proves stationarity.
+\end{proof}
+
+\section{Why finite electric energy supplies the count condition}
+
+\begin{lemma}\label{lem:energy-count}
+Every locally finite configuration satisfying
+\eqref{eq:div}--\eqref{eq:field} satisfies \eqref{eq:temper}.
+\end{lemma}
+
+\begin{proof}
+Choose $\chi\in C_c^\infty((-2,3)\times(-2,2))$ with
+$0\le\chi\le1$ and $\chi=1$ on $[-1,2]\times[-1,1]$.
+Write $\chi_j(x,y)=\chi(x-j,y)$ and
+$S_j=[j-2,j+3]\times[-2,2]$. Since $0<\eta<1$, every smearing circle
+whose center lies in $[j,j+1)\times\{0\}$ is contained in
+$\{\chi_j=1\}$. Positivity and the divergence identity give
+\begin{align*}
+N_j&\le\int\chi_j\dd(\gamma*\rho_\eta)\\
+&=\int_\R\chi_j(x,0)\dd x
+  +\frac1{2\pi}\int_{\R^2}F\cdot\nabla\chi_j\\
+&\le5+C\left(\int_{S_j}|F|^2\right)^{1/2}.
+\end{align*}
+After squaring and summing, the boxes $S_j$ have bounded overlap, so
+\begin{equation}\label{eq:count-field}
+\sum_{|j|\le m}N_j^2
+\le C(m+1)+C\int_{[-m-3,m+3]\times\R}|F|^2.
+\end{equation}
+The right side is $O_\gamma(m)$ by \eqref{eq:field}; the finitely
+many remaining small $m$ have finite counts. This proves the lemma.
+\end{proof}
+
+\begin{proof}[Proof of Corollaries~\ref{cor:energy-stationarity}
+and \ref{cor:uniqueness}]
+Lemma~\ref{lem:energy-count} and Theorem~\ref{thm:auto} prove the
+first corollary. For the second, recall the convention of [M]:
+\[
+f_\eta(z)=\1_{\{|z|\le\eta\}}\log(|z|/\eta),\qquad
+E_\eta=E+\sum_{p\in\gamma}\nabla f_\eta(\,\cdot-(p,0)).
+\]
+If $-\diver E=2\pi(\gamma-dx\,\delta_0)$, then $F=E_\eta$
+satisfies \eqref{eq:div}.
+
+Finiteness of the renormalized energy, defined as the infimum over
+compatible fields of their small-truncation renormalized spatial mean
+energy, provides a compatible field for which this functional is
+finite. The infimum need not be attained. For at least one sufficiently
+small fixed $\eta$, its spatial mean of $|E_\eta|^2$ is finite:
+the self-energy subtraction at fixed $\eta$ is a finite constant.
+This is exactly the fixed-truncation implication used in
+[M, Lemma 7.2]. It is pathwise and requires no stationarization.
+Thus \eqref{eq:div}--\eqref{eq:field} hold $P$-almost surely.
+
+The preceding corollary proves that $P$ is stationary. Its assumed
+$\E_PW<\infty$ and its canonical DLR equations are unchanged.
+It now satisfies all hypotheses of [M, Theorem 1.2], and hence
+$P=\Sine_\beta$.
+\end{proof}
+
+\begin{remark}[The precise energy assumption]
+The inner truncation indicator is essential; we use the convention
+already specified in [M], rather than the outer indicator printed in
+the supplied version of \cite[Definition 2.20]{DHLM}.
+For an alternative notion of ``finite energy'', the implication
+\eqref{eq:div}--\eqref{eq:field} must be checked. It is not enough
+merely to produce a stationary spatial average of the candidate law.
+\end{remark}
+
+\section{What changes in the accompanying manuscript}
+
+The argument supplies a preliminary stationarity theorem. The
+gap-entropy comparison, random particle-ended blocks, Palm identities,
+and stationary electric lift in [M] can subsequently be used as
+written. They are applied only after stationarity has been proved.
+
+In particular, the finite-energy theorem can be restated as follows:
+\begin{quote}
+Fix $\beta>0$, with the inner-truncation energy convention of [M].
+Every simple point-process law satisfying the canonical logarithmic
+Gibbs-kernel equations and $\E_PW<\infty$ equals $\Sine_\beta$.
+\end{quote}
+Its new proof first invokes Corollary~\ref{cor:energy-stationarity}
+and then the original stationary theorem. The formulation must refer
+to the Gibbs-kernel equations themselves, rather than invoking a
+definition which already assumes stationarity.
+
+For the discrepancy theorem, a similarly useful sufficient condition
+is \eqref{eq:temper} together with the three count bounds in [M],
+with their variance function replaced by
+$d_P(t)=\E_P(N_{(0,t]}-t)^2$. Theorem~\ref{thm:auto}
+first supplies stationarity; the linear centered bound then forces
+intensity one, and the original comparison theorem applies.
+
+The reason this additional argument is needed is structural. Averages
+of many gap observables cannot distinguish a law from another law
+with different behavior in a fixed window but the same spatial
+averages. Stationarity is used when [M] identifies the limiting
+averages with a Palm gap distribution. The present proof directly
+controls translation of a fixed window and therefore resolves that
+missing step. No assertion about a local defect being a DLR solution
+is needed for this observation.
+
+\section{An independent nonstationary result at \texorpdfstring{$\beta=2$}{beta=2}}
+
+\begin{proposition}\label{prop:beta2}
+Let $P$ satisfy the canonical logarithmic Gibbs-kernel equations at
+$\beta=2$. Assume that, almost surely, its points admit an increasing
+two-sided enumeration $(p_k)_{k\in\Z}$ with
+\[
+p_k/k\longrightarrow1\quad(k\to\pm\infty),\qquad
+\lim_{S\to\infty}\sum_{\substack{p\in\gamma\\0<|p|\le S}}\frac1p
+\text{ exists}.
+\]
+Then $P=\Sine_2$, without stationarity or an energy assumption.
+\end{proposition}
+
+\begin{proof}
+Fix a configuration satisfying these assumptions. For the interval
+$[-R,R]$ let $N_R=\gamma([-R,R])$. Its canonical conditional law is
+the $N_R$-particle orthogonal-polynomial ensemble with weight
+\[
+w_R(x)=\1_{[-R,R]}(x)
+\lim_{S\to\infty}\prod_{\substack{p\in\gamma\\R<|p|\le S}}
+\left(1-\frac{x}{p}\right)^2.
+\]
+Kuijlaars--Mi\~na-D\'iaz~\cite[Assumption 1.2 and Theorem 1.3]{KMD}
+prove that the associated kernels $K_R$ converge locally uniformly to
+\[
+K_{\sin}(x,y)=\frac{\sin\pi(x-y)}{\pi(x-y)},\qquad K_{\sin}(x,x)=1.
+\]
+Their particle number is exactly the actual count $N_R$ above.
+
+For $h\in C_c^+(\R)$ supported in a compact interval $B$, the
+conditional Laplace functional has the Fredholm series
+\[
+L_R(\gamma)=\sum_{k=0}^{N_R}\frac{(-1)^k}{k!}
+\int_{B^k}\prod_{i=1}^k(1-e^{-h(x_i)})
+\det[K_R(x_i,x_j)]_{i,j=1}^k\dd\mathbf x.
+\]
+For each fixed admissible configuration, eventually
+$\sup_{x\in B}K_R(x,x)\le2$. Positive semidefiniteness and
+Hadamard's inequality bound the absolute $k$th summand by
+$(2|B|)^k/k!$. Local uniform convergence and dominated convergence
+in the series therefore yield
+$L_R(\gamma)\to\E_{\Sine_2}e^{-\langle h,\gamma\rangle}$.
+Finally DLR gives
+\[
+\E_Pe^{-\langle h,\gamma\rangle}=\E_PL_R(\gamma),
+\]
+and $0\le L_R\le1$ allows bounded convergence over $P$.
+Equality of all such Laplace functionals proves the proposition.
+The random value of $N_R$ causes no difficulty: the deterministic
+theorem is applied separately to each full configuration.
+\end{proof}
+
+This last result provides a separate check on the nonstationary
+conclusion at $\beta=2$. The all-$\beta$ conclusion above instead
+comes from the explicit automatic-stationarity argument and the
+stationary theorem in [M].
+
+\begin{thebibliography}{DHLM}
+\bibitem[DHLM]{DHLM}
+D. Dereudre, A. Hardy, T. Lebl\'e and M. Ma\"ida,
+\emph{DLR equations and rigidity for the Sine-beta process},
+arXiv:1809.03989v2 (2019).
+\href{https://arxiv.org/abs/1809.03989v2}{arXiv:1809.03989v2}.
+
+\bibitem[Geo]{Geo}
+H.-O. Georgii,
+\emph{Translation invariance and continuous symmetries in
+two-dimensional continuum systems},
+in \emph{Mathematical Results in Statistical Mechanics},
+World Scientific (1999), 53--69.
+\href{https://www.mathematik.uni-muenchen.de/~georgii/papers/D2sym.pdf}{Author's manuscript}.
+
+\bibitem[KMD]{KMD}
+A. B. J. Kuijlaars and E. Mi\~na-D\'iaz,
+\emph{Universality for conditional measures of the sine point process},
+J. Approx. Theory \textbf{243} (2019), 1--24.
+\href{https://arxiv.org/abs/1703.02349v2}{arXiv:1703.02349v2},
+especially Assumption 1.2 and Theorem 1.3.
+
+\bibitem[Leb]{Leble}
+T. Lebl\'e,
+\emph{DLR equations, number-rigidity and translation-invariance
+for infinite-volume limit points of the 2DOCP},
+\href{https://arxiv.org/abs/2410.04958}{arXiv:2410.04958}, Section 8.
+\end{thebibliography}
+\end{document}

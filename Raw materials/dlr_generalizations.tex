@@ -1,0 +1,1646 @@
+\documentclass[11pt,reqno]{amsart}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[a4paper,margin=27mm]{geometry}
+\usepackage{microtype,amsmath,amssymb,mathtools}
+\usepackage[hidelinks,pdfusetitle]{hyperref}
+\usepackage{enumitem,booktabs,needspace}
+\numberwithin{equation}{section}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+\newcommand{\R}{\mathbb R}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\N}{\mathbb N}
+\newcommand{\E}{\mathbb E}
+\newcommand{\Prob}{\mathbb P}
+\newcommand{\1}{\mathbf 1}
+\newcommand{\dd}{\,d}
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Ent}{Ent}
+\DeclareMathOperator{\PV}{PV}
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\supp}{supp}
+\DeclareMathOperator{\diver}{div}
+\DeclareMathOperator{\Conf}{Conf}
+\allowdisplaybreaks[2]
+\setlength{\emergencystretch}{1.5em}
+\setlist[enumerate]{leftmargin=*,itemsep=3pt,topsep=5pt}
+\raggedbottom
+\title[Discrepancy-based DLR uniqueness]{Discrepancy-based uniqueness for\\
+one-dimensional repulsive Gibbs states}
+\date{Research note --- 14 September 2026}
+\begin{document}
+\begin{abstract}
+We extend a logarithmic DLR comparison argument to inverse-power
+interactions and to smooth finite-range perturbations of the logarithm.
+For each $s>0$ and $\beta>0$, there is at most one stationary
+intensity-one canonical DLR state for $r^{-s}$ whose interval-count
+variance is bounded linearly and is $o(t)$. An entropy comparison
+between nearby temperatures compensates for the change of coupling
+under affine normalization; a weighted half-line estimate makes the
+exterior-force cost tight. For $-a\log r+W(r)$, with $W$ smooth and of
+finite range and the total interaction having positive second
+derivative, uniqueness follows under the logarithmic discrepancy
+assumptions and a finite local third count moment. We include the
+probabilistic and analytic comparison proofs, distinguish these
+statements from finite-energy uniqueness, and give the tangential
+Hessian obstruction to the same proof in higher dimensions.
+\end{abstract}
+\maketitle
+
+\noindent\textit{Scope.}
+This note develops the comparison framework of the supplied working
+manuscript~\cite{Draft}. All model-specific estimates needed below are
+proved here. Standard convexity inequalities, Campbell's formula, the
+point-shift invariance of Palm measure, and the ergodic theorem are used
+in their usual forms. We prove uniqueness within the stated classes;
+we do not prove their nonemptiness or derive their count bounds from
+finite energy. No claim of priority for the uniqueness statements is made.
+
+\section{Statements and the canonical specification}
+\label{sec:statements}
+
+Let $\Conf(\R)$ be the space of locally finite simple counting measures
+on $\R$. Write $\theta_a\gamma=\gamma-a$ and $N_I(\gamma)=\gamma(I)$.
+A stationary law $P$ has intensity one if
+$\E_PN_I=|I|$ for every bounded interval $I$. Put
+\[
+v_P(t)=\Var_PN_{(0,t]},\qquad t>0.
+\]
+Throughout, stationarity means invariance under every real translation;
+rotation or reflection invariance is not imposed. Constants may depend
+on the candidate process.
+
+\begin{theorem}[Inverse-power interactions]\label{thm:riesz}
+Fix $s>0$ and $\beta>0$. There is at most one stationary simple
+intensity-one canonical DLR state for
+\[
+V_s(r)=r^{-s},\qquad r>0,
+\]
+satisfying
+\begin{align}
+v_P(t)&\le C_Pt\quad(t>0),\label{hyp:linear}\\
+v_P(t)&=o(t)\quad(t\longrightarrow\infty).\label{hyp:sublinear}
+\end{align}
+The DLR specification is the relative-energy specification defined below.
+\end{theorem}
+
+\begin{theorem}[Smooth perturbations of the logarithm]\label{thm:perturb}
+Let $a_0>0$ and let $W\in C^2([0,\infty))$ vanish on $[R_0,\infty)$
+for some $R_0<\infty$. Suppose
+\begin{equation}\label{hyp:convex}
+V(r)=-a_0\log r+W(r),\qquad V''(r)>0\quad(r>0).
+\end{equation}
+For each $\beta>0$, there is at most one stationary simple
+intensity-one canonical DLR state for $V$ satisfying
+\eqref{hyp:linear}--\eqref{hyp:sublinear} and
+\begin{align}
+\int_1^\infty v_P(t)t^{-2}\dd t&<\infty,\label{hyp:integrated}\\
+\E_PN_{[0,1]}^3&<\infty.\label{hyp:third}
+\end{align}
+\end{theorem}
+
+\begin{example}\label{ex:compact}
+For $a_0,R_0>0$ and $\lambda\ge0$,
+\[
+V(r)=-a_0\log r+\lambda(1-r/R_0)_+^4
+\]
+satisfies \eqref{hyp:convex}. Indeed, the added second derivative is
+$12\lambda R_0^{-2}(1-r/R_0)^2$ for $r<R_0$ and zero for $r>R_0$,
+with continuous extension at $R_0$. No smallness condition on $\lambda$
+is required. The count hypotheses remain assumptions on the Gibbs state.
+\end{example}
+
+\subsection{Relative exterior energy}
+Let $I=(A,B)$ be bounded, $\xi$ an exterior configuration supported on
+$I^c$, and $x_*\in I$. For $x\in I$, define
+\begin{equation}\label{def:exterior}
+U_{V,I}^{\xi}(x)=
+\lim_{R\to\infty}\sum_{\substack{p\in\xi\\ |p|\le R}}
+\bigl[V(|x-p|)-V(|x_*-p|)\bigr],
+\end{equation}
+whenever the limit exists. For $V_s$ it is an absolutely convergent
+series on density-one exteriors. In fact, uniformly on compact sets of
+$x,x_*$,
+\begin{equation}\label{eq:relative-riesz-tail}
+\abs{V_s(|x-p|)-V_s(|x_*-p|)}
+\le C_{I,s}|p|^{-s-1}\quad\hbox{for large }|p|.
+\end{equation}
+For a logarithmic tail the cutoff is symmetric. The discrepancy
+assumption \eqref{hyp:integrated} gives the reciprocal principal value
+needed for convergence; this is proved in
+Section~\ref{sec:forces}. The finite-range contribution is a finite sum.
+Changing $x_*$ adds an $x$-independent constant.
+
+On the ordered chamber
+$I_<^n=\{A<x_1<\cdots<x_n<B\}$, let
+\begin{equation}\label{def:hamiltonian}
+H_{V,I}^{\xi,n}(x_1,\ldots,x_n)
+=\sum_{1\le i<j\le n}V(x_j-x_i)
++\sum_{i=1}^nU_{V,I}^{\xi}(x_i).
+\end{equation}
+The associated canonical probability is
+\begin{equation}\label{def:kernel}
+\pi_{V,I,n}^{\xi}(\dd x)=
+\frac{\1_{I_<^n}(x)}{Z_{V,I,n}^{\xi}}
+\exp\{-\beta H_{V,I}^{\xi,n}(x)\}\dd x_1\cdots\dd x_n.
+\end{equation}
+For $n=0$ it is the point mass at the empty configuration. Ordering
+absorbs the usual $n!$ factor into the normalization.
+
+\begin{definition}[Canonical DLR equation]\label{def:dlr}
+A point-process law $P$ satisfies the canonical DLR equation for $V$
+at inverse temperature $\beta$ if, for every bounded interval $I$,
+conditionally on $(\gamma_{I^c},N_I)$ its interior law is
+$\pi_{V,I,N_I}^{\gamma_{I^c}}$ almost surely. Equivalently, for every
+bounded measurable $f$,
+\begin{equation}\label{eq:dlr}
+\E_P\!\left[f(\gamma)\mid\gamma_{I^c},N_I\right]
+=\int f\!\left(\gamma_{I^c}+\sum_{i=1}^{N_I}\delta_{x_i}\right)
+\pi_{V,I,N_I}^{\gamma_{I^c}}(\dd x).
+\end{equation}
+The relative energies and normalizations in this definition are
+required to be well defined on almost every exterior.
+\end{definition}
+
+For $0<s<1$, equations \eqref{def:exterior}--\eqref{eq:dlr} in particular
+give the canonical Riesz DLR equation without an infinite unrenormalized
+exterior energy. The anchor subtraction is essential at the level of
+that energy, even though its force is absolutely summable.
+For the logarithmic interaction this convention is the canonical
+relative-energy convention considered in~\cite{DHLM}.
+
+\subsection{The lattice reference}
+For $K\ge1$, set $L=K+1$ and
+\[
+\Omega_K=\{0<u_1<\cdots<u_K<L\},\qquad
+\xi_K^{\mathrm{lat}}=\{j\in\Z:j\le0\text{ or }j\ge L\}.
+\]
+Let
+\begin{equation}\label{def:lattice-H}
+H^{\mathrm{lat}}_{V,K}(u)=
+\sum_{i<j}V(u_j-u_i)+
+\sum_i\PV\sum_{p\in\xi_K^{\mathrm{lat}}}
+\bigl[V(|u_i-p|)-V(|x_*-p|)\bigr].
+\end{equation}
+For Riesz interactions the $\PV$ sign may be dropped.
+For the logarithm, pair $p=-m$ with $p=L+m$: the relative logarithms
+have a paired tail $O(m^{-2})$, locally uniformly in $u$.
+The cutoff convention in \eqref{def:lattice-H} agrees with this pairing,
+since the finitely shifted cutoff shells contribute $O(R^{-1})$.
+Derivatives of order two converge locally uniformly in both models.
+
+Every pair Hessian is nonnegative in $\Omega_K$, and the endpoint
+terms are convex as well. Thus $H^{\mathrm{lat}}_{V,K}$ is convex and
+$C^2$ there. A supporting affine function bounds it below on the
+bounded chamber. Consequently, for every $T,\tau>0$,
+\begin{align}
+\Phi_{K,T}(u)&=\beta H^{\mathrm{lat}}_{V,K}(u)
++\frac1{2T}\sum_{i=1}^K(u_i-i)^2,\label{def:Phi}\\
+\omega_{K,T}^{(\tau)}(\dd u)
+&=Z_{K,T}(\tau)^{-1}e^{-\tau\Phi_{K,T}(u)}\dd u
+\label{def:omega-tau}
+\end{align}
+have strictly positive finite normalizing constants. We write
+$\omega_{K,T}=\omega_{K,T}^{(1)}$.
+
+
+\section{A static inequality for convex one-dimensional interactions}
+\label{sta:sec-static}\label{sec:static}
+
+Fix $\beta>0$. Let $V\in C^2((0,\infty))$ satisfy
+\begin{equation}\label{sta:curvature}
+V''(t)>0\qquad(t>0).
+\end{equation}
+This is a positive-curvature assumption; strict convexity alone would
+not imply it. Write $L=K+1$ and
+\[
+\Omega_K=\{0<u_1<\cdots<u_K<L\},\qquad
+u_0=0,\quad u_{K+1}=L,\quad g_i=u_{i+1}-u_i.
+\]
+The lattice exterior is $\{j\in\mathbb Z:j\le0\text{ or }j\ge L\}$.
+Assume its relative Hamiltonian $H^{\mathrm{lat}}_{V,K}$ is finite and
+$C^2$ on $\Omega_K$, and that its Hessian is the sum of the
+nonnegative Hessians of the interior pairs and exterior interactions.
+In particular, for $v_0=v_{K+1}=0$,
+\begin{equation}\label{sta:hessian}
+v^\top D^2(\beta H^{\mathrm{lat}}_{V,K})(u)v
+\ge \beta\sum_{i=0}^K V''(g_i)(v_{i+1}-v_i)^2.
+\end{equation}
+The nearest-neighbour interior pairs and the two exterior charges at
+$0,L$ give the terms on the right. The existence and differentiability
+of the relative Hamiltonian must be verified for the interaction under
+consideration; they do not follow from \eqref{sta:curvature} alone.
+
+For $T>0$, set
+\begin{equation}\label{sta:reference}
+\Phi_{K,T}(u)=\beta H^{\mathrm{lat}}_{V,K}(u)
+ +\frac1{2T}\sum_{i=1}^K(u_i-i)^2,
+\qquad
+\omega_{K,T}(\dd u)=Z_{K,T}^{-1}e^{-\Phi_{K,T}(u)}\dd u.
+\end{equation}
+A finite convex function on this bounded chamber has a global affine
+lower bound, obtained from any supporting tangent plane. Its exponential
+therefore has a finite integral, and the integral is strictly positive.
+This justifies $0<Z_{K,T}<\infty$ under the preceding assumptions.
+
+Fix $r\ge1$ and $G\in C_c^2((0,\infty)^r)$, and write
+\begin{equation}\label{sta:observable}
+F_K(u)=\frac1{K-r}\sum_{j=1}^{K-r}
+ G(g_j,\ldots,g_{j+r-1}),\qquad K\ge2r+1.
+\end{equation}
+For $\mu\ll\omega$, use the conventions
+\[
+S(\mu\mid\omega)=\int\log\frac{\dd\mu}{\dd\omega}\,\dd\mu,
+\qquad
+I(\mu\mid\omega)=4\int
+ \left|\nabla\sqrt{\frac{\dd\mu}{\dd\omega}}\right|^2\dd\omega.
+\]
+The last expression defines Fisher information in the weak Sobolev
+sense and is assigned the value $+\infty$ outside its domain. For a
+positive smooth density it equals the usual integral of its squared
+logarithmic gradient against $\mu$.
+
+\begin{proposition}[Uniform gap comparison]\label{sta:prop-gap}
+There is a constant $C$, depending on $V,\beta,r,G$ but independent of
+$K\ge2r+1$ and $T>0$, such that
+\begin{align}
+|\mu(F_K)-\omega_{K,T}(F_K)|^2
+ &\le \frac{C}{K}S(\mu\mid\omega_{K,T}),
+ \label{sta:entropy-gap}\\
+|\mu(F_K)-\omega_{K,T}(F_K)|^2
+ &\le \frac{CT}{K}I(\mu\mid\omega_{K,T}).
+ \label{sta:fisher-gap}
+\end{align}
+The same constants can be chosen uniformly when $\beta$ varies in a
+fixed compact subinterval of $(0,\infty)$.
+\end{proposition}
+
+\begin{proof}
+Write $\Phi=\Phi_{K,T}$ and $n=K-r$. Regard $F_K$ as a function of
+the gaps and define $q_i=\partial F_K/\partial g_i$, including
+$q_0=q_K=0$. Its Euclidean gradient is explicitly
+\begin{equation}\label{sta:gradient}
+(\nabla F_K)_j=q_{j-1}-q_j\quad(1\le j\le K),
+\qquad
+\nabla F_K\cdot v=\sum_{i=0}^Kq_i(v_{i+1}-v_i).
+\end{equation}
+Each gap occurs in at most $r$ summands of \eqref{sta:observable}.
+Consequently $|q_i|\le r\|DG\|_\infty/n$. There is a compact interval
+$[b,B]\subset(0,\infty)$ containing every coordinate projection of
+the supports of $DG$ and $D^2G$. Whenever $q_i\ne0$, one has
+$g_i\in[b,B]$. Put $m=\min_{[b,B]}V''>0$.
+Using $n\ge K/2$ and \eqref{sta:hessian}, weighted Cauchy--Schwarz gives
+\begin{align}
+|\nabla F_K\cdot v|^2
+&\le\left(\sum_{i:q_i\ne0}
+ \frac{q_i^2}{\beta V''(g_i)}\right)
+ \left(\beta\sum_{i=0}^K V''(g_i)(v_{i+1}-v_i)^2\right)
+ \notag\\
+&\le\frac{A}{K}\,v^\top D^2\Phi\,v.
+\label{sta:metric-form}
+\end{align}
+Since $D^2\Phi\ge T^{-1}\mathrm{Id}$, duality yields
+\begin{equation}\label{sta:metric-gradient}
+\nabla F_K^\top(D^2\Phi)^{-1}\nabla F_K\le A/K.
+\end{equation}
+
+There is also a constant $B_0>0$ such that
+\begin{equation}\label{sta:tilt-control}
+|v^\top D^2F_K\,v|
+\le\frac{B_0}{K}\,
+ v^\top D^2(\beta H^{\mathrm{lat}}_{V,K})\,v.
+\end{equation}
+Indeed, for the $j$th window let
+$w_j=(v_{j+1}-v_j,\ldots,v_{j+r}-v_{j+r-1})$. Its contribution to the
+left is bounded by $n^{-1}\|D^2G\|_\infty|w_j|^2$, and vanishes
+unless all its relevant gaps belong to $[b,B]$. Summing, using the
+overlap bound $r$ and then the lower bound $m$ in
+\eqref{sta:hessian}, proves \eqref{sta:tilt-control}.
+
+For a real parameter $z$, let
+\[
+\omega_z(\dd u)=
+ \frac{e^{zF_K(u)}}{\omega_{K,T}(e^{zF_K})}\omega_{K,T}(\dd u).
+\]
+Choose $c>0$ with $cB_0\le1/2$. For $|z|\le cK$,
+\begin{equation}\label{sta:tilt-convexity}
+D^2(\Phi-zF_K)
+\ge\tfrac12D^2(\beta H^{\mathrm{lat}}_{V,K})
+   +T^{-1}\mathrm{Id}
+\ge\tfrac12D^2\Phi.
+\end{equation}
+The Brascamp--Lieb variance inequality on a convex domain thus implies
+\begin{equation}\label{sta:tilted-variance}
+\Var_{\omega_z}(F_K)
+\le\int\nabla F_K^\top[D^2(\Phi-zF_K)]^{-1}\nabla F_K\,\dd\omega_z
+\le 2A/K.
+\end{equation}
+For completeness, the convex-domain version follows from the Neumann
+Bochner identity. For $\nu\propto e^{-\Psi}$ on a smooth convex bounded
+domain, let $\mathcal L=\Delta-\nabla\Psi\cdot\nabla$ and solve
+$-\mathcal Lh=f-\nu(f)$ with Neumann boundary condition. Integration
+by parts and the nonnegative second fundamental form of the boundary
+give
+\[
+\int(\mathcal Lh)^2\dd\nu
+\ge\int\nabla h^\top D^2\Psi\,\nabla h\,\dd\nu,
+\quad
+\Var_\nu(f)=\int\nabla f\cdot\nabla h\,\dd\nu.
+\]
+Cauchy--Schwarz in the $D^2\Psi$ metric gives
+\[
+\Var_\nu(f)^2\le
+ \left(\int\nabla f^\top(D^2\Psi)^{-1}\nabla f\,\dd\nu\right)
+ \Var_\nu(f),
+\]
+which is the asserted inequality. Smooth convex approximation treats
+polytopes. To handle the singularities of $\Phi$ at the original
+chamber boundary, first apply this inequality on the inner convex
+polytopes
+\[
+\Omega_{K,\varepsilon}
+ =\{u\in\Omega_K:g_i(u)>\varepsilon\text{ for }0\le i\le K\},
+\qquad 0<\varepsilon<1.
+\]
+All derivatives of the potential are regular on their closures. The
+constants in \eqref{sta:metric-gradient} and
+\eqref{sta:tilt-convexity} are unchanged. The normalized restrictions
+converge to $\omega_z$, and $F_K$ is bounded; hence their variance
+bounds imply \eqref{sta:tilted-variance} on $\Omega_K$.
+
+Let
+$\Lambda(z)=\log\omega_{K,T}
+(e^{z(F_K-\omega_{K,T}(F_K))})$.
+Boundedness of $F_K$ permits differentiation under the integral.
+Since $\Lambda(0)=\Lambda'(0)=0$ and
+$\Lambda''(z)=\Var_{\omega_z}(F_K)$, integrating
+\eqref{sta:tilted-variance} twice, for either sign of $z$, gives
+\begin{equation}\label{sta:mgf}
+\Lambda(z)\le A z^2/K\qquad(|z|\le cK).
+\end{equation}
+The Donsker--Varadhan entropy variational inequality, applied to both $zF_K$ and
+$-zF_K$, now shows, for $0<z\le cK$,
+\begin{equation}\label{sta:entropy-optimization}
+|\mu(F_K)-\omega_{K,T}(F_K)|
+\le S(\mu\mid\omega_{K,T})/z+Az/K.
+\end{equation}
+If $0<S\le Ac^2K$, choose $z=\sqrt{SK/A}$ to obtain a squared bound
+$4AS/K$; the case $S=0$ follows by taking $z\downarrow0$.
+If $S>Ac^2K$, boundedness gives instead
+\[
+|\mu(F_K)-\omega_{K,T}(F_K)|^2
+\le4\|G\|_\infty^2
+\le \frac{4\|G\|_\infty^2}{Ac^2}\frac SK.
+\]
+The infinite-entropy case is automatic. This proves
+\eqref{sta:entropy-gap} for every entropy value.
+
+Finally $D^2\Phi\ge T^{-1}\mathrm{Id}$ gives the convex-domain
+logarithmic Sobolev inequality
+\begin{equation}\label{sta:lsi}
+\Ent_{\omega_{K,T}}(f^2)
+\le2T\int|\nabla f|^2\dd\omega_{K,T},
+\qquad
+S(\mu\mid\omega_{K,T})\le\frac T2 I(\mu\mid\omega_{K,T}).
+\end{equation}
+Here $\Ent_\omega(h)=\omega(h\log h)-\omega(h)\log\omega(h)$.
+These are standard convexity estimates, also used in the local
+comparison framework of~\cite{BEY}. One way to verify the logarithmic
+Sobolev constant is to use the reflecting diffusion
+with generator $\Delta-\nabla\Phi\cdot\nabla$ on an inner polytope
+after smooth convex approximation. The Bochner inequality, including
+its nonnegative boundary term, gives decay of Fisher information at
+rate $2/T$; integrating the entropy dissipation identity yields
+$S\le(T/2)I$.
+The passage to the full chamber does not require a boundary
+integrability threshold on $\beta$. To see this directly, first take
+a bounded locally Sobolev function $f$ with finite weighted Dirichlet
+integral. Its restriction to each inner polytope belongs to the usual
+Sobolev space, because the weight is smooth and bounded above and
+below there. Apply its logarithmic Sobolev inequality and let
+$\varepsilon\downarrow0$. The entropy integrals converge by
+boundedness, and the Dirichlet integrals converge by monotone
+convergence before normalization. Truncation of an arbitrary
+finite-energy $f$, followed by lower semicontinuity of entropy, proves
+the general assertion. Apply this to
+$f=\sqrt{\dd\mu/\dd\omega_{K,T}}$ and combine with
+\eqref{sta:entropy-gap}. All preceding constants depend on $\beta$
+only through positive lower bounds for $\beta m$, proving the stated
+uniformity.
+\end{proof}
+
+\section{A temperature comparison for convex reference measures}
+\label{sta:sec-temperature}
+
+The homogeneity of an inverse-power interaction changes its effective
+inverse temperature under dilation. The following finite-dimensional
+estimate controls that change without estimating singular pair forces.
+Its variance bound is the sharp information-content variance inequality
+for log-concave densities; we follow the perspective proof presented
+in~\cite{FMW}. The argument is included for completeness.
+
+\begin{lemma}[Convex temperature bound]\label{sta:temperature}
+Let $D\subset\R^K$ be a convex set with nonempty interior, and let
+$\Phi$ be a measurable convex function on $D$, finite almost everywhere
+there and bounded below. Extend it by $+\infty$ off $D$. Assume
+\[
+0<Z(t):=\int_{\R^K}e^{-t\Phi(u)}\dd u<\infty
+\qquad(t>0),
+\]
+and put $\omega_t(\dd u)=Z(t)^{-1}e^{-t\Phi(u)}\dd u$.
+Then, for every $t>0$ and $\tau>0$,
+\begin{align}
+\Var_{\omega_t}(\Phi)&\le K/t^2,
+ \label{sta:energy-variance}\\
+S(\omega_\tau\mid\omega_1)
+ &\le K(\log\tau+\tau^{-1}-1).
+ \label{sta:temperature-entropy}
+\end{align}
+\end{lemma}
+
+\begin{proof}
+Adding a constant to $\Phi$ changes none of the measures or claimed
+quantities, so assume $\Phi\ge0$. For $t>0$ the perspective
+\[
+(y,t)\longmapsto t\Phi(y/t)
+\]
+is convex as an extended-valued function. Indeed, if
+$t=(1-\theta)t_0+\theta t_1$, then
+$y/t$ is the convex combination of $y_0/t_0,y_1/t_1$ with weights
+$(1-\theta)t_0/t$ and $\theta t_1/t$, respectively. Multiplication of
+the convexity inequality for $\Phi$ by $t$ proves the claim, including
+the constraint $y/t\in D$.
+The Pr\'ekopa marginal log-concavity theorem implies that
+\[
+t\longmapsto\log\int_{\R^K}e^{-t\Phi(y/t)}\dd y
+ =K\log t+\log Z(t)
+\]
+is concave. Let $\psi(t)=\log Z(t)$. Differentiating under the integral
+is justified at every $t>0$: for $j=1,2$ and $t$ in a small compact
+neighbourhood of $t_0>0$, the factors $\Phi^j e^{-t\Phi}$ are dominated
+by a constant times $e^{-(t_0/2)\Phi}$ after shrinking that
+neighbourhood. Consequently
+\[
+\psi'(t)=-\omega_t(\Phi),\qquad
+\psi''(t)=\Var_{\omega_t}(\Phi).
+\]
+The second derivative of the concave function above is nonpositive,
+and gives \eqref{sta:energy-variance}.
+
+The logarithmic density ratio gives the exact identity
+\begin{equation}\label{sta:kl-identity}
+S(\omega_\tau\mid\omega_1)
+=\psi(1)-\psi(\tau)+(\tau-1)\psi'(\tau).
+\end{equation}
+Its derivative in $\tau$ is $(\tau-1)\psi''(\tau)$, and its value at
+$\tau=1$ is zero. Thus, when $\tau\ge1$,
+\[
+S(\omega_\tau\mid\omega_1)
+=\int_1^\tau(t-1)\psi''(t)\dd t
+\le K\int_1^\tau\frac{t-1}{t^2}\dd t
+=K(\log\tau+\tau^{-1}-1).
+\]
+When $0<\tau\le1$, the positive-kernel expression is instead
+\[
+S(\omega_\tau\mid\omega_1)
+=\int_\tau^1(1-t)\psi''(t)\dd t
+\le K\int_\tau^1\frac{1-t}{t^2}\dd t
+=K(\log\tau+\tau^{-1}-1).
+\]
+The change of integration orientation is essential for using the
+variance upper bound in this second case.
+\end{proof}
+
+\begin{corollary}[Temperature bridge for gap averages]
+\label{sta:temperature-gap}
+Let $\Phi=\Phi_{K,T}$ be as in \eqref{sta:reference} and define
+$\omega_{K,T}^{(\tau)}\propto e^{-\tau\Phi_{K,T}}$.
+Uniformly in $K\ge2r+1$ and $T>0$,
+\begin{equation}\label{sta:temperature-observable}
+|\omega_{K,T}^{(\tau)}(F_K)-\omega_{K,T}(F_K)|^2
+\le C(\log\tau+\tau^{-1}-1).
+\end{equation}
+In particular, on each fixed compact interval
+$J\subset(0,\infty)$ containing $1$, its right-hand side is at most
+$C_J|\tau-1|^2$.
+\end{corollary}
+
+\begin{proof}
+Convexity on the bounded chamber gives a finite lower bound for
+$\Phi_{K,T}$, so all hypotheses of Lemma~\ref{sta:temperature} hold.
+Use \eqref{sta:entropy-gap} with
+$\mu=\omega_{K,T}^{(\tau)}$, and then
+\eqref{sta:temperature-entropy}. The factor $K$ cancels. For the final
+statement, write $h(\tau)=\log\tau+\tau^{-1}-1$; one has
+$h(1)=h'(1)=0$ and $h''$ bounded on $J$, so Taylor's formula applies.
+\end{proof}
+
+\begin{remark}\label{sta:whole-potential}
+The temperature parameter multiplies the entire potential:
+\[
+\tau\Phi_{K,T}
+=\tau\beta H^{\mathrm{lat}}_{V,K}
+  +\frac{1}{2(T/\tau)}\sum_i(u_i-i)^2.
+\]
+Thus the bridge changes the interaction coefficient to $\tau\beta$
+and the confinement parameter to $T/\tau$. This is the family for which
+Lemma~\ref{sta:temperature} applies directly. Multiplying just one
+part of the Hamiltonian would require a separate argument.
+\end{remark}
+
+
+\section{Stationary counting and particle-ended blocks}
+\label{pre:section}\label{sec:prelim}
+
+This section uses no special property of the interaction. Let $P$ be a
+stationary simple point process of intensity one and write
+$v_P(t)=\operatorname{Var}_P N_{(0,t]}$. Assume throughout that
+\begin{equation}\label{pre:variance}
+v_P(t)\le C_Pt\quad(t>0),\qquad v_P(t)=o(t)\quad(t\to\infty).
+\end{equation}
+Translations are $\theta_x\gamma=\gamma-x$. The Palm law $P^0$ is
+characterized by Campbell's identity
+\begin{equation}\label{pre:campbell}
+\E_P\sum_{p\in\gamma} h(p,\theta_p\gamma)
+=\int_{\R}\E_{P^0}h(x,\gamma)\dd x
+\end{equation}
+for nonnegative measurable $h$. Under $P^0$ enumerate the points as
+$\cdots<p_{-1}<p_0=0<p_1<\cdots$, put $g_i=p_{i+1}-p_i$, and let
+$T_*\gamma=\theta_{p_1}\gamma$.
+
+\begin{lemma}[Density one]\label{pre:density}
+Almost surely under both $P$ and $P^0$, the configuration has density
+one in both directions, at every finite origin.
+\end{lemma}
+
+\begin{proof}
+Chebyshev's inequality gives
+$P(|N_{(0,n^2]}-n^2|>\varepsilon n^2)\le C_P/(\varepsilon^2n^2)$.
+Borel--Cantelli and monotonic interpolation prove forward density one;
+the reflected argument proves backward density one. Moving the origin
+by a finite amount does not change these limits. Thus the good event
+is invariant under every translation, and Campbell's identity
+transfers it to $P^0$.
+\end{proof}
+
+\begin{lemma}[Palm count envelopes]\label{pre:envelopes}
+The random variables
+\[
+C^+=\sup_{t\ge0}\frac{N_{(0,t]}}{1+t},\qquad
+C^-=\sup_{t\ge0}\frac{N_{[-t,0)}}{1+t}
+\]
+are integrable under $P^0$.
+\end{lemma}
+
+\begin{proof}
+For a spatially rooted configuration put
+$C_0=\sup_{t\ge0}N_{(0,t]}/(1+t)$. A dyadic decomposition gives
+\[
+C_0\le N_{(0,1]}+2+
+\sum_{j\ge0}2^{-j}|N_{(0,2^{j+1}]}-2^{j+1}|.
+\]
+Minkowski's inequality and the linear variance bound imply
+$\E_PC_0^2<\infty$. For every $p\in\gamma\cap(0,1]$,
+$C^+(\theta_p\gamma)\le2C_0(\gamma)$. Consequently, by Campbell and
+Cauchy--Schwarz,
+\[
+\E_{P^0}C^+
+=\E_P\sum_{p\in\gamma\cap(0,1]}C^+(\theta_p\gamma)
+\le2\E_P[N_{(0,1]}C_0]<\infty.
+\]
+Reflection proves the assertion for $C^-$.
+\end{proof}
+
+\begin{lemma}[First-point bias and recovery of the Palm law]
+\label{pre:palm-identification}
+The Palm law is invariant under $T_*$. If $a$ is the first strictly
+positive point of a spatial sample, then
+\begin{equation}\label{pre:first-point}
+\operatorname{Law}_P(\theta_a\gamma)
+=g_{-1}P^0,\qquad \E_{P^0}g_{-1}=1.
+\end{equation}
+For every bounded measurable function $G$ of $r$ consecutive gaps,
+the expectation of its average over successive gap windows following
+$a$ converges, as the number of windows tends to infinity, to
+$\E_{P^0}G(g_0,\ldots,g_{r-1})$.
+Moreover the Palm law determines $P$ through
+\begin{equation}\label{pre:inversion}
+\E_P f(\gamma)
+=\E_{P^0}\int_0^{g_0}f(\theta_t\gamma)\dd t
+\end{equation}
+for bounded measurable $f$.
+\end{lemma}
+
+\begin{proof}
+For bounded $h$, compare the sums of $h(\theta_p\gamma)$ and
+$h(T_*\theta_p\gamma)$ over $p\in\gamma\cap(0,R]$. Their sets of
+point indices differ at most at the two ends, so the absolute
+difference is at most $2\norm h_\infty$. Campbell and division by $R$
+give $\E_{P^0}h(T_*\gamma)=\E_{P^0}h(\gamma)$.
+
+There is a unique point immediately to the left of the spatial
+origin, by Lemma~\ref{pre:density}; a point at zero has $P$-probability
+zero. Assigning the origin to that point and applying Campbell gives
+\[
+\E_P f(\gamma)
+=\int_{\R}\E_{P^0}
+ [\1_{\{x\le0<x+g_0\}}f(\theta_{-x}\gamma)]\dd x
+=\E_{P^0}\int_0^{g_0}f(\theta_t\gamma)\dd t.
+\]
+Assigning the origin instead to the first point on its right gives
+\[
+\E_P h(\theta_a\gamma)
+=\int_{\R}\E_{P^0}
+ [\1_{\{0<x\le g_{-1}\}}h(\gamma)]\dd x
+=\E_{P^0}[g_{-1}h].
+\]
+Taking $f=1$ or $h=1$ gives the mean gap identity.
+
+For completeness the averaging assertion does not require ergodicity.
+Let $\mathcal I$ be the $T_*$-invariant sigma-algebra. Birkhoff's
+theorem gives the almost-sure limit
+$\E_{P^0}[G\mid\mathcal I]$ for the bounded gap averages.
+The density assertion and Birkhoff applied to $g_{-1}$ give
+\[
+\E_{P^0}[g_{-1}\mid\mathcal I]
+=\lim_{n\to\infty}\frac1n\sum_{j=0}^{n-1}g_{-1}\circ T_*^j=1.
+\]
+Use \eqref{pre:first-point}, dominated convergence with the integrable
+weight $g_{-1}$, and conditional expectation onto $\mathcal I$.
+\end{proof}
+
+\begin{remark}[Endpoint domination]\label{pre:domination}
+Let $g_*$ denote the entire gap containing the spatial origin.
+For every nonnegative measurable $h$, every integer $j$, and $M>0$,
+\begin{equation}\label{pre:domination-equation}
+\E_P[\1_{\{g_*\le M\}}h(T_*^j\theta_a\gamma)]
+=\E_{P^0}[g_{-1}\1_{\{g_{-1}\le M\}}h(T_*^j\gamma)]
+\le M\E_{P^0}h.
+\end{equation}
+The bound is uniform in $j$. In particular it applies to the two
+particle endpoints of all blocks considered below.
+\end{remark}
+
+\subsection{Canonical conditioning on a fixed-rank block}
+
+For $K\ge1$ let $a$ be the first positive point and $b$ the
+$(K+2)$-nd positive point. Write the $K$ points between them as
+$x_1<\cdots<x_K$ and define
+\[
+L=K+1,\qquad \ell=b-a,\qquad c=L/\ell,\qquad
+u_i=c(x_i-a),\qquad
+\zeta=\gamma-\sum_{i=1}^K\delta_{x_i}.
+\]
+Thus $a,b$ are the first two positive points of the retained
+configuration $\zeta$, and $u\in\Omega_K=\{0<u_1<\cdots<u_K<L\}$.
+
+\begin{lemma}[Random-rank DLR disintegration]\label{pre:random-dlr}
+Suppose $P$ satisfies the canonical DLR equations for the interaction
+$V$. Conditionally on $\zeta$, the points $x_1,\ldots,x_K$ have the
+canonical Gibbs density in $(a,b)$ with exterior $\zeta$. In the
+$u$-coordinates the conditional law, denoted by $\mu_\zeta$, has
+interaction $V_c(r)=V(r/c)$ and exterior $c(\zeta-a)$, including
+charges at $0$ and $L$.
+\end{lemma}
+
+\begin{proof}
+Restrict first to $\{b<R\}$, where $R$ is a positive integer. Apply
+canonical DLR in the deterministic interval $(0,R)$, conditional on
+its exterior and particle number. Then condition further on the
+ordered coordinates of rank $1,K+2,K+3,\ldots$ in that interval.
+Only the $K$ coordinates between $a$ and $b$ remain variable.
+Factoring their terms out of the original Gibbs density gives exactly
+their Gibbs density with the retained exterior. Both the total number
+in $(0,R)$ and the event $\{b<R\}$ are determined by $\zeta$ and $K$.
+The rank selection is preserved by every resampling inside $(a,b)$,
+so it introduces no additional coordinate-dependent factor.
+The events $\{b<R\}$ exhaust probability one. Finally the affine
+change of variables contributes a constant Jacobian and transforms
+each distance $r$ into $r/c$. For the relative exterior energies used
+here the same change is legitimate by absolute tail convergence for
+inverse powers and by the symmetric-cutoff convergence for the
+logarithm. A finite displacement of the cutoff center contributes
+vanishing distant-shell terms by density one.
+\end{proof}
+
+\begin{lemma}[Good lengths]\label{pre:good-length}
+One has $\ell-L=o_P(\sqrt K)$. For any two candidate laws $P,Q$,
+there is a common deterministic sequence $r_K\downarrow0$ such that,
+for every fixed $M>0$, the exterior-measurable event
+\begin{equation}\label{pre:good-event}
+E_{K,M}=\{g_*\le M,\ |\ell-L|\le r_K\sqrt K\}
+\end{equation}
+satisfies
+\[
+\limsup_{K\to\infty}P(E_{K,M}^c)\le P(g_*>M),
+\]
+and the analogous inequality holds under $Q$.
+\end{lemma}
+
+\begin{proof}
+Put $n=K+2$. For $t=n+\varepsilon\sqrt K$, the event $\{b>t\}$
+implies $N_{(0,t]}<n$, a deviation of size at least
+$\varepsilon\sqrt K$. Since $v_P(t)=o(K)$, its probability tends to
+zero by Chebyshev. Taking $t=n-\varepsilon\sqrt K$ similarly controls
+$\{b<t\}$. Therefore $b-n=o_P(\sqrt K)$. The random variable $a$
+is almost surely finite and has a law independent of $K$, proving the
+claim about $\ell-L=b-n+1-a$. A diagonal choice gives a common slowly
+decreasing $r_K$ for $P,Q$. The other assertions follow because $a,b$
+and the last point before zero all belong to $\zeta$.
+\end{proof}
+
+\begin{lemma}[Negligible confinement cost]\label{pre:quadratic}
+Define
+\begin{equation}\label{pre:J-definition}
+J_K(\zeta)=\E_{\mu_\zeta}\sum_{i=1}^K(u_i-i)^2.
+\end{equation}
+For every fixed $M$,
+\begin{equation}\label{pre:J-small}
+\frac1{K^2}\E_P[\1_{E_{K,M}}J_K]\longrightarrow0.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+For any deterministic $0<z_1<\cdots<z_K<\ell$, let
+$A(t)=\#\{i:z_i\le t\}$ and $\rho=K/\ell$. The exact identity
+\begin{equation}\label{pre:quantile}
+\int_0^\ell(A(t)-\rho t)^2\dd t
+=\rho\sum_{i=1}^K
+\left(z_i-\frac{i-\frac12}{\rho}\right)^2+\frac\ell{12}
+\end{equation}
+follows on expanding the square and using
+\[
+\int_0^\ell A(t)^2\dd t=\sum_i(2i-1)(\ell-z_i),\qquad
+\int_0^\ell tA(t)\dd t=\frac12\sum_i(\ell^2-z_i^2).
+\]
+Take $z_i=x_i-a$ and $D_0(s)=N_{(0,s]}-s$. For Lebesgue-almost
+every $0<t<\ell$,
+\[
+A(t)-\rho t=D_0(a+t)+(a-1)+(1-\rho)t.
+\]
+On $E_{K,M}$ we have $a\le g_*\le M$, $\ell\asymp K$, and $b\le3K$
+for sufficiently large $K$. The midpoint locations
+$(i-\frac12)\ell/K$ differ from $i\ell/L$ by a uniformly bounded
+amount. Therefore \eqref{pre:quantile} yields
+\begin{equation}\label{pre:quadratic-pointwise}
+\1_{E_{K,M}}\sum_i(u_i-i)^2
+\le C\int_0^{3K}D_0(s)^2\dd s+C_MK+Cr_K^2K^2.
+\end{equation}
+Here we used $K(\ell-K)^2\le C K+C K(\ell-L)^2$ for the density
+correction. By stationarity and intensity one,
+$\E_PD_0(s)^2=v_P(s)$, and
+$\int_0^{3K}v_P(s)\dd s=o(K^2)$. Take expectations in
+\eqref{pre:quadratic-pointwise}. Exterior measurability of $E_{K,M}$
+allows conditional expectation of the left side, giving
+\eqref{pre:J-small}.
+\end{proof}
+
+\begin{lemma}[Conditional envelopes]\label{pre:conditional-envelopes}
+For an interior configuration define
+\[
+C_{\rm int}^+=\sup_{t\ge0}\frac{\#\{i:u_i\le t\}}{1+t},\qquad
+C_{\rm int}^-=\sup_{t\ge0}\frac{\#\{i:L-u_i\le t\}}{1+t},\qquad
+X_\pm=\E_{\mu_\zeta}C_{\rm int}^\pm.
+\]
+For each fixed $M$ and all sufficiently large $K$,
+\begin{equation}\label{pre:X-bound}
+\E_P[\1_{E_{K,M}}X_\pm]\le2M\E_{P^0}C^\pm.
+\end{equation}
+Furthermore, for any nonnegative decreasing function $h$ on $[0,L]$,
+\begin{equation}\label{pre:decreasing-envelope}
+\sum_{i=1}^K h(u_i)^2
+\le C_{\rm int}^+\left(h(0)^2+\int_0^Lh(t)^2\dd t\right),
+\end{equation}
+and the reflected inequality holds at the right endpoint.
+\end{lemma}
+
+\begin{proof}
+On $E_{K,M}$, $c\in[1/2,2]$, and changing variables in the count
+envelope gives
+$C_{\rm int}^+\le2C^+(\theta_a\gamma)$ and
+$C_{\rm int}^-\le2C^-(\theta_b\gamma)$.
+Condition on $\zeta$, apply \eqref{pre:domination-equation} with
+$j=0,L$, and use Lemma~\ref{pre:envelopes}.
+For \eqref{pre:decreasing-envelope}, integrate $h^2$ against the
+interior counting function $N(t)$ and use
+$N(t)\le C_{\rm int}^+(1+t)$. Integration by parts gives
+\[
+\int_0^Lh^2\dd N
+\le C_{\rm int}^+\left((1+L)h(L)^2+
+\int_{[0,L]}(1+t)\,\dd(-h(t)^2)\right)
+=C_{\rm int}^+\left(h(0)^2+\int_0^Lh^2\dd t\right).
+\]
+Approximation proves the assertion for arbitrary decreasing $h$.
+\end{proof}
+
+\begin{lemma}[Affine block statistics]\label{pre:affine-statistics}
+Let $G\in C_c^2((0,\infty)^r)$ and
+\[
+F_K(u)=\frac1{K-r}\sum_{i=1}^{K-r}
+G(u_{i+1}-u_i,\ldots,u_{i+r}-u_{i+r-1}).
+\]
+Then
+\begin{equation}\label{pre:affine-limit}
+\lim_{K\to\infty}\E_P F_K(u(\gamma))
+=\E_{P^0}G(g_0,\ldots,g_{r-1}).
+\end{equation}
+Consequently equality of these limits for two intensity-one laws and
+all $r,G$ implies equality of the laws.
+\end{lemma}
+
+\begin{proof}
+Extend $G$ by zero to a globally Lipschitz function on $\R^r$.
+Each physical gap enters at most $r$ summands, and the sum of the
+interior gaps is at most $\ell$. Thus the difference between the
+scaled statistic and its unscaled version is at most
+\[
+\frac{C_G}{K-r}|c-1|\ell
+=\frac{C_G}{K-r}|\ell-L|\longrightarrow0
+\]
+almost surely, by density one. Both statistics are bounded, so the
+difference tends to zero in mean. Lemma~\ref{pre:palm-identification}
+identifies the unscaled limit. Equality for every $G$ identifies all
+finite consecutive-gap distributions; $T_*$-invariance identifies
+every finite window of integer gap indices. The full gap sequence
+determines the Palm configuration, and \eqref{pre:inversion} recovers
+the spatial law.
+\end{proof}
+
+
+\section{Exterior forces and tight conditional costs}\label{for:section}\label{sec:forces}
+
+The following argument treats the logarithm and the inverse powers
+together.  Fix $\alpha\ge0$ and write
+\[
+ V_\alpha(r)=
+ \begin{cases}-\log r,&\alpha=0,\\ r^{-\alpha},&\alpha>0.
+ \end{cases}
+\]
+All constants in this section may depend on $\alpha$.  Let $P$ be a
+stationary simple point process of intensity one, and put
+$v(t)=\operatorname{Var}_P N_{(0,t]}$.  We use the assumptions
+\begin{equation}\label{for:assumptions}
+ v(t)\le Ct\quad(t>0),\qquad v(t)=o(t),\qquad
+ \int_1^\infty v(t)t^{-2\alpha-2}\,\dd t<\infty.
+\end{equation}
+For every $\alpha>0$ the last condition follows from the first, since
+$\int_1^\infty t^{-2\alpha-1}\,\dd t<\infty$.  For $\alpha=0$ it
+is the additional logarithmic discrepancy assumption.  The sublinear
+condition is only needed below through the good endpoint-length event.
+
+\begin{lemma}[Weighted discrepancy regularity]\label{for:regularity}
+There is a translation-invariant event of full $P$- and $P^0$-measure
+on which the configuration has density one in both directions and,
+simultaneously for every $a\in\R$,
+\begin{equation}\label{for:weighted-discrepancy}
+ \int_1^\infty
+ \bigl((N_{(a,a+t]}-t)^2+(N_{[a-t,a)}-t)^2\bigr)
+ t^{-2\alpha-2}\,\dd t<\infty.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Density one was proved in Lemma~\ref{pre:density}.
+Tonelli's theorem and \eqref{for:assumptions} give
+\eqref{for:weighted-discrepancy} at $a=0$.  To pass simultaneously to
+all finite $a$, use the signed cumulative discrepancy $D_0$ of
+$\gamma-\dd x$.  An interval discrepancy rooted at $a$ is a difference
+$D_0(a+t)-D_0(a)$, up to a fixed endpoint convention.  For large $t$,
+$t$ and $t+a$ are comparable.  Translation in the integral and
+$\int_1^\infty t^{-2\alpha-2}\,\dd t<\infty$ prove the assertion
+at every $a$ on the same event.  Density one is likewise unaffected by
+finite translations.  This event is consequently translation invariant;
+Campbell's formula transfers its probability-one property from $P$ to
+$P^0$.
+\end{proof}
+
+\begin{lemma}[Logarithmic principal values]\label{for:log-pv}
+When $\alpha=0$, the event in Lemma~\ref{for:regularity} also has
+the following property. At every finite origin the reciprocal
+symmetric principal value exists, with a point at that origin omitted.
+The logarithmic relative exterior energies converge, and their first
+and second derivatives converge locally uniformly away from exterior
+points. A finite change of cutoff center does not change their limits.
+\end{lemma}
+
+\begin{proof}
+At origin zero put
+$D_{\rm sym}(t)=N_{(0,t]}-N_{[-t,0)}$. Stieltjes integration by parts gives
+\[
+\sum_{\substack{p\in\gamma\\1<|p|\le R}}\frac1p
+=\frac{D_{\rm sym}(R)}R-D_{\rm sym}(1)
++\int_1^R\frac{D_{\rm sym}(t)}{t^2}\dd t.
+\]
+Density one makes the boundary term tend to zero.
+The integral converges absolutely by Cauchy--Schwarz and
+\eqref{for:weighted-discrepancy}. The same argument applies at every
+finite origin on the same event.
+For $x,x_*$ in a fixed bounded set and large $|p|$,
+\[
+-\log|x-p|+\log|x_*-p|
+=\frac{x-x_*}{p}+O(|p|^{-2}),
+\]
+uniformly on that set. The reciprocal principal value and the
+absolutely summable remainder prove the relative-energy claim.
+The derivative has the same principal-value leading term, and the
+second derivative is absolutely summable.
+Finally, moving a cutoff center by a fixed amount changes only shells
+of bounded width. Density one bounds the number of points in those
+shells by $o(R)$, and each relative-energy or first-derivative summand
+is $O(R^{-1})$. Their contribution tends to zero.
+\end{proof}
+
+\begin{lemma}[Half-line envelope and its dilation]\label{for:halfline}
+Root a configuration from the preceding event at a particle.  Remove
+that particle, and let $N_{\rm ext}(t)$ count the particles on either
+chosen outward half-line at distance at most $t$.  Define
+\begin{equation}\label{for:envelope-def}
+ D(t)=N_{\rm ext}(t)-(t-1)_+,\qquad
+ H_\alpha(x)=\int_0^\infty
+ \frac{\abs{D(t)}}{(x+t)^{\alpha+2}}\,\dd t\quad(x\ge0).
+\end{equation}
+Then
+\begin{equation}\label{for:envelope-energy}
+ \mathcal B_\alpha
+ :=H_\alpha(0)^2+\int_0^\infty H_\alpha(x)^2\,\dd x<\infty.
+\end{equation}
+More precisely, with $\mathrm B$ denoting the beta function,
+\begin{equation}\label{for:schur}
+ \int_0^\infty H_\alpha(x)^2\,\dd x
+ \le \mathrm B\left(\frac12,\alpha+\frac32\right)^2
+ \int_0^\infty D(t)^2t^{-2\alpha-2}\,\dd t.
+\end{equation}
+If outward distances are multiplied by $c\in[1/2,2]$, center the new
+counting function at $c^{-1}(t-1)_+$.  The resulting envelope energy
+$\mathcal B_{\alpha,c}$ satisfies
+\begin{equation}\label{for:dilation}
+ \sup_{1/2\le c\le2}\mathcal B_{\alpha,c}
+ \le C_\alpha(\mathcal B_\alpha+1).
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Simplicity and local finiteness give a positive distance to the next
+outward point.  Hence $D$ vanishes on some interval $(0,\delta)$.
+At infinity $D(t)$ differs from $N_{\rm ext}(t)-t$ by the constant
+$1$, so Lemma~\ref{for:regularity} gives
+$\int_0^\infty D(t)^2t^{-2\alpha-2}\,\dd t<\infty$.
+Cauchy--Schwarz yields
+\[
+ H_\alpha(0)
+ \le\left(\int_\delta^\infty D(t)^2t^{-2\alpha-2}\,\dd t\right)^{1/2}
+     \left(\int_\delta^\infty t^{-2}\,\dd t\right)^{1/2}<\infty.
+\]
+For the square-integral bound, write
+$f(t)=\abs{D(t)}t^{-\alpha-1}$ and use the positive kernel
+\[
+ k_\alpha(x,t)=\frac{t^{\alpha+1}}{(x+t)^{\alpha+2}}.
+\]
+With $w(t)=t^{-1/2}$, direct substitutions give both Schur identities
+\[
+ \int_0^\infty k_\alpha(x,t)w(t)\,\dd t
+ =b_\alpha w(x),\qquad
+ \int_0^\infty k_\alpha(x,t)w(x)\,\dd x
+ =b_\alpha w(t),
+ \quad b_\alpha=\mathrm B\left(\tfrac12,\alpha+\tfrac32\right).
+\]
+The Schur bound proves \eqref{for:schur}.  In particular
+$b_0^2=\pi^2/4$.
+
+For the dilation, the new centered discrepancy is
+\[
+ D_c(t)=D(t/c)+R_c(t),\qquad
+ R_c(t)=(t/c-1)_+-c^{-1}(t-1)_+.
+\]
+Uniformly for $c\in[1/2,2]$, $R_c$ is bounded and vanishes when
+$t<1/2$.  Therefore
+\[
+ H_{\alpha,c}(x)
+ \le c^{-\alpha-1}H_\alpha(x/c)
+       +C_\alpha(x+1/2)^{-\alpha-1}.
+\]
+Its value at zero and its square integral are bounded as claimed in
+\eqref{for:dilation}.
+\end{proof}
+
+Retain the random block notation: $a$ is the first positive point,
+$b$ is the $(K+2)$-nd positive point, $L=K+1$, $\ell=b-a$,
+$c=L/\ell$, and $u_i=c(x_i-a)$.  The retained exterior $\zeta$
+includes $a,b$, and $\mu_\zeta$ denotes the conditional distribution
+of the rescaled interior.  Write $\widehat\zeta=c(\zeta-a)$ and
+\[
+ \xi_K^{\rm lat}=\{0,-1,-2,\ldots\}\cup\{L,L+1,L+2,\ldots\}.
+\]
+The common endpoint charges $0,L$ will always be cancelled before
+estimating a force difference.  To fix a harmless sign convention, put
+$q_\alpha(r)=-V_\alpha'(r)$ and define
+\begin{equation}\label{for:force-def}
+ \begin{split}
+ B_\zeta(u)={}&
+ \sum_{p\in\widehat\zeta\setminus\{0,L\}}
+     \operatorname{sgn}(u-p)q_\alpha(\abs{u-p})\\
+ &-\sum_{p\in\xi_K^{\rm lat}\setminus\{0,L\}}
+     \operatorname{sgn}(u-p)q_\alpha(\abs{u-p}),\qquad 0\le u\le L.
+ \end{split}
+\end{equation}
+For $\alpha>0$ these force sums are absolutely convergent.  For
+$\alpha=0$ each sum is understood in symmetric principal value, or
+equivalently by pairing the two outward rays.  Indeed, subtraction of
+the corresponding constant-density rays leaves absolutely convergent
+discrepancy integrals, and the paired continuum force converges.
+Changing between the two cutoff conventions contributes vanishing
+distant shells by density one.  The estimates below in particular
+show that $B_\zeta$ is bounded on the closed block for almost every
+retained exterior.
+
+Define its conditional cost by
+\begin{equation}\label{for:cost}
+ \mathcal D_{K,\alpha}(\zeta)=\mathcal D_K(\zeta)
+ =\E_{\mu_\zeta}\sum_{i=1}^K B_\zeta(u_i)^2.
+\end{equation}
+
+\begin{proposition}[Tight conditional force cost]\label{for:tight}
+Let $r_K\downarrow0$ be chosen so that
+$\ell-L=o_P(\sqrt K)$ is captured by the good events
+\[
+ E_{K,M}=\{g_*\le M,\ \abs{\ell-L}\le r_K\sqrt K\},
+\]
+where $g_*$ is the full gap containing the spatial origin, as in
+Lemma~\ref{pre:good-length}.
+For each fixed $M$, the random variables
+$\1_{E_{K,M}}\mathcal D_K$ are tight as $K\to\infty$.
+\end{proposition}
+
+\begin{proof}
+On $E_{K,M}$, $c\in[1/2,2]$ for all sufficiently large $K$.
+The rescaled exterior has density $\lambda=c^{-1}=\ell/L$.
+For each of its two outward rays, center its residual count at
+$\lambda(t-1)_+$ and denote the resulting envelopes and energies
+by $H_{\alpha,+},H_{\alpha,-}$ and
+$\mathcal B_{\alpha,+},\mathcal B_{\alpha,-}$.
+These are functions of the retained exterior.
+
+Stieltjes integration by parts compares a ray force to its continuum
+counterpart.  Since
+$\abs{q_\alpha'(r)}=C_\alpha r^{-\alpha-2}$, its discrepancy
+contribution is bounded by $C_\alpha H_{\alpha,+}(u)$, or by its
+reflection at the right endpoint.  The boundary term at infinity
+vanishes: the centered count is $o(t)$, and
+$q_\alpha(u+t)=O(t^{-\alpha-1})$.  For the unit lattice, the residual
+count is $\lfloor t\rfloor$.  Its difference from $(t-1)_+$ is
+bounded and vanishes below $1$, yielding the deterministic envelope
+$C_\alpha(u+1)^{-\alpha-1}$.
+
+The continuum density mismatch is explicit.  Up to the overall sign
+chosen in \eqref{for:force-def}, its contribution is
+$(\lambda-1)f_{\alpha,L}(u)$, where
+\[
+ f_{\alpha,L}(u)=
+ \begin{cases}
+ \displaystyle\log\frac{L-u+1}{u+1},&\alpha=0,\\[6pt]
+ (u+1)^{-\alpha}-(L-u+1)^{-\alpha},&\alpha>0.
+ \end{cases}
+\]
+Consequently
+\begin{equation}\label{for:pointwise}
+ \begin{split}
+ \abs{B_\zeta(u)}\le C_\alpha\bigl\{&
+ H_{\alpha,+}(u)+H_{\alpha,-}(L-u)
+ +(u+1)^{-\alpha-1}+(L-u+1)^{-\alpha-1}\bigr\}\\
+ &+\abs{\lambda-1}\abs{f_{\alpha,L}(u)}.
+ \end{split}
+\end{equation}
+There are no endpoint singularities in this estimate, because the
+charges at $0,L$ have already cancelled exactly.
+
+Recall $C_{\rm int}^\pm$ and $X_\pm$ from
+Lemma~\ref{pre:conditional-envelopes}.  Its decreasing-function
+estimate gives
+\begin{equation}\label{for:summation}
+ \sum_i h(u_i)^2
+ \le C_{\rm int}^+
+ \left(h(0)^2+\int_0^L h(t)^2\,\dd t\right),
+\end{equation}
+and an identical reflected estimate.
+
+For $\alpha=0$ take
+$h_{0,L}(t)=\log((L+1)/(t+1))$, and for $\alpha>0$ take
+$h_{\alpha,L}(t)=(t+1)^{-\alpha}$.  In either case
+$\abs{f_{\alpha,L}(u)}\le h_{\alpha,L}(u)+h_{\alpha,L}(L-u)$.
+Moreover, for $L\ge2$,
+\[
+ h_{\alpha,L}(0)^2+\int_0^L h_{\alpha,L}(t)^2\,\dd t
+ \le C_\alpha A_\alpha(L),\qquad
+ A_\alpha(L)=
+ \begin{cases}
+ L,&\alpha=0,\\
+ \displaystyle1+\int_0^L(1+t)^{-2\alpha}\,\dd t,&\alpha>0.
+ \end{cases}
+\]
+For the logarithm, the integral is at most
+$(L+1)\int_0^1\log(1/y)^2\,\dd y=2(L+1)$ and
+$\log(L+1)^2\le CL$.  For positive $\alpha$ this assertion is
+immediate; its growth is $L^{1-2\alpha}$, $\log L$, or $1$
+according as $\alpha<1/2$, $\alpha=1/2$, or $\alpha>1/2$.
+Squaring \eqref{for:pointwise}, applying \eqref{for:summation}, and
+taking the conditional expectation now gives
+\begin{equation}\label{for:cost-bound}
+ \begin{split}
+ \mathcal D_K\le C_\alpha\bigl\{&
+ X_+(\mathcal B_{\alpha,+}+1)
+ +X_-(\mathcal B_{\alpha,-}+1)\\
+ &+(\lambda-1)^2A_\alpha(L)(X_++X_-)\bigr\}.
+ \end{split}
+\end{equation}
+
+We finally check tightness under the random endpoint law.
+The endpoint domination \eqref{pre:domination-equation} bounds the
+laws rooted at either $a$ or $b$, restricted to $\{g_*\le M\}$,
+by $M P^0$, uniformly in $K$.
+Lemma~\ref{for:halfline}, including its uniform dilation bound,
+therefore implies that the two exterior energies restricted to
+$E_{K,M}$ are tight.  The restricted $X_\pm$ are tight by
+\eqref{pre:X-bound}; that estimate uses integrability of the full
+Palm count envelopes and exterior measurability of $E_{K,M}$.
+Products of two tight
+nonnegative families are tight: the event that a product exceeds
+$R^2$ is contained in the union of the events that either factor
+exceeds $R$.  No independence or integrable product is required.
+Finally $A_\alpha(L)\le C_\alpha L$ and, on $E_{K,M}$,
+\[
+ (\lambda-1)^2A_\alpha(L)
+ \le C_\alpha\frac{(\ell-L)^2}{L}
+ \le C_\alpha r_K^2\longrightarrow0.
+\]
+Insert these conclusions into \eqref{for:cost-bound} to obtain the
+proposition.
+\end{proof}
+
+
+\section{Completion of the comparison arguments}\label{sec:completion}
+
+\subsection{A common-reference criterion}
+Fix two candidate laws $P,Q$, an integer $r\ge1$ and
+$G\in C_c^2((0,\infty)^r)$, and use the random blocks and good events
+of Section~\ref{sec:prelim}. For each fixed $M$, choose a common
+sequence $r_K\downarrow0$ for the two processes.
+
+\begin{lemma}[Closing the comparison]\label{end:criterion}
+Suppose a deterministic reference $\omega_{K,T}$ satisfies, on
+$E_{K,M}$ and for $K$ sufficiently large,
+\begin{equation}\label{end:abstract}
+\abs{\mu_\zeta(F_K)-\omega_{K,T}(F_K)}^2
+\le C_G\left\{\frac{T}{K}\mathcal A_K(\zeta)
++\frac{J_K(\zeta)}{KT}+e_K(\zeta)^2\right\},
+\end{equation}
+where $\mathcal A_K,J_K\ge0$ and, under each candidate law, $\1_{E_{K,M}}\mathcal A_K$ is tight,
+$\E[\1_{E_{K,M}}J_K]=o(K^2)$, and
+$\sup_{E_{K,M}}|e_K|\to0$. The constants are independent of $K,T$.
+If these estimates hold for every $r,G,M$, then $P=Q$.
+\end{lemma}
+
+\begin{proof}
+For fixed $M$, put
+\[
+q_K=\frac{\E_P[\1_{E_{K,M}}J_K]
++\E_Q[\1_{E_{K,M}}J_K]}{K^2},\qquad
+\varepsilon_K=\max\{\sqrt{q_K},K^{-1/2}\},\qquad
+T_K=\varepsilon_KK.
+\]
+Both $q_K$ and $\varepsilon_K$ tend to zero, and
+$q_K/\varepsilon_K\le\sqrt{q_K}$. At this choice of $T$ the
+right-hand side of \eqref{end:abstract} is
+\[
+C_G\left\{\varepsilon_K\mathcal A_K+
+\frac{J_K}{\varepsilon_KK^2}+e_K^2\right\}.
+\]
+Restricted to $E_{K,M}$, its first term tends to zero in probability
+by tightness, its second in mean, and its third uniformly.
+The expectation difference on the left is bounded by $2\norm G_\infty$,
+so its absolute value, restricted to good exteriors, tends to zero in mean.
+
+Let $\mathfrak F_K$ be the statistic $F_K$ evaluated on the rescaled
+random block. Since $E_{K,M}$ is retained-exterior measurable, conditional
+DLR gives
+\[
+\limsup_{K\to\infty}
+\abs{\E_P\mathfrak F_K-\omega_{K,T_K}(F_K)}
+\le 2\norm G_\infty P(g_*>M).
+\]
+The same estimate holds for $Q$, with exactly the same reference.
+Subtract, let $M\to\infty$, and obtain
+$\E_P\mathfrak F_K-\E_Q\mathfrak F_K\to0$.
+The rescaling and Palm-identification lemmas of
+Section~\ref{sec:prelim} then identify all finite consecutive-gap
+distributions of $P^0$ and $Q^0$.
+Point-shift invariance identifies every finite window of integer
+gap indices. These gaps determine the entire rooted configuration.
+Palm inversion at intensity one therefore gives $P=Q$.
+\end{proof}
+
+\subsection{Proof for inverse powers}
+\begin{proof}[Proof of Theorem~\ref{thm:riesz}]
+All statements of Section~\ref{sec:prelim} follow from
+\eqref{hyp:linear}--\eqref{hyp:sublinear}. In
+Section~\ref{sec:forces}, use the exponent $\alpha=s$.
+Its weighted discrepancy condition is automatic, because
+\begin{equation}\label{end:weighted-auto}
+\int_1^\infty v_P(t)t^{-2s-2}\dd t
+\le C_P\int_1^\infty t^{-2s-1}\dd t<\infty.
+\end{equation}
+Consequently the conditional cost $\mathcal D_{K,s}$ of the
+difference of the scaled actual and lattice exterior forces is tight
+on the good events. The same is true for $Q$.
+
+Write $c=L/\ell$ and $\tau=c^s$. The exact homogeneity
+\[
+V_s(r/c)=c^sV_s(r)
+\]
+means that the rescaled conditional DLR density has Hamiltonian
+$\beta\tau H_{V_s,(0,L)}^{c(\zeta-a),K}$, up to an additive constant.
+Compare it first with $\omega_{K,T}^{(\tau)}$, defined by
+\eqref{def:omega-tau}. The internal pair interactions and the charges
+at $0,L$ have identical coefficients in the two densities.
+Their logarithmic derivatives therefore cancel exactly. What remains is
+the exterior-force difference and the quadratic confinement. Thus
+\begin{equation}\label{end:riesz-score}
+I(\mu_\zeta\mid\omega_{K,T}^{(\tau)})
+\le C_{\beta,s}\tau^2
+\left(\mathcal D_{K,s}+\frac{J_K}{T^2}\right).
+\end{equation}
+For every fixed retained exterior, the residual exterior particles are
+a positive distance from the endpoints. Their relative forces are
+bounded on $[0,L]$ and their tails converge uniformly there.
+The score in \eqref{end:riesz-score} is bounded on $\Omega_K$.
+In particular both the relative entropy and Fisher information are
+finite; no inverse-gap moment estimate has been used.
+
+On $E_{K,M}$, eventually $c\in[1/2,2]$ and hence
+$\tau\in[2^{-s},2^s]$. Apply the static gap inequality with inverse
+temperature $\beta\tau$ and confinement parameter $T/\tau$.
+The constants are uniform on this compact interval, so
+\[
+\abs{\mu_\zeta(F_K)-\omega_{K,T}^{(\tau)}(F_K)}^2
+\le C_G\left\{\frac{T}{K}\mathcal D_{K,s}
++\frac{J_K}{KT}\right\}.
+\]
+Corollary~\ref{sta:temperature-gap} gives
+\[
+\abs{\omega_{K,T}^{(\tau)}(F_K)-\omega_{K,T}(F_K)}^2
+\le C_G(\tau-1)^2.
+\]
+Combining these inequalities proves \eqref{end:abstract} with
+$\mathcal A_K=\mathcal D_{K,s}$ and $e_K=c^s-1$.
+On good boundaries,
+\[
+|c^s-1|\le C_s|c-1|\le C_sr_KK^{-1/2}.
+\]
+The displacement estimate gives the remaining hypothesis of
+Lemma~\ref{end:criterion}, which proves the theorem.
+\end{proof}
+
+\begin{remark}
+It is important to scale the \emph{whole} reference exponent by
+$\tau$. The confinement then has strength $\tau/T$, which stays
+comparable to $1/T$. The temperature comparison applies directly to
+this family and avoids all singular internal-force estimates.
+\end{remark}
+
+\subsection{The dilation error for smooth perturbations}
+In this subsection $V=-a_0\log r+W$ satisfies
+\eqref{hyp:convex}. The conditional law $\mu_\zeta$ after dilation has
+interaction $r\mapsto V(r/c)$; the deterministic reference uses $V(r)$.
+The logarithmic interior terms cancel because
+$-a_0\log(r/c)=-a_0\log r+a_0\log c$.
+
+\begin{lemma}[The added internal score]\label{end:internal-W}
+Assume \eqref{hyp:third}. Define
+\begin{align*}
+A_c(r)&=c^{-1}W'(r/c)-W'(r),\\
+R_i(u)&=\sum_{j\ne i}\sgn(u_i-u_j)A_c(|u_i-u_j|),\\
+\mathcal R_K(\zeta)&=\E_{\mu_\zeta}\sum_{i=1}^K|R_i(u)|^2.
+\end{align*}
+For every fixed $M$,
+\[
+\E_P[\1_{E_{K,M}}\mathcal R_K]\longrightarrow0.
+\]
+\end{lemma}
+
+\begin{proof}
+For $c\in[1/2,2]$,
+\[
+\frac{\partial}{\partial c}\bigl[c^{-1}W'(r/c)\bigr]
+=-c^{-2}W'(r/c)-rc^{-3}W''(r/c).
+\]
+The derivatives of $W$ are bounded and vanish beyond $R_0$.
+Integration in $c$ therefore gives
+\[
+|A_c(r)|\le C_W|c-1|\1_{\{r\le2R_0\}}.
+\]
+On $E_{K,M}$ the physical interior points belong to $(0,3K]$ for
+large $K$. A scaled separation at most $2R_0$ corresponds to a
+physical separation at most $4R_0$. It follows that
+\begin{equation}\label{end:internal-physical}
+\sum_i|R_i(u)|^2
+\le C_W|c-1|^2
+\sum_{x\in\gamma\cap(0,3K]}
+N_{[x-4R_0,x+4R_0]}(\gamma)^2.
+\end{equation}
+
+The moment assumption implies
+$\E_{P^0}N_{[-4R_0,4R_0]}^2<\infty$. Indeed, Campbell's formula gives
+\[
+\begin{split}
+\E_{P^0}N_{[-4R_0,4R_0]}^2
+&=\E_P\sum_{x\in\gamma\cap(0,1]}
+N_{[x-4R_0,x+4R_0]}^2\\
+&\le \E_PN_{[-4R_0,1+4R_0]}^3<\infty.
+\end{split}
+\]
+The last assertion follows by covering the fixed interval by finitely
+many unit intervals and using stationarity.
+Another application of Campbell yields
+\[
+\E_P\sum_{x\in\gamma\cap(0,3K]}
+N_{[x-4R_0,x+4R_0]}^2
+=3K\,\E_{P^0}N_{[-4R_0,4R_0]}^2\le CK.
+\]
+Since $|c-1|^2\le Cr_K^2/K$ on $E_{K,M}$, taking expectations
+in \eqref{end:internal-physical} gives an upper bound $Cr_K^2$.
+The good event is exterior measurable, so conditioning gives the same
+bound for $\E_P[\1_{E_{K,M}}\mathcal R_K]$.
+\end{proof}
+
+\begin{lemma}[The added exterior score]\label{end:exterior-W}
+Let $\mathcal W_K(\zeta)$ be the squared conditional force cost of the
+$W$-part of the actual scaled exterior interaction minus the $W$-part
+of the lattice exterior interaction, including their endpoint terms.
+Then $\1_{E_{K,M}}\mathcal W_K$ is tight for every fixed $M$.
+\end{lemma}
+
+\begin{proof}
+The scaled actual force has summands
+$c^{-1}\sgn(u-p)W'(|u-p|/c)$, whereas the lattice force has summands
+$\sgn(u-p)W'(|u-p|)$. On good boundaries their magnitudes are bounded
+by a deterministic constant and they vanish unless the exterior charge
+lies within scaled distance $2R_0$ of $u$.
+Consequently the left contribution vanishes for $u>2R_0$, and the
+right one vanishes for $L-u>2R_0$. Let
+\[
+Y_+=1+N_{[a-4R_0,a)}(\gamma),\qquad
+Y_-=1+N_{(b,b+4R_0]}(\gamma).
+\]
+These variables are exterior measurable. The constants include the
+common endpoint and the finitely many lattice charges that can contribute.
+Writing $X_\pm$ for the conditional interior count envelopes,
+\[
+\mathcal W_K\le C_{W,R_0}
+\bigl(Y_+^2X_++Y_-^2X_-\bigr).
+\]
+For example, the number of left interior particles affected is at most
+$(1+2R_0)C_{\mathrm{int}}^+$.
+On $\{g_*\le M\}$ the laws of both endpoint environments
+are dominated by $M P^0$, uniformly in $K$, so $Y_\pm$ are tight.
+The restricted first-moment bounds for $X_\pm$ give their tightness.
+Products of nonnegative tight random variables are tight.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:perturb}]
+The static inequality of Section~\ref{sec:static} applies to the
+reference with the full potential $V$, because \eqref{hyp:convex}
+ensures all pair Hessians are nonnegative and the necessary compact
+gap ranges have positive curvature.
+
+Let $\mathcal D_{K,0}$ be the logarithmic exterior-force cost from
+Section~\ref{sec:forces}; it is tight on good boundaries by
+\eqref{hyp:integrated}. Cancellation of the interior logarithms and
+endpoint logarithms, followed by the two preceding lemmas, gives
+\begin{equation}\label{end:W-score}
+I(\mu_\zeta\mid\omega_{K,T})
+\le C_{\beta,a_0,W}
+\left(\mathcal D_{K,0}+\mathcal W_K+\mathcal R_K+\frac{J_K}{T^2}\right).
+\end{equation}
+For fixed exterior, the residual logarithmic exterior force is bounded
+on the closed interval, and all $W$ derivatives appearing in the score
+are bounded. Hence the entropy and Fisher information in
+\eqref{end:W-score} are finite for every $\beta>0$.
+
+The static Fisher estimate proves \eqref{end:abstract} with
+$\mathcal A_K=\mathcal D_{K,0}+\mathcal W_K+\mathcal R_K$ and $e_K=0$.
+The first two terms are tight, and the third tends to zero in
+restricted mean. The displacement cost is $o(K^2)$ in restricted mean.
+Lemma~\ref{end:criterion} proves uniqueness.
+\end{proof}
+
+\begin{remark}
+The third count moment is a sufficient hypothesis for the particular
+internal-score estimate used here; we do not assert it is necessary.
+When $W=0$, the two added costs vanish and this moment assumption can
+be removed, recovering the discrepancy comparison theorem for the
+unperturbed logarithm.
+\end{remark}
+
+
+\section{Scope of the extensions and higher-dimensional obstructions}
+\label{sec:limits}
+
+\subsection{Collision regularity for more general perturbations}
+Positive curvature alone does not ensure that a direct comparison
+after dilation has finite Fisher information. Suppose, near $r=0$,
+\[
+V(r)=-a_0\log r+b r^\eta,\qquad
+0<\eta<\tfrac12,\quad b\ne0.
+\]
+For $c\ne1$ the added interior-force defect is
+$b\eta(c^{-\eta}-1)r^{\eta-1}$. On a region where just one pair
+collides and the remaining separations stay bounded away from zero,
+the Gibbs density is comparable to $r^{\beta a_0}$. The squared
+defect therefore has the collision integral
+\[
+\int_0^\delta r^{\beta a_0+2\eta-2}\dd r,
+\]
+which diverges if $\beta a_0+2\eta\le1$.
+One can multiply $r^\eta$ by a smooth cutoff and choose $|b|$
+small enough that the full $V''$ remains positive: near zero the
+$a_0r^{-2}$ term dominates, and away from zero the cutoff contribution
+is bounded on a compact annulus. Thus this obstruction can occur
+within convex interactions. It concerns the direct Fisher proof,
+not the truth of uniqueness.
+
+\subsection{Why a finite-energy theorem needs another input}
+Theorems~\ref{thm:riesz} and~\ref{thm:perturb} assume the count bounds.
+They do not deduce them from finite energy. For $0<s<1$, the
+one-dimensional Riesz Fourier kernel is a positive multiple of
+$|k|^{s-1}$. For example, with the Fourier convention
+$\widehat f(k)=\int e^{-ikx}f(x)\dd x$, the Gaussian integral
+representation gives, distributionally,
+\[
+|x|^{-s}=\frac1{\Gamma(s/2)}
+\int_0^\infty t^{s/2-1}e^{-tx^2}\dd t,\qquad
+\widehat{|\,\cdot\,|^{-s}}(k)
+=\frac{2^{1-s}\sqrt\pi\,\Gamma((1-s)/2)}{\Gamma(s/2)}
+|k|^{s-1}.
+\]
+Consequently a flat covariance spectral density has finite
+low-frequency Riesz cost:
+\[
+\int_{|k|<1}|k|^{s-1}\dd k=\frac2s<\infty.
+\]
+Smooth charge regularization controls the high-frequency part.
+In contrast, the logarithmic weight $|k|^{-1}$ is not integrable
+against a flat density near zero. The logarithmic energy argument
+therefore cannot by itself prove sublinear variance for a Riesz state.
+This observation does not assert that a Riesz DLR state has flat
+spectrum; the DLR equations may provide additional information.
+For $s\ge1$, the hypotheses of Theorem~\ref{thm:riesz} also remain to be
+verified in whatever class of Gibbs states is under consideration.
+
+\subsection{Negative tangential curvature}\label{lim:tangential}
+\begin{proposition}\label{lim:hessian}
+Let $d\ge2$ and $V\in C^2((0,\infty))$. For $z\ne0$, put
+$r=|z|$ and $e=z/r$. Then
+\begin{equation}\label{lim:radial-Hessian}
+D^2[V(|z|)]=V''(r)e\otimes e+
+\frac{V'(r)}r(I-e\otimes e).
+\end{equation}
+In particular the radial logarithmic and positive inverse-power
+interactions do not satisfy the pointwise convexity needed in
+Section~\ref{sec:static}. A fixed quadratic confinement does not remove
+this failure near collisions.
+\end{proposition}
+
+\begin{proof}
+Differentiate $\nabla[V(|z|)]=V'(r)e$ and use
+$D e=(I-e\otimes e)/r$. The radial eigenvalue is $V''(r)$, while
+each tangential eigenvalue is $V'(r)/r$. Thus the eigenvalues are
+\[
+\begin{array}{c|cc}
+V(r)&\text{radial}&\text{tangential}\\ \hline
+-\log r&r^{-2}&-r^{-2}\\[2pt]
+r^{-s}&s(s+1)r^{-s-2}&-sr^{-s-2}
+\end{array}
+\]
+for $s>0$.
+Place two interior particles at separation $re$ and choose their
+velocities to be $h,-h$, with $h\perp e$.
+Their pair contribution to the Hamiltonian Hessian is
+$4V'(r)|h|^2/r$, which tends to $-\infty$ as $r\downarrow0$.
+Keep all other particles a positive distance from this pair and
+assume the fixed exterior potential is $C^2$ near it.
+All other Hessian contributions, including the quadratic confinement,
+then remain bounded. This proves the assertion.
+\end{proof}
+
+The proposition includes Coulomb repulsion: $-\log r$ in dimension
+two and $r^{2-d}$ in dimension $d\ge3$. It proves a limitation of
+this convexity argument, rather than nonuniqueness of Gibbs states.
+In a regime with distinct stationary phases, a global uniqueness
+theorem would of course be false. Different translates of a phase
+can become the same law after translation averaging, whereas distinct
+orientational phases can retain different stationary averages.
+Neither existence nor coexistence of such phases is proved here.
+
+\subsection{Geometry, angular discrepancy, and scales}
+The ordered one-dimensional construction also requires replacement:
+there is no direct counterpart of its successor-gap coding and
+two matched endpoint charges in a general free-particle gas.
+Scalar centered-ball counts alone do not determine the exterior force.
+For example, the signed charge
+$\delta_{Re_1}-\delta_{-Re_1}$ has zero mass in every ball centered
+at the origin but produces a nonzero force there when $V'(R)\ne0$.
+An extension needs angular or field information.
+
+The growth of boundary area alone is not an obstruction to the
+abstract comparison. Suppose a different analytic argument produced
+\[
+|\mu(F_R)-\omega(F_R)|^2
+\le C\left(\frac{T\mathcal D_R}{N_R}+
+\frac{J_R}{N_RT}\right),\qquad N_R\asymp R^d.
+\]
+If $\mathcal D_R=O_{\Prob}(R^{d-1})$ and
+$\E J_R=N_R\sigma_R^2$, the two scales would be $T/R$ and
+$\sigma_R^2/T$. They can both vanish if
+\[
+\sigma_R^2=o(R),\qquad \sigma_R^2\ll T\ll R.
+\]
+For instance, $T=\sqrt{R\max\{1,\sigma_R^2\}}$ works.
+This is a conditional scale calculation: the functional inequalities
+and the surface-order force bound have not been proved here.
+
+\subsection{A finite-field-energy obstruction above dimension two}
+\begin{proposition}\label{lim:poisson}
+In every dimension $d\ge3$ there is a stationary point process with
+linear volume-order count variance admitting a stationary compatible
+electric field of finite mean square after fixed-scale smooth charge
+regularization.
+\end{proposition}
+
+\begin{proof}
+Let $\Pi$ be the unit Poisson process and let $-\Delta G=\delta_0$.
+Choose a smooth compactly supported probability density $\rho_\eta$,
+and set $K_\eta=(\nabla G)*\rho_\eta$.
+This vector field is locally bounded and satisfies
+$|K_\eta(x)|=O(|x|^{1-d})$ at infinity, so
+\[
+\int_{\R^d}|K_\eta|^2<\infty
+\]
+because its tail is bounded by a constant times
+$\int_1^\infty r^{1-d}\dd r$.
+The compensated Poisson integral
+\[
+E(x)=\int K_\eta(x-y)(\Pi(\dd y)-\dd y)
+\]
+exists in $L^2$, is stationary, and has
+\[
+\E|E(0)|^2=\int_{\R^d}|K_\eta(y)|^2\dd y<\infty.
+\]
+Since $-\diver K_\eta=\rho_\eta$, testing against smooth compactly
+supported functions gives
+$-\diver E=\Pi*\rho_\eta-1$ in distributions.
+However $\Var\Pi(B_R)=|B_R|$. Thus the stated field-energy property
+does not force sublinear volume-order count variance.
+\end{proof}
+
+This is a counterexample to an energy-only implication. The Poisson
+process is not asserted to satisfy Coulomb DLR, and fixed-scale
+regularized energy is not identified here with a full renormalized
+energy convention.
+
+\begin{thebibliography}{DHLM}
+\bibitem[Draft]{Draft}
+\emph{Uniqueness of the stationary logarithmic DLR state}.
+User-supplied working manuscript, file
+\texttt{logarithmic\_dlr\_uniqueness.tex}, dated 9 September 2026.
+The source of the comparison framework developed in this note.
+
+\bibitem[BEY]{BEY}
+P.~Bourgade, L.~Erd\H{o}s and H.-T.~Yau,
+\emph{Universality of general $\beta$-ensembles}.
+Duke Math.\ J.\ \textbf{163} (2014), no.~6, 1127--1190.
+\href{https://arxiv.org/abs/1104.2272}{arXiv:1104.2272}.
+
+\bibitem[DHLM]{DHLM}
+D.~Dereudre, A.~Hardy, T.~Lebl\'e and M.~Ma\"ida,
+\emph{DLR equations and rigidity for the Sine-beta process}.
+Preprint version 2, 2019.
+\href{https://arxiv.org/abs/1809.03989v2}{arXiv:1809.03989v2}.
+
+\bibitem[FMW]{FMW}
+M.~Fradelizi, M.~Madiman and L.~Wang,
+\emph{Optimal concentration of information content for log-concave
+densities}.
+In \emph{High Dimensional Probability VII}, Progress in Probability
+\textbf{71}, Springer, 2016.
+Preprint version 2:
+\href{https://arxiv.org/abs/1508.04093v2}{arXiv:1508.04093v2}.
+\end{thebibliography}
+\end{document}

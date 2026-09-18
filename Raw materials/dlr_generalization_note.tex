@@ -1,0 +1,241 @@
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,hyperref}
+\hypersetup{colorlinks=true,urlcolor=blue}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.55em}
+\setlength{\emergencystretch}{2em}
+\title{Beyond logarithmic DLR uniqueness\\\large Conditional extensions to other interactions and dimensions}
+\author{Research note on the supplied manuscript}
+\date{14 September 2026}
+\begin{document}
+\maketitle
+\section*{Scope and conclusions}
+The comparison method in the supplied manuscript extends to other one-dimensional interactions under explicit additional assumptions. This note gives two conditional propositions, for smooth perturbations of the logarithm and for positive Riesz powers, and explains why the higher-dimensional problem requires a new central estimate.
+
+These propositions are deductions from the manuscript's comparison machinery, accompanied by proof sketches. They are not claims of unconditional finite-energy uniqueness for the new interactions. Existence and the verification of the assumptions for the full intended Gibbs class remain separate questions. The manuscript considered is ``Uniqueness of the stationary logarithmic DLR state,'' dated 9 September 2026; the literature check was completed on 14 September 2026. Here ``potential'' primarily means pair interaction.
+
+The closest extension is $V(r)=-a\log r+\lambda e^{-\kappa r}$ with $a,\kappa>0$ and $\lambda\geq0$. Positive Riesz powers are also accessible after adding a Palm moment controlling the singular force. In dimension at least two, radial repulsion has negative tangential curvature, which prevents the manuscript's convexity argument from transferring.
+
+A recent reference should be incorporated into the original draft: Assiotis [A], submitted 6 September 2026, states stationary logarithmic DLR uniqueness at every positive inverse temperature under a specified divergence-compatible electric-energy condition. Its circular-ensemble entropy comparison and energy convention should be compared with the draft's lattice-reference argument. This result does not by itself verify the draft or the extensions below.
+
+\section*{1. The common-reference mechanism}
+For a stationary simple point process $P$ of intensity one, write $P^0$ for its Palm distribution and $v_P(t)=\mathrm{Var}_P N_{(0,t]}$. The manuscript compares the conditional law $\mu$ in a block with $K$ interior particles to a deterministic lattice-boundary law $\omega_{K,T}$ with quadratic confinement. For a bounded average $F_K$ of fixed gap windows, the key estimate is
+
+\[
+|\mu(F_K)-\omega_{K,T}(F_K)|^2\leq C\left(\frac{T}{K}\mathcal D_K+\frac{J_K}{KT}\right).
+\]
+Here $\mathcal D_K$ is the conditional sum of squared exterior-force differences and $J_K$ is the conditional total squared displacement from the reference lattice. The proof needs tightness of the first cost and a truncated expectation bound $J_K=o(K^2)$. It then chooses a common deterministic scale $T=\varepsilon_K K$, where $\varepsilon_K\to0$, for the two candidate processes.
+
+The static gap estimate is flexible. On the ordered chamber, with endpoint displacements $z_0=z_{K+1}=0$, a convex pair potential gives
+
+\[
+z^{\mathsf T}\Phi^{\prime\prime}z\geq\beta\sum_{i=0}^{K}V^{\prime\prime}(g_i)(z_{i+1}-z_i)^2+T^{-1}|z|^2.
+\]
+Assume the reference Hamiltonian is well-defined and $V^{\prime\prime}$ has a positive lower bound on every compact subinterval of $(0,\infty)$. For the compactly supported gap test, bounded overlap of windows and support of its derivatives give
+
+\[
+\sum_i\frac{q_i^2}{\beta V^{\prime\prime}(g_i)}\leq\frac{C_G}{K},\qquad q_i=\frac{\partial F_K}{\partial g_i}.
+\]
+The same argument controls the second derivative of the tilt. The manuscript's tilted Brascamp-Lieb and confinement logarithmic Sobolev estimates therefore transfer. Exact logarithmic curvature is not necessary at this stage.
+
+The more delicate step is the random dilation. Let $L=K+1$, let $\ell$ be the physical block length, and set $c=L/\ell$. Under $u=c(x-a)$, the actual interaction becomes $V_c(r)=V(r/c)$. Its derivative differs from the fixed reference potential by
+
+\[
+\Delta_c(r)=c^{-1}V^{\prime}(r/c)-V^{\prime}(r).
+\]
+This produces an additional score throughout the block, including interior pairs and endpoint charges. For the logarithm the defect is exactly zero. In fact, if $V(r/c)-V(r)$ is independent of $r$ for every positive $c$, differentiation forces $rV^{\prime}(r)$ to be constant. This identifies the logarithm's special scaling property.
+
+\section*{2. Smooth perturbations of the logarithm}
+Conditional proposition 1. Fix $\beta>0$, and suppose
+
+\[
+V(r)=-a\log r+h(r),\qquad a>0,\qquad h\in C^2([0,\infty)),
+\]
+\[
+|h^{\prime}(r)|+|h^{\prime\prime}(r)|\leq C e^{-\kappa r},\qquad V^{\prime\prime}(r)\geq m r^{-2},\qquad m,\kappa>0.
+\]
+Subtract the limiting constant of $h$ so that $h(\infty)=0$. Define canonical DLR kernels by the logarithmic relative-energy convention of the draft together with the absolutely convergent perturbation interaction. There is at most one stationary simple unit-intensity DLR process in the class satisfying
+
+\[
+v_P(t)\leq C_Pt,\qquad v_P(t)=o(t),\qquad \int_1^\infty v_P(t)t^{-2}\,dt<\infty,
+\]
+and the additional Palm moment
+
+\[
+\mathbb E_{P^0}\left[\left(\sum_{q\in\gamma\setminus\{0\}}(1+|q|)e^{-\kappa|q|/4}\right)^2\right]<\infty.
+\]
+The constants in the process assumptions need not be uniform over candidates. This proposition uses the manuscript's random-block, count-envelope, and Palm-identification lemmas. Its extra hypothesis is a local crowding moment, not a conclusion inferred from count variance alone.
+
+Example. The interaction $V(r)=-a\log r+\lambda e^{-\kappa r}$ satisfies the potential assumptions for every $\lambda\geq0$. There is no smallness restriction on $\lambda$, since the added term contributes positive curvature. For sign-changing perturbations, the stated curvature lower bound must be checked.
+
+Proof sketch. Use $V$ in the common lattice-boundary reference. Add and subtract a Hamiltonian with potential $V$ and the actual rescaled exterior. The score splits into exterior discrepancy, dilation discrepancy, and confinement. The logarithmic dilation defect vanishes, while at physical distance $d$,
+
+\[
+|c^{-1}h^{\prime}(d)-h^{\prime}(cd)|\leq C|c-1|(1+d)e^{-\kappa d/2},\qquad c\in[1/2,2].
+\]
+Recall the draft's exterior-measurable event $E_{K,M}$: the gap containing the spatial origin has length at most $M$, and $|\ell-L|\leq r_K\sqrt{K}$ with deterministic $r_K\to0$. On this event,
+
+\[
+|c-1|^2\leq C r_K^2/K.
+\]
+The law rooted at the first positive point, restricted to the origin-gap condition, is dominated by $MP^0$. Successor invariance and the Palm moment therefore give, for the conditional total squared dilation score $\mathcal A_K$,
+
+\[
+\mathbb E_P[\mathbf 1_{E_{K,M}}\mathcal A_K]\leq C_Mr_K^2\longrightarrow0.
+\]
+The perturbation's exterior force is bounded by an exponentially decaying function of distance from each endpoint times an almost surely finite weighted exterior count. Apply the manuscript's conditional interior count-envelope estimate to sum its square over particles. These endpoint factors and the conditional count envelopes are tight; their products are tight without an independence assumption. The logarithmic exterior estimate is retained.
+
+The modified comparison is consequently
+
+\[
+|\mu(F_K)-\omega_{K,T}(F_K)|^2\leq C\left[\frac{T}{K}(\mathcal D_K+\mathcal A_K)+\frac{J_K}{KT}\right].
+\]
+Choose the common scale as in the draft. The added dilation term tends to zero, the remaining errors are controlled by the original assumptions, and boundedness permits removal of the good-event restriction. Equality of consecutive Palm gap distributions and Palm inversion give equality of the stationary processes.
+
+What remains for a finite-energy theorem. Establish existence and prove that a precisely defined perturbed energy supplies the discrepancy bounds and the Palm moment. The conditional proposition does not establish those implications.
+
+\section*{3. Positive Riesz interactions}
+Conditional proposition 2. Fix $s>0$ and $\beta>0$, and normalize the interaction as $V_s(r)=r^{-s}/s$. There is at most one stationary simple unit-intensity canonical DLR process satisfying
+
+\[
+v_P(t)\leq C_Pt,\qquad v_P(t)=o(t),\qquad M_s(P)<\infty,
+\]
+where
+
+\[
+M_s(P)=\mathbb E_{P^0}\left[\left(\sum_{q\in\gamma\setminus\{0\}}|q|^{-s-1}\right)^2\right].
+\]
+Use relative exterior energies when the raw exterior energy is not summable. Finite-move relative energies have absolutely convergent tails at density one for $s>0$, since their summands are of order $|q|^{-s-1}$. The force sums themselves converge absolutely. The most natural application is $0<s<1$. For $s\geq1$, this is only a theorem about the stated hyperuniform class; its nonemptiness and relation to usual short-range equilibrium states are separate issues.
+
+The curvature and scaling identities are
+
+\[
+V_s^{\prime\prime}(r)=(s+1)r^{-s-2},\qquad V_s(r/c)=c^sV_s(r),\qquad \beta_{\mathrm{eff}}=\beta c^s.
+\]
+Boundary control. Remove the endpoint particle and write $D(t)=N_{\mathrm{ext}}(t)-(t-1)_+$. Stieltjes integration by parts produces
+
+\[
+H_s(x)=(s+1)\int_0^\infty\frac{|D(t)|}{(x+t)^{s+2}}\,dt.
+\]
+Schur's test uses the kernel $t^{s+1}(x+t)^{-s-2}$, acting on $D(t)t^{-s-1}$, with weight $t^{-1/2}$. It gives
+
+\[
+\int_0^\infty H_s(x)^2\,dx\leq C_s\int_0^\infty D(t)^2t^{-2s-2}\,dt,
+\]
+\[
+C_s=\left[(s+1)\mathrm B\left(\frac12,s+\frac32\right)\right]^2.
+\]
+The required tail condition follows already from linear variance:
+
+\[
+\int_1^\infty v_P(t)t^{-2s-2}\,dt\leq C_P\int_1^\infty t^{-2s-1}\,dt<\infty.
+\]
+The translation and Palm transfer from the draft apply with this new weight. Close to an endpoint, $D(t)=0$ below the minimum of 1 and the next residual gap, so the integral has no singularity at zero. After scaling, the continuum density is $\lambda=1/c$; its mismatch with the unit-density reference contributes, up to sign,
+
+\[
+\frac{\lambda-1}{s}\left[(u+1)^{-s}-(L-u+1)^{-s}\right].
+\]
+Its squared particle sum is bounded by $C_s(\lambda-1)^2L$ times the same tight conditional count envelopes. This bound is deliberately loose but sufficient on $E_{K,M}$.
+
+Dilation control. Add and subtract the $V_s$ Hamiltonian with the actual rescaled exterior. The full actual force is multiplied by $c^s-1$. Importantly, the endpoint singularities must be included: their coefficients no longer agree after dilation. The absolute force sum in $M_s(P)$ controls interior, endpoint, and exterior contributions together. Since $|c^s-1|\leq C_s|c-1|$ on the good event, Palm domination yields
+
+\[
+\mathbb E_P[\mathbf 1_{E_{K,M}}\mathcal A_K]\leq C_{s,M}r_K^2M_s(P)\longrightarrow0.
+\]
+The static gap estimate applies with the Riesz curvature. Hyperuniformity supplies the good block lengths and negligible quadratic cost. The modified comparison from Section 2 and the original Palm identification close the proof.
+
+The outstanding implication is substantial: hyperuniformity and $M_s(P)<\infty$ must be proved for every candidate in the intended DLR class. Finite inverse moments under each fixed conditional law do not automatically give the averaged Palm moment.
+
+Literature scope. Boursier [B, Theorem 3] proves convergence of the microscopic circular ensembles for $s\in(0,1)\cup(1,\infty)$; Theorem 5 gives hyperuniformity and rank-distance variance of order $K^s$ for $0<s<1$. These results concern a unique circular thermodynamic limit, not all stationary DLR states. Dereudre-Vasseur [DV] establish canonical DLR results and existence of non-number-rigid circular Riesz limits for $d-1<s<d$. In one dimension this includes $0<s<1$. Non-rigidity neither contradicts hyperuniformity nor obstructs the canonical fixed-count comparison used here.
+
+\section*{4. The higher-dimensional convexity obstruction}
+For a radial interaction $g(z)=\phi(|z|)$, set $r=|z|$ and $e=z/r$. Direct differentiation gives
+
+\[
+D^2g(z)=\phi^{\prime\prime}(r)ee^{\mathsf T}+\frac{\phi^{\prime}(r)}{r}(I-ee^{\mathsf T}).
+\]
+The radial and tangential eigenvalues are respectively
+
+\[
+-\log r:\quad r^{-2},\ -r^{-2};\qquad r^{-s}:\quad s(s+1)r^{-s-2},\ -sr^{-s-2}.
+\]
+The one-dimensional ordered chamber has no tangential directions. In dimension at least two, every decreasing radial repulsion has negative tangential curvature. For logarithmic and Riesz interactions this curvature is unbounded below near an isolated pair collision. Hold the other particles and boundary away from the pair and move the two particles in opposite tangential directions: the negative contribution diverges, whereas the remaining contributions stay bounded. Even a fixed quadratic confinement cannot make the full Hamiltonian globally convex.
+
+This breaks the draft's Hessian lower bound, tilted Brascamp-Lieb estimate, and Bakry-Emery route to the logarithmic Sobolev inequality. It is a limitation of the proof, not a proof of nonuniqueness. Positivity of electric energy as a quadratic form in charge densities does not imply convexity in particle coordinates.
+
+Other structural steps also need replacement. There is no canonical ordered gap sequence, so averaged observables must describe unlabelled local configurations. A block with matched particle count cannot be selected using two endpoint particles. Scalar discrepancies of concentric balls do not control angular components of the exterior force. A higher-dimensional argument needs an appropriate concentration inequality, finite-block matching, and directional estimates or electric screening.
+
+The two-dimensional logarithmic interaction is Coulomb. In dimension $d\geq3$, the physical Coulomb interaction is proportional to $r^{2-d}$. Keeping a logarithm in higher dimensions defines a different interaction and does not automatically inherit the electric-field construction in the manuscript.
+
+\section*{5. What finite energy controls}
+For the one-dimensional logarithmic gas, the manuscript's stationary electric lift controls the low-frequency covariance spectral measure through
+
+\[
+\int_{0<|k|<1}|k|^{-1}S(dk)<\infty.
+\]
+With local second-moment control, the interval Fourier formula then yields integrated count variance and hyperuniformity. The argument allows singular spectral measures and does not require a spectral density.
+
+For the positive Riesz interaction in dimension $d$, with $0<s<d$, the analogous infrared interaction-energy weight is
+
+\[
+\int_{0<|k|<1}|k|^{s-d}S(dk).
+\]
+A constant spectral density passes this test, since the radial integral is proportional to $\int_0^1r^{s-1}\,dr<\infty$. Thus this energy control alone cannot force Riesz hyperuniformity. This is an obstruction to an implication between assumptions, not a claim that Poisson is a Riesz Gibbs state.
+
+Coulomb energy instead has multiplier $|k|^{-2}$. In dimension two it is critical: Huesmann-Leblé [HL] prove that finite regularized Coulomb energy implies hyperuniformity, through stationary quadratic transport, and relate it to a strengthened quantitative condition. In dimension at least three, the constant-spectrum test again passes:
+
+\[
+\int_{|k|<1}|k|^{-2}\,dk\ \propto\ \int_0^1r^{d-3}\,dr<\infty\qquad(d>2).
+\]
+After fixed smooth charge regularization, Poisson is also consistent with finite expected Coulomb field energy in these dimensions. Therefore the draft's chain from finite energy to hyperuniformity and then to negligible confinement cannot simply be transferred to dimension three or above.
+
+\section*{6. A quantitative target in higher dimension}
+Let a box of side scale $R$ contain $N\asymp R^d$ particles. Suppose a new concentration argument, suitable for this nonconvex geometry, gives
+
+\[
+|\mu(F_R)-\omega(F_R)|^2\leq C\left(\frac{T}{N}\mathcal D_R+\frac{J_R}{NT}\right).
+\]
+Suppose screening also supplies $\mathcal D_R=O_P(R^{d-1})$. This is a proposed surface-order estimate, not one proved in this note. Then the scale requirements become
+
+\[
+J_R/N\ll T\ll R.
+\]
+In particular, a sufficiently averaged bound $J_R=o(R^{d+1})$ would leave room for a common deterministic $T$. The probabilistic or truncated-mean control must be strong enough to choose that scale for both candidates. Boundary-area growth alone is therefore not fatal to the strategy.
+
+A practical starting point is two-dimensional Coulomb in a regime where concentration or mixing can be proved independently. Combine that with screened boundary estimates and transport inside finite blocks. The results of [HL] motivate the transport step, but a stationary transport estimate is not yet a reference Gibbs law with the needed concentration.
+
+Leblé [L] proves DLR equations, number rigidity, and translation invariance for two-dimensional Coulomb bulk limit points at all positive temperatures. Section 1.4 lists DLR uniqueness as an open question. The literature checked for this note did not supply a general higher-dimensional uniqueness theorem. Identification of a Ginibre bulk limit at the solvable temperature must not be promoted to uniqueness among every admissible DLR solution without a separate proof.
+
+\section*{7. Refinements and next steps}
+The comparison assumptions can be slightly simplified. Linear variance and integrated variance already imply hyperuniformity. Stationarity of increments of the centered counting function gives
+
+\[
+|\sqrt{v(t+h)}-\sqrt{v(t)}|\leq\sqrt{v(h)}\leq\sqrt{Ch},\qquad h\geq0.
+\]
+If $v(t_n)\geq\varepsilon t_n$ along an unbounded sequence, then $v(t)\geq\varepsilon t_n/4$ throughout the interval from $t_n$ to $t_n+\varepsilon t_n/(4C)$. Each interval contributes a fixed positive amount to $\int_1^\infty v(t)t^{-2}\,dt$. Choosing an infinite disjoint subsequence contradicts finiteness. Keeping all three assumptions may aid exposition, but only two are logically needed.
+
+The earlier audit found no concrete fatal error in the checked random-rank disintegration, half-line force tightness, or spectral implication under the stated lift. The complete renormalized-energy convention should nevertheless be written explicitly: compatible field class, spatial normalization, self-energy subtraction, and the regularization used to import the bounds from [D]. Compare [A, Section 2.3]. This is especially important before changing the interaction.
+
+If ``other potential'' means an external confining potential in a finite beta-ensemble, the relevant task is different. Once every normalized bulk limit is known to satisfy the same stationary logarithmic DLR specification and discrepancy bounds, uniqueness identifies it. Establishing those inherited properties is the universality step. A fixed nonconstant external field in infinite volume generally changes stationarity and cannot be inserted into the current theorem unchanged.
+
+Arbitrary nonconvex pair perturbations, negative Riesz powers, and the one-dimensional Coulomb interaction require separate analysis of curvature, tails, and collisions. Neither conditional proposition asserts uniqueness for those classes.
+
+The most concrete continuation is to develop the two propositions above into a formal extension section, then establish the required Palm moments and discrepancy bounds for the chosen DLR class. Smooth logarithmic perturbations preserve the original energy structure most closely. Positive Riesz interactions improve the far-field estimate but require averaged singular-force control and a separate hyperuniformity argument. Higher-dimensional uniqueness should begin with concentration and screening as new inputs.
+
+\section*{Primary references}
+\textbf{[A]} \href{https://arxiv.org/abs/2609.06832}{Theodoros Assiotis. Uniqueness for DLR equations of Sine-beta.} Preprint submitted 6 September 2026. See Theorem 1.1, Section 2.3 (energy convention), and Section 9.
+
+\textbf{[B]} \href{https://arxiv.org/abs/2209.00396}{Jeanne Boursier. Decay of correlations and thermodynamic limit for the circular Riesz gas.} Version 4, 2023. See Theorems 3 and 5 and Section 1.3.
+
+\textbf{[DV]} \href{https://arxiv.org/abs/2104.09408}{David Dereudre and Thibaut Vasseur. Number-Rigidity and beta-Circular Riesz gas.} Annals of Probability 51 (2023). See Theorems 1.8 and 1.11.
+
+\textbf{[L]} \href{https://arxiv.org/abs/2410.04958}{Thomas Leblé. DLR equations, number-rigidity and translation-invariance for infinite-volume limit points of the 2DOCP.} See the main results and Section 1.4 on uniqueness questions.
+
+\textbf{[HL]} \href{https://arxiv.org/abs/2404.18588}{Martin Huesmann and Thomas Leblé. The link between hyperuniformity, Coulomb energy, and Wasserstein distance to Lebesgue for two-dimensional point processes.} Probability and Mathematical Physics 7 (2026), 123-173.
+
+\textbf{[D]} \href{https://arxiv.org/abs/1809.03989}{David Dereudre, Adrien Hardy, Thomas Leblé and Mylène Maïda. DLR equations and rigidity for the Sine-beta process.} Source used by the manuscript. See Lemma 2.23 and Proposition 3.13, with the regularization convention made explicit.
+
+\end{document}
